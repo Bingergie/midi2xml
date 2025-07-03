@@ -29,11 +29,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="wedge">
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       <attGroup ref="{}color"/>
- *       <attGroup ref="{}line-type"/>
- *       <attGroup ref="{}optional-unique-id"/>
- *       <attGroup ref="{}dashed-formatting"/>
  *       <attGroup ref="{}position"/>
+ *       <attGroup ref="{}optional-unique-id"/>
+ *       <attGroup ref="{}line-type"/>
+ *       <attGroup ref="{}dashed-formatting"/>
+ *       <attGroup ref="{}color"/>
  *       <attribute name="type" use="required" type="{}wedge-type" />
  *       <attribute name="number" type="{}number-level" />
  *       <attribute name="spread" type="{}tenths" />
@@ -57,20 +57,6 @@ public class Wedge {
     protected BigDecimal spread;
     @XmlAttribute(name = "niente")
     protected YesNo niente;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
-    @XmlAttribute(name = "dash-length")
-    protected BigDecimal dashLength;
-    @XmlAttribute(name = "space-length")
-    protected BigDecimal spaceLength;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -79,6 +65,20 @@ public class Wedge {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
+    @XmlAttribute(name = "dash-length")
+    protected BigDecimal dashLength;
+    @XmlAttribute(name = "space-length")
+    protected BigDecimal spaceLength;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the type property.
@@ -177,126 +177,6 @@ public class Wedge {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
-    }
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
-    }
-
-    /**
-     * Gets the value of the dashLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDashLength() {
-        return dashLength;
-    }
-
-    /**
-     * Sets the value of the dashLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDashLength(BigDecimal value) {
-        this.dashLength = value;
-    }
-
-    /**
-     * Gets the value of the spaceLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getSpaceLength() {
-        return spaceLength;
-    }
-
-    /**
-     * Sets the value of the spaceLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setSpaceLength(BigDecimal value) {
-        this.spaceLength = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -390,6 +270,126 @@ public class Wedge {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setId(java.lang.String value) {
+        this.id = value;
+    }
+
+    /**
+     * Gets the value of the lineType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineType }
+     *     
+     */
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    /**
+     * Sets the value of the lineType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineType }
+     *     
+     */
+    public void setLineType(LineType value) {
+        this.lineType = value;
+    }
+
+    /**
+     * Gets the value of the dashLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDashLength() {
+        return dashLength;
+    }
+
+    /**
+     * Sets the value of the dashLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDashLength(BigDecimal value) {
+        this.dashLength = value;
+    }
+
+    /**
+     * Gets the value of the spaceLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getSpaceLength() {
+        return spaceLength;
+    }
+
+    /**
+     * Sets the value of the spaceLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setSpaceLength(BigDecimal value) {
+        this.spaceLength = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

@@ -39,8 +39,8 @@ import javax.xml.bind.annotation.XmlType;
  *         <element name="capo" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" minOccurs="0"/>
  *         <element name="staff-size" type="{}staff-size" minOccurs="0"/>
  *       </sequence>
- *       <attGroup ref="{}print-object"/>
  *       <attGroup ref="{}print-spacing"/>
+ *       <attGroup ref="{}print-object"/>
  *       <attribute name="number" type="{}staff-number" />
  *       <attribute name="show-frets" type="{}show-frets" />
  *     </restriction>
@@ -87,10 +87,10 @@ public class StaffDetails {
     protected BigInteger number;
     @XmlAttribute(name = "show-frets")
     protected ShowFrets showFrets;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
     @XmlAttribute(name = "print-spacing")
     protected YesNo printSpacing;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
 
     /**
      * Gets the value of the staffType property.
@@ -303,30 +303,6 @@ public class StaffDetails {
     }
 
     /**
-     * Gets the value of the printObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintObject() {
-        return printObject;
-    }
-
-    /**
-     * Sets the value of the printObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
-    }
-
-    /**
      * Gets the value of the printSpacing property.
      * 
      * @return
@@ -348,6 +324,30 @@ public class StaffDetails {
      */
     public void setPrintSpacing(YesNo value) {
         this.printSpacing = value;
+    }
+
+    /**
+     * Gets the value of the printObject property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintObject() {
+        return printObject;
+    }
+
+    /**
+     * Sets the value of the printObject property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
 }

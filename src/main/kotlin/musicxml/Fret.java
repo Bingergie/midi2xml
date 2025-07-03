@@ -29,8 +29,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="fret">
  *   <simpleContent>
  *     <extension base="<http://www.w3.org/2001/XMLSchema>nonNegativeInteger">
- *       <attGroup ref="{}font"/>
  *       <attGroup ref="{}color"/>
+ *       <attGroup ref="{}font"/>
  *     </extension>
  *   </simpleContent>
  * </complexType>
@@ -47,6 +47,9 @@ public class Fret {
     @XmlValue
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger value;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -56,9 +59,6 @@ public class Fret {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
 
     /**
      * Gets the value of the value property.
@@ -82,6 +82,30 @@ public class Fret {
      */
     public void setValue(BigInteger value) {
         this.value = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -178,30 +202,6 @@ public class Fret {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
 }

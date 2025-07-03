@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="formatted-symbol-id">
  *   <simpleContent>
  *     <extension base="<>smufl-glyph-name">
- *       <attGroup ref="{}optional-unique-id"/>
  *       <attGroup ref="{}symbol-formatting"/>
+ *       <attGroup ref="{}optional-unique-id"/>
  *     </extension>
  *   </simpleContent>
  * </complexType>
@@ -52,32 +52,16 @@ public class FormattedSymbolId {
     @XmlValue
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String value;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
-    @XmlAttribute(name = "dir")
-    protected TextDirection dir;
+    @XmlAttribute(name = "underline")
+    protected Integer underline;
+    @XmlAttribute(name = "overline")
+    protected Integer overline;
+    @XmlAttribute(name = "line-through")
+    protected Integer lineThrough;
+    @XmlAttribute(name = "rotation")
+    protected BigDecimal rotation;
     @XmlAttribute(name = "enclosure")
     protected EnclosureShape enclosure;
-    @XmlAttribute(name = "letter-spacing")
-    protected java.lang.String letterSpacing;
-    @XmlAttribute(name = "line-height")
-    protected java.lang.String lineHeight;
-    @XmlAttribute(name = "halign")
-    protected LeftCenterRight halign;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -87,18 +71,34 @@ public class FormattedSymbolId {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
     @XmlAttribute(name = "valign")
     protected Valign valign;
-    @XmlAttribute(name = "rotation")
-    protected BigDecimal rotation;
-    @XmlAttribute(name = "underline")
-    protected Integer underline;
-    @XmlAttribute(name = "overline")
-    protected Integer overline;
-    @XmlAttribute(name = "line-through")
-    protected Integer lineThrough;
+    @XmlAttribute(name = "letter-spacing")
+    protected java.lang.String letterSpacing;
     @XmlAttribute(name = "justify")
     protected LeftCenterRight justify;
+    @XmlAttribute(name = "line-height")
+    protected java.lang.String lineHeight;
+    @XmlAttribute(name = "dir")
+    protected TextDirection dir;
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
 
     /**
      * The smufl-glyph-name type is used for attributes that reference a specific Standard Music Font Layout (SMuFL) character. The value is a SMuFL canonical glyph name, not a code point. For instance, the value for a standard piano pedal mark would be keyboardPedalPed, not U+E650.
@@ -126,51 +126,99 @@ public class FormattedSymbolId {
     }
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the underline property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link Integer }
      *     
      */
-    public java.lang.String getId() {
-        return id;
+    public Integer getUnderline() {
+        return underline;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the underline property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link Integer }
      *     
      */
-    public void setId(java.lang.String value) {
-        this.id = value;
+    public void setUnderline(Integer value) {
+        this.underline = value;
     }
 
     /**
-     * Gets the value of the dir property.
+     * Gets the value of the overline property.
      * 
      * @return
      *     possible object is
-     *     {@link TextDirection }
+     *     {@link Integer }
      *     
      */
-    public TextDirection getDir() {
-        return dir;
+    public Integer getOverline() {
+        return overline;
     }
 
     /**
-     * Sets the value of the dir property.
+     * Sets the value of the overline property.
      * 
      * @param value
      *     allowed object is
-     *     {@link TextDirection }
+     *     {@link Integer }
      *     
      */
-    public void setDir(TextDirection value) {
-        this.dir = value;
+    public void setOverline(Integer value) {
+        this.overline = value;
+    }
+
+    /**
+     * Gets the value of the lineThrough property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getLineThrough() {
+        return lineThrough;
+    }
+
+    /**
+     * Sets the value of the lineThrough property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setLineThrough(Integer value) {
+        this.lineThrough = value;
+    }
+
+    /**
+     * Gets the value of the rotation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRotation() {
+        return rotation;
+    }
+
+    /**
+     * Sets the value of the rotation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRotation(BigDecimal value) {
+        this.rotation = value;
     }
 
     /**
@@ -195,198 +243,6 @@ public class FormattedSymbolId {
      */
     public void setEnclosure(EnclosureShape value) {
         this.enclosure = value;
-    }
-
-    /**
-     * Gets the value of the letterSpacing property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getLetterSpacing() {
-        return letterSpacing;
-    }
-
-    /**
-     * Sets the value of the letterSpacing property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setLetterSpacing(java.lang.String value) {
-        this.letterSpacing = value;
-    }
-
-    /**
-     * Gets the value of the lineHeight property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getLineHeight() {
-        return lineHeight;
-    }
-
-    /**
-     * Sets the value of the lineHeight property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setLineHeight(java.lang.String value) {
-        this.lineHeight = value;
-    }
-
-    /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the defaultX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultX() {
-        return defaultX;
-    }
-
-    /**
-     * Sets the value of the defaultX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
     }
 
     /**
@@ -486,6 +342,150 @@ public class FormattedSymbolId {
     }
 
     /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
      * Gets the value of the valign property.
      * 
      * @return
@@ -510,99 +510,27 @@ public class FormattedSymbolId {
     }
 
     /**
-     * Gets the value of the rotation property.
+     * Gets the value of the letterSpacing property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link java.lang.String }
      *     
      */
-    public BigDecimal getRotation() {
-        return rotation;
+    public java.lang.String getLetterSpacing() {
+        return letterSpacing;
     }
 
     /**
-     * Sets the value of the rotation property.
+     * Sets the value of the letterSpacing property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link java.lang.String }
      *     
      */
-    public void setRotation(BigDecimal value) {
-        this.rotation = value;
-    }
-
-    /**
-     * Gets the value of the underline property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getUnderline() {
-        return underline;
-    }
-
-    /**
-     * Sets the value of the underline property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setUnderline(Integer value) {
-        this.underline = value;
-    }
-
-    /**
-     * Gets the value of the overline property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getOverline() {
-        return overline;
-    }
-
-    /**
-     * Sets the value of the overline property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setOverline(Integer value) {
-        this.overline = value;
-    }
-
-    /**
-     * Gets the value of the lineThrough property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getLineThrough() {
-        return lineThrough;
-    }
-
-    /**
-     * Sets the value of the lineThrough property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setLineThrough(Integer value) {
-        this.lineThrough = value;
+    public void setLetterSpacing(java.lang.String value) {
+        this.letterSpacing = value;
     }
 
     /**
@@ -627,6 +555,78 @@ public class FormattedSymbolId {
      */
     public void setJustify(LeftCenterRight value) {
         this.justify = value;
+    }
+
+    /**
+     * Gets the value of the lineHeight property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getLineHeight() {
+        return lineHeight;
+    }
+
+    /**
+     * Sets the value of the lineHeight property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setLineHeight(java.lang.String value) {
+        this.lineHeight = value;
+    }
+
+    /**
+     * Gets the value of the dir property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TextDirection }
+     *     
+     */
+    public TextDirection getDir() {
+        return dir;
+    }
+
+    /**
+     * Sets the value of the dir property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TextDirection }
+     *     
+     */
+    public void setDir(TextDirection value) {
+        this.dir = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setId(java.lang.String value) {
+        this.id = value;
     }
 
 }

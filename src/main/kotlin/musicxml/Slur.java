@@ -29,14 +29,14 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="slur">
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       <attGroup ref="{}placement"/>
+ *       <attGroup ref="{}bezier"/>
  *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}optional-unique-id"/>
- *       <attGroup ref="{}dashed-formatting"/>
- *       <attGroup ref="{}placement"/>
  *       <attGroup ref="{}orientation"/>
- *       <attGroup ref="{}position"/>
+ *       <attGroup ref="{}dashed-formatting"/>
  *       <attGroup ref="{}line-type"/>
- *       <attGroup ref="{}bezier"/>
+ *       <attGroup ref="{}position"/>
  *       <attribute name="type" use="required" type="{}start-stop-continue" />
  *       <attribute name="number" type="{}number-level" default="1" />
  *     </restriction>
@@ -54,32 +54,8 @@ public class Slur {
     protected StartStopContinue type;
     @XmlAttribute(name = "number")
     protected Integer number;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
-    @XmlAttribute(name = "dash-length")
-    protected BigDecimal dashLength;
-    @XmlAttribute(name = "space-length")
-    protected BigDecimal spaceLength;
     @XmlAttribute(name = "placement")
     protected AboveBelow placement;
-    @XmlAttribute(name = "orientation")
-    protected OverUnder orientation;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
     @XmlAttribute(name = "bezier-x")
     protected BigDecimal bezierX;
     @XmlAttribute(name = "bezier-y")
@@ -92,6 +68,30 @@ public class Slur {
     protected BigDecimal bezierOffset;
     @XmlAttribute(name = "bezier-offset2")
     protected BigDecimal bezierOffset2;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
+    @XmlAttribute(name = "orientation")
+    protected OverUnder orientation;
+    @XmlAttribute(name = "dash-length")
+    protected BigDecimal dashLength;
+    @XmlAttribute(name = "space-length")
+    protected BigDecimal spaceLength;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
 
     /**
      * Gets the value of the type property.
@@ -146,102 +146,6 @@ public class Slur {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
-    }
-
-    /**
-     * Gets the value of the dashLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDashLength() {
-        return dashLength;
-    }
-
-    /**
-     * Sets the value of the dashLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDashLength(BigDecimal value) {
-        this.dashLength = value;
-    }
-
-    /**
-     * Gets the value of the spaceLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getSpaceLength() {
-        return spaceLength;
-    }
-
-    /**
-     * Sets the value of the spaceLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setSpaceLength(BigDecimal value) {
-        this.spaceLength = value;
-    }
-
-    /**
      * Gets the value of the placement property.
      * 
      * @return
@@ -263,150 +167,6 @@ public class Slur {
      */
     public void setPlacement(AboveBelow value) {
         this.placement = value;
-    }
-
-    /**
-     * Gets the value of the orientation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link OverUnder }
-     *     
-     */
-    public OverUnder getOrientation() {
-        return orientation;
-    }
-
-    /**
-     * Sets the value of the orientation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link OverUnder }
-     *     
-     */
-    public void setOrientation(OverUnder value) {
-        this.orientation = value;
-    }
-
-    /**
-     * Gets the value of the defaultX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultX() {
-        return defaultX;
-    }
-
-    /**
-     * Sets the value of the defaultX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
     }
 
     /**
@@ -551,6 +311,246 @@ public class Slur {
      */
     public void setBezierOffset2(BigDecimal value) {
         this.bezierOffset2 = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setId(java.lang.String value) {
+        this.id = value;
+    }
+
+    /**
+     * Gets the value of the orientation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link OverUnder }
+     *     
+     */
+    public OverUnder getOrientation() {
+        return orientation;
+    }
+
+    /**
+     * Sets the value of the orientation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link OverUnder }
+     *     
+     */
+    public void setOrientation(OverUnder value) {
+        this.orientation = value;
+    }
+
+    /**
+     * Gets the value of the dashLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDashLength() {
+        return dashLength;
+    }
+
+    /**
+     * Sets the value of the dashLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDashLength(BigDecimal value) {
+        this.dashLength = value;
+    }
+
+    /**
+     * Gets the value of the spaceLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getSpaceLength() {
+        return spaceLength;
+    }
+
+    /**
+     * Sets the value of the spaceLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setSpaceLength(BigDecimal value) {
+        this.spaceLength = value;
+    }
+
+    /**
+     * Gets the value of the lineType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineType }
+     *     
+     */
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    /**
+     * Sets the value of the lineType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineType }
+     *     
+     */
+    public void setLineType(LineType value) {
+        this.lineType = value;
+    }
+
+    /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
     }
 
 }

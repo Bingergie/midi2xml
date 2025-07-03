@@ -29,8 +29,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="image">
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       <attGroup ref="{}optional-unique-id"/>
  *       <attGroup ref="{}image-attributes"/>
+ *       <attGroup ref="{}optional-unique-id"/>
  *     </restriction>
  *   </complexContent>
  * </complexType>
@@ -42,11 +42,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "image")
 public class Image {
 
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
     @XmlAttribute(name = "source", required = true)
     @XmlSchemaType(name = "anyURI")
     protected java.lang.String source;
@@ -58,6 +53,8 @@ public class Image {
     protected BigDecimal height;
     @XmlAttribute(name = "width")
     protected BigDecimal width;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -68,32 +65,11 @@ public class Image {
     protected BigDecimal relativeY;
     @XmlAttribute(name = "valign")
     protected ValignImage valign;
-    @XmlAttribute(name = "halign")
-    protected LeftCenterRight halign;
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
-    }
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
 
     /**
      * Gets the value of the source property.
@@ -189,6 +165,30 @@ public class Image {
      */
     public void setWidth(BigDecimal value) {
         this.width = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
     }
 
     /**
@@ -312,27 +312,27 @@ public class Image {
     }
 
     /**
-     * Gets the value of the halign property.
+     * Gets the value of the id property.
      * 
      * @return
      *     possible object is
-     *     {@link LeftCenterRight }
+     *     {@link java.lang.String }
      *     
      */
-    public LeftCenterRight getHalign() {
-        return halign;
+    public java.lang.String getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the halign property.
+     * Sets the value of the id property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LeftCenterRight }
+     *     {@link java.lang.String }
      *     
      */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
+    public void setId(java.lang.String value) {
+        this.id = value;
     }
 
 }

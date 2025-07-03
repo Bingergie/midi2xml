@@ -68,10 +68,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         <element name="other-dynamics" type="{}other-text"/>
  *       </choice>
  *       <attGroup ref="{}enclosure"/>
- *       <attGroup ref="{}print-style-align"/>
  *       <attGroup ref="{}placement"/>
- *       <attGroup ref="{}text-decoration"/>
  *       <attGroup ref="{}optional-unique-id"/>
+ *       <attGroup ref="{}text-decoration"/>
+ *       <attGroup ref="{}print-style-align"/>
  *     </restriction>
  *   </complexContent>
  * </complexType>
@@ -117,19 +117,19 @@ public class Dynamics {
     protected List<JAXBElement<?>> pOrPpOrPpp;
     @XmlAttribute(name = "enclosure")
     protected EnclosureShape enclosure;
-    @XmlAttribute(name = "halign")
-    protected LeftCenterRight halign;
-    @XmlAttribute(name = "color")
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
+    @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
+    @XmlAttribute(name = "underline")
+    protected Integer underline;
+    @XmlAttribute(name = "overline")
+    protected Integer overline;
+    @XmlAttribute(name = "line-through")
+    protected Integer lineThrough;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -139,21 +139,21 @@ public class Dynamics {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
     @XmlAttribute(name = "valign")
     protected Valign valign;
-    @XmlAttribute(name = "placement")
-    protected AboveBelow placement;
-    @XmlAttribute(name = "underline")
-    protected Integer underline;
-    @XmlAttribute(name = "overline")
-    protected Integer overline;
-    @XmlAttribute(name = "line-through")
-    protected Integer lineThrough;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
 
     /**
      * Gets the value of the pOrPpOrPpp property.
@@ -238,147 +238,123 @@ public class Dynamics {
     }
 
     /**
-     * Gets the value of the halign property.
+     * Gets the value of the placement property.
      * 
      * @return
      *     possible object is
-     *     {@link LeftCenterRight }
+     *     {@link AboveBelow }
      *     
      */
-    public LeftCenterRight getHalign() {
-        return halign;
+    public AboveBelow getPlacement() {
+        return placement;
     }
 
     /**
-     * Sets the value of the halign property.
+     * Sets the value of the placement property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LeftCenterRight }
+     *     {@link AboveBelow }
      *     
      */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the id property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public java.lang.String getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the id property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setId(java.lang.String value) {
+        this.id = value;
     }
 
     /**
-     * Gets the value of the defaultX property.
+     * Gets the value of the underline property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public BigDecimal getDefaultX() {
-        return defaultX;
+    public Integer getUnderline() {
+        return underline;
     }
 
     /**
-     * Sets the value of the defaultX property.
+     * Sets the value of the underline property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
+    public void setUnderline(Integer value) {
+        this.underline = value;
     }
 
     /**
-     * Gets the value of the defaultY property.
+     * Gets the value of the overline property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public BigDecimal getDefaultY() {
-        return defaultY;
+    public Integer getOverline() {
+        return overline;
     }
 
     /**
-     * Sets the value of the defaultY property.
+     * Sets the value of the overline property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
+    public void setOverline(Integer value) {
+        this.overline = value;
     }
 
     /**
-     * Gets the value of the relativeX property.
+     * Gets the value of the lineThrough property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public BigDecimal getRelativeX() {
-        return relativeX;
+    public Integer getLineThrough() {
+        return lineThrough;
     }
 
     /**
-     * Sets the value of the relativeX property.
+     * Sets the value of the lineThrough property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link Integer }
      *     
      */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
+    public void setLineThrough(Integer value) {
+        this.lineThrough = value;
     }
 
     /**
@@ -478,6 +454,150 @@ public class Dynamics {
     }
 
     /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
      * Gets the value of the valign property.
      * 
      * @return
@@ -499,126 +619,6 @@ public class Dynamics {
      */
     public void setValign(Valign value) {
         this.valign = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
-     * Gets the value of the underline property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getUnderline() {
-        return underline;
-    }
-
-    /**
-     * Sets the value of the underline property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setUnderline(Integer value) {
-        this.underline = value;
-    }
-
-    /**
-     * Gets the value of the overline property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getOverline() {
-        return overline;
-    }
-
-    /**
-     * Sets the value of the overline property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setOverline(Integer value) {
-        this.overline = value;
-    }
-
-    /**
-     * Gets the value of the lineThrough property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getLineThrough() {
-        return lineThrough;
-    }
-
-    /**
-     * Sets the value of the lineThrough property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setLineThrough(Integer value) {
-        this.lineThrough = value;
-    }
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
     }
 
 }

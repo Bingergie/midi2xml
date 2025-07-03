@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * The notehead type indicates shapes other than the open and closed ovals associated with note durations. 
+ * The notehead type indicates shapes other than the open and closed ovals associated with note durations.
  * 
  * The smufl attribute can be used to specify a particular notehead, allowing application interoperability without requiring every SMuFL glyph to have a MusicXML element equivalent. This attribute can be used either with the "other" value, or to refine a specific notehead value such as "cluster". Noteheads in the SMuFL Note name noteheads and Note name noteheads supplement ranges (U+E150–U+E1AF and U+EEE0–U+EEFF) should not use the smufl attribute or the "other" value, but instead use the notehead-text element.
  * 
@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   <simpleContent>
  *     <extension base="<>notehead-value">
  *       <attGroup ref="{}font"/>
- *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}smufl"/>
+ *       <attGroup ref="{}color"/>
  *       <attribute name="filled" type="{}yes-no" />
  *       <attribute name="parentheses" type="{}yes-no" />
  *     </extension>
@@ -52,7 +52,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Notehead {
 
     /**
-     * The notehead-value type indicates shapes other than the open and closed ovals associated with note durations. 
+     * The notehead-value type indicates shapes other than the open and closed ovals associated with note durations.
      * 
      * The values do, re, mi, fa, fa up, so, la, and ti correspond to Aikin's 7-shape system.  The fa up shape is typically used with upstems; the fa shape is typically used with downstems or no stems.
      * 
@@ -76,15 +76,15 @@ public class Notehead {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "smufl")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String smufl;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
-     * The notehead-value type indicates shapes other than the open and closed ovals associated with note durations. 
+     * The notehead-value type indicates shapes other than the open and closed ovals associated with note durations.
      * 
      * The values do, re, mi, fa, fa up, so, la, and ti correspond to Aikin's 7-shape system.  The fa up shape is typically used with upstems; the fa shape is typically used with downstems or no stems.
      * 
@@ -259,30 +259,6 @@ public class Notehead {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the smufl property.
      * 
      * @return
@@ -304,6 +280,30 @@ public class Notehead {
      */
     public void setSmufl(java.lang.String value) {
         this.smufl = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

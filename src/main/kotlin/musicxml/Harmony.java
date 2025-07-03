@@ -45,11 +45,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         <group ref="{}editorial"/>
  *         <group ref="{}staff" minOccurs="0"/>
  *       </sequence>
+ *       <attGroup ref="{}print-style"/>
  *       <attGroup ref="{}placement"/>
  *       <attGroup ref="{}optional-unique-id"/>
- *       <attGroup ref="{}print-object"/>
- *       <attGroup ref="{}print-style"/>
  *       <attGroup ref="{}system-relation"/>
+ *       <attGroup ref="{}print-object"/>
  *       <attribute name="type" type="{}harmony-type" />
  *       <attribute name="print-frame" type="{}yes-no" />
  *       <attribute name="arrangement" type="{}harmony-arrangement" />
@@ -103,26 +103,6 @@ public class Harmony {
     protected YesNo printFrame;
     @XmlAttribute(name = "arrangement")
     protected HarmonyArrangement arrangement;
-    @XmlAttribute(name = "placement")
-    protected AboveBelow placement;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -132,8 +112,28 @@ public class Harmony {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
     @XmlAttribute(name = "system")
     protected SystemRelation system;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
 
     /**
      * A harmony element can contain many stacked chords (e.g. V of II). A sequence of harmony-chord groups is used for this type of secondary function, where V of II would be represented by a harmony-chord with a 5 numeral followed by a harmony-chord with a 2 numeral.
@@ -371,99 +371,99 @@ public class Harmony {
     }
 
     /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
-     * Gets the value of the id property.
+     * Gets the value of the fontFamily property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getId() {
-        return id;
+    public java.lang.String getFontFamily() {
+        return fontFamily;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the fontFamily property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setId(java.lang.String value) {
-        this.id = value;
+    public void setFontFamily(java.lang.String value) {
+        this.fontFamily = value;
     }
 
     /**
-     * Gets the value of the printObject property.
+     * Gets the value of the fontStyle property.
      * 
      * @return
      *     possible object is
-     *     {@link YesNo }
+     *     {@link FontStyle }
      *     
      */
-    public YesNo getPrintObject() {
-        return printObject;
+    public FontStyle getFontStyle() {
+        return fontStyle;
     }
 
     /**
-     * Sets the value of the printObject property.
+     * Sets the value of the fontStyle property.
      * 
      * @param value
      *     allowed object is
-     *     {@link YesNo }
+     *     {@link FontStyle }
      *     
      */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
+    public void setFontStyle(FontStyle value) {
+        this.fontStyle = value;
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the fontSize property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public java.lang.String getFontSize() {
+        return fontSize;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the fontSize property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setFontSize(java.lang.String value) {
+        this.fontSize = value;
+    }
+
+    /**
+     * Gets the value of the fontWeight property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontWeight }
+     *     
+     */
+    public FontWeight getFontWeight() {
+        return fontWeight;
+    }
+
+    /**
+     * Sets the value of the fontWeight property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontWeight }
+     *     
+     */
+    public void setFontWeight(FontWeight value) {
+        this.fontWeight = value;
     }
 
     /**
@@ -563,99 +563,75 @@ public class Harmony {
     }
 
     /**
-     * Gets the value of the fontFamily property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getFontFamily() {
-        return fontFamily;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the fontFamily property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setFontFamily(java.lang.String value) {
-        this.fontFamily = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
-     * Gets the value of the fontStyle property.
+     * Gets the value of the placement property.
      * 
      * @return
      *     possible object is
-     *     {@link FontStyle }
+     *     {@link AboveBelow }
      *     
      */
-    public FontStyle getFontStyle() {
-        return fontStyle;
+    public AboveBelow getPlacement() {
+        return placement;
     }
 
     /**
-     * Sets the value of the fontStyle property.
+     * Sets the value of the placement property.
      * 
      * @param value
      *     allowed object is
-     *     {@link FontStyle }
+     *     {@link AboveBelow }
      *     
      */
-    public void setFontStyle(FontStyle value) {
-        this.fontStyle = value;
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
     /**
-     * Gets the value of the fontSize property.
+     * Gets the value of the id property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getFontSize() {
-        return fontSize;
+    public java.lang.String getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the fontSize property.
+     * Sets the value of the id property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setFontSize(java.lang.String value) {
-        this.fontSize = value;
-    }
-
-    /**
-     * Gets the value of the fontWeight property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontWeight }
-     *     
-     */
-    public FontWeight getFontWeight() {
-        return fontWeight;
-    }
-
-    /**
-     * Sets the value of the fontWeight property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontWeight }
-     *     
-     */
-    public void setFontWeight(FontWeight value) {
-        this.fontWeight = value;
+    public void setId(java.lang.String value) {
+        this.id = value;
     }
 
     /**
@@ -680,6 +656,30 @@ public class Harmony {
      */
     public void setSystem(SystemRelation value) {
         this.system = value;
+    }
+
+    /**
+     * Gets the value of the printObject property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintObject() {
+        return printObject;
+    }
+
+    /**
+     * Sets the value of the printObject property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
 }

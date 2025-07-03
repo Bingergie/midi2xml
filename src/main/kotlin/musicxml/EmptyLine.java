@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="empty-line">
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       <attGroup ref="{}line-type"/>
+ *       <attGroup ref="{}print-style"/>
  *       <attGroup ref="{}dashed-formatting"/>
  *       <attGroup ref="{}placement"/>
- *       <attGroup ref="{}print-style"/>
- *       <attGroup ref="{}line-type"/>
  *       <attGroup ref="{}line-length"/>
  *       <attGroup ref="{}line-shape"/>
  *     </restriction>
@@ -44,23 +44,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "empty-line")
 public class EmptyLine {
 
-    @XmlAttribute(name = "dash-length")
-    protected BigDecimal dashLength;
-    @XmlAttribute(name = "space-length")
-    protected BigDecimal spaceLength;
-    @XmlAttribute(name = "placement")
-    protected AboveBelow placement;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -70,203 +55,50 @@ public class EmptyLine {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "dash-length")
+    protected BigDecimal dashLength;
+    @XmlAttribute(name = "space-length")
+    protected BigDecimal spaceLength;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
     @XmlAttribute(name = "line-length")
     protected LineLength lineLength;
     @XmlAttribute(name = "line-shape")
     protected LineShape lineShape;
 
     /**
-     * Gets the value of the dashLength property.
+     * Gets the value of the lineType property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link LineType }
      *     
      */
-    public BigDecimal getDashLength() {
-        return dashLength;
+    public LineType getLineType() {
+        return lineType;
     }
 
     /**
-     * Sets the value of the dashLength property.
+     * Sets the value of the lineType property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link LineType }
      *     
      */
-    public void setDashLength(BigDecimal value) {
-        this.dashLength = value;
-    }
-
-    /**
-     * Gets the value of the spaceLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getSpaceLength() {
-        return spaceLength;
-    }
-
-    /**
-     * Sets the value of the spaceLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setSpaceLength(BigDecimal value) {
-        this.spaceLength = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the defaultX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultX() {
-        return defaultX;
-    }
-
-    /**
-     * Sets the value of the defaultX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
+    public void setLineType(LineType value) {
+        this.lineType = value;
     }
 
     /**
@@ -366,27 +198,195 @@ public class EmptyLine {
     }
 
     /**
-     * Gets the value of the lineType property.
+     * Gets the value of the defaultX property.
      * 
      * @return
      *     possible object is
-     *     {@link LineType }
+     *     {@link BigDecimal }
      *     
      */
-    public LineType getLineType() {
-        return lineType;
+    public BigDecimal getDefaultX() {
+        return defaultX;
     }
 
     /**
-     * Sets the value of the lineType property.
+     * Sets the value of the defaultX property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LineType }
+     *     {@link BigDecimal }
      *     
      */
-    public void setLineType(LineType value) {
-        this.lineType = value;
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the dashLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDashLength() {
+        return dashLength;
+    }
+
+    /**
+     * Sets the value of the dashLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDashLength(BigDecimal value) {
+        this.dashLength = value;
+    }
+
+    /**
+     * Gets the value of the spaceLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getSpaceLength() {
+        return spaceLength;
+    }
+
+    /**
+     * Sets the value of the spaceLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setSpaceLength(BigDecimal value) {
+        this.spaceLength = value;
+    }
+
+    /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
     /**

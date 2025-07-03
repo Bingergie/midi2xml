@@ -39,11 +39,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         <element name="first-fret" type="{}first-fret" minOccurs="0"/>
  *         <element name="frame-note" type="{}frame-note" maxOccurs="unbounded"/>
  *       </sequence>
- *       <attGroup ref="{}valign-image"/>
- *       <attGroup ref="{}position"/>
- *       <attGroup ref="{}halign"/>
- *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}optional-unique-id"/>
+ *       <attGroup ref="{}color"/>
+ *       <attGroup ref="{}halign"/>
+ *       <attGroup ref="{}position"/>
+ *       <attGroup ref="{}valign-image"/>
  *       <attribute name="height" type="{}tenths" />
  *       <attribute name="width" type="{}tenths" />
  *       <attribute name="unplayed" type="{http://www.w3.org/2001/XMLSchema}token" />
@@ -89,8 +89,16 @@ public class Frame {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String unplayed;
-    @XmlAttribute(name = "valign")
-    protected ValignImage valign;
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -99,16 +107,8 @@ public class Frame {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "halign")
-    protected LeftCenterRight halign;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
+    @XmlAttribute(name = "valign")
+    protected ValignImage valign;
 
     /**
      * The frame-strings element gives the overall size of the frame in vertical lines (strings).
@@ -289,27 +289,75 @@ public class Frame {
     }
 
     /**
-     * Gets the value of the valign property.
+     * Gets the value of the id property.
      * 
      * @return
      *     possible object is
-     *     {@link ValignImage }
+     *     {@link java.lang.String }
      *     
      */
-    public ValignImage getValign() {
-        return valign;
+    public java.lang.String getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the valign property.
+     * Sets the value of the id property.
      * 
      * @param value
      *     allowed object is
-     *     {@link ValignImage }
+     *     {@link java.lang.String }
      *     
      */
-    public void setValign(ValignImage value) {
-        this.valign = value;
+    public void setId(java.lang.String value) {
+        this.id = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
     }
 
     /**
@@ -409,75 +457,27 @@ public class Frame {
     }
 
     /**
-     * Gets the value of the halign property.
+     * Gets the value of the valign property.
      * 
      * @return
      *     possible object is
-     *     {@link LeftCenterRight }
+     *     {@link ValignImage }
      *     
      */
-    public LeftCenterRight getHalign() {
-        return halign;
+    public ValignImage getValign() {
+        return valign;
     }
 
     /**
-     * Sets the value of the halign property.
+     * Sets the value of the valign property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LeftCenterRight }
+     *     {@link ValignImage }
      *     
      */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
+    public void setValign(ValignImage value) {
+        this.valign = value;
     }
 
 }

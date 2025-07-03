@@ -7,9 +7,10 @@ import javax.sound.midi.*
 class MidiParser {
 
     companion object {
-        fun getNotesFromMidi(file: File): MutableList<TrackData> {
+        fun getNotesFromMidi(file: File): MidiData {
             val sequence = MidiSystem.getSequence(file)
             require(sequence.divisionType == Sequence.PPQ) { TODO("PPQ not supported yet") }
+            val divisions = sequence.resolution
             val tracksData = mutableListOf<TrackData>()
             mutableListOf<TimeSignatureData>()
             for (track in sequence.tracks) {
@@ -61,10 +62,11 @@ class MidiParser {
                 }
                 tracksData.add(TrackData(notes, listOf(TimeSignatureData(0L, 4, 4))))
             }
-            return tracksData
+            return MidiData(divisions, tracksData)
         }
 
-        data class NoteData(val startTime: Long, val duration: Long, val pitch: Int, val velocity: Int)
+        data class MidiData(val divisionsPerQuarterNote: Int, val tracksData: List<TrackData>)
+        data class NoteData(val startTick: Long, val duration: Long, val pitch: Int, val velocity: Int)
         data class TimeSignatureData(val tick: Long, val numerator: Int, val denominator: Int)
         data class TrackData(val notesData: List<NoteData>, val timeSignatureData: List<TimeSignatureData>)
     }

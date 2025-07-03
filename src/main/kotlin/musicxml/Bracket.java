@@ -29,11 +29,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="bracket">
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       <attGroup ref="{}optional-unique-id"/>
- *       <attGroup ref="{}line-type"/>
- *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}position"/>
+ *       <attGroup ref="{}optional-unique-id"/>
  *       <attGroup ref="{}dashed-formatting"/>
+ *       <attGroup ref="{}color"/>
+ *       <attGroup ref="{}line-type"/>
  *       <attribute name="type" use="required" type="{}start-stop-continue" />
  *       <attribute name="number" type="{}number-level" />
  *       <attribute name="line-end" use="required" type="{}line-end" />
@@ -57,16 +57,6 @@ public class Bracket {
     protected LineEnd lineEnd;
     @XmlAttribute(name = "end-length")
     protected BigDecimal endLength;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -75,10 +65,20 @@ public class Bracket {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
     @XmlAttribute(name = "dash-length")
     protected BigDecimal dashLength;
     @XmlAttribute(name = "space-length")
     protected BigDecimal spaceLength;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
 
     /**
      * Gets the value of the type property.
@@ -174,78 +174,6 @@ public class Bracket {
      */
     public void setEndLength(BigDecimal value) {
         this.endLength = value;
-    }
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
-    }
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
     /**
@@ -345,6 +273,30 @@ public class Bracket {
     }
 
     /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setId(java.lang.String value) {
+        this.id = value;
+    }
+
+    /**
      * Gets the value of the dashLength property.
      * 
      * @return
@@ -390,6 +342,54 @@ public class Bracket {
      */
     public void setSpaceLength(BigDecimal value) {
         this.spaceLength = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the lineType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineType }
+     *     
+     */
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    /**
+     * Sets the value of the lineType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineType }
+     *     
+     */
+    public void setLineType(LineType value) {
+        this.lineType = value;
     }
 
 }

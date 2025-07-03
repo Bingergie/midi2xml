@@ -28,12 +28,12 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="text-element-data">
  *   <simpleContent>
  *     <extension base="<http://www.w3.org/2001/XMLSchema>string">
- *       <attGroup ref="{}text-direction"/>
  *       <attGroup ref="{}font"/>
+ *       <attGroup ref="{}text-direction"/>
+ *       <attGroup ref="{}text-decoration"/>
  *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}text-rotation"/>
  *       <attGroup ref="{}letter-spacing"/>
- *       <attGroup ref="{}text-decoration"/>
  *       <attribute ref="{http://www.w3.org/XML/1998/namespace}lang"/>
  *     </extension>
  *   </simpleContent>
@@ -64,8 +64,6 @@ public class TextElementData {
      */
     @XmlAttribute(name = "lang", namespace = "http://www.w3.org/XML/1998/namespace")
     protected java.lang.String lang;
-    @XmlAttribute(name = "dir")
-    protected TextDirection dir;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -75,6 +73,14 @@ public class TextElementData {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "dir")
+    protected TextDirection dir;
+    @XmlAttribute(name = "underline")
+    protected Integer underline;
+    @XmlAttribute(name = "overline")
+    protected Integer overline;
+    @XmlAttribute(name = "line-through")
+    protected Integer lineThrough;
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
@@ -82,12 +88,6 @@ public class TextElementData {
     protected BigDecimal rotation;
     @XmlAttribute(name = "letter-spacing")
     protected java.lang.String letterSpacing;
-    @XmlAttribute(name = "underline")
-    protected Integer underline;
-    @XmlAttribute(name = "overline")
-    protected Integer overline;
-    @XmlAttribute(name = "line-through")
-    protected Integer lineThrough;
 
     /**
      * Gets the value of the value property.
@@ -144,30 +144,6 @@ public class TextElementData {
      */
     public void setLang(java.lang.String value) {
         this.lang = value;
-    }
-
-    /**
-     * Gets the value of the dir property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TextDirection }
-     *     
-     */
-    public TextDirection getDir() {
-        return dir;
-    }
-
-    /**
-     * Sets the value of the dir property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TextDirection }
-     *     
-     */
-    public void setDir(TextDirection value) {
-        this.dir = value;
     }
 
     /**
@@ -267,75 +243,27 @@ public class TextElementData {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the dir property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link TextDirection }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public TextDirection getDir() {
+        return dir;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the dir property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link TextDirection }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the rotation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRotation() {
-        return rotation;
-    }
-
-    /**
-     * Sets the value of the rotation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRotation(BigDecimal value) {
-        this.rotation = value;
-    }
-
-    /**
-     * Gets the value of the letterSpacing property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getLetterSpacing() {
-        return letterSpacing;
-    }
-
-    /**
-     * Sets the value of the letterSpacing property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setLetterSpacing(java.lang.String value) {
-        this.letterSpacing = value;
+    public void setDir(TextDirection value) {
+        this.dir = value;
     }
 
     /**
@@ -408,6 +336,78 @@ public class TextElementData {
      */
     public void setLineThrough(Integer value) {
         this.lineThrough = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the rotation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRotation() {
+        return rotation;
+    }
+
+    /**
+     * Sets the value of the rotation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRotation(BigDecimal value) {
+        this.rotation = value;
+    }
+
+    /**
+     * Gets the value of the letterSpacing property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getLetterSpacing() {
+        return letterSpacing;
+    }
+
+    /**
+     * Sets the value of the letterSpacing property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setLetterSpacing(java.lang.String value) {
+        this.letterSpacing = value;
     }
 
 }

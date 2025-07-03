@@ -30,11 +30,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="slide">
  *   <simpleContent>
  *     <extension base="<http://www.w3.org/2001/XMLSchema>string">
- *       <attGroup ref="{}print-style"/>
- *       <attGroup ref="{}bend-sound"/>
- *       <attGroup ref="{}line-type"/>
- *       <attGroup ref="{}optional-unique-id"/>
  *       <attGroup ref="{}dashed-formatting"/>
+ *       <attGroup ref="{}optional-unique-id"/>
+ *       <attGroup ref="{}print-style"/>
+ *       <attGroup ref="{}line-type"/>
+ *       <attGroup ref="{}bend-sound"/>
  *       <attribute name="type" use="required" type="{}start-stop" />
  *       <attribute name="number" type="{}number-level" default="1" />
  *     </extension>
@@ -56,17 +56,15 @@ public class Slide {
     protected StartStop type;
     @XmlAttribute(name = "number")
     protected Integer number;
-    @XmlAttribute(name = "color")
+    @XmlAttribute(name = "dash-length")
+    protected BigDecimal dashLength;
+    @XmlAttribute(name = "space-length")
+    protected BigDecimal spaceLength;
+    @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -76,6 +74,19 @@ public class Slide {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
     @XmlAttribute(name = "accelerate")
     protected YesNo accelerate;
     @XmlAttribute(name = "beats")
@@ -84,17 +95,6 @@ public class Slide {
     protected BigDecimal firstBeat;
     @XmlAttribute(name = "last-beat")
     protected BigDecimal lastBeat;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
-    @XmlAttribute(name = "dash-length")
-    protected BigDecimal dashLength;
-    @XmlAttribute(name = "space-length")
-    protected BigDecimal spaceLength;
 
     /**
      * Gets the value of the value property.
@@ -173,123 +173,75 @@ public class Slide {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the dashLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDashLength() {
+        return dashLength;
+    }
+
+    /**
+     * Sets the value of the dashLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDashLength(BigDecimal value) {
+        this.dashLength = value;
+    }
+
+    /**
+     * Gets the value of the spaceLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getSpaceLength() {
+        return spaceLength;
+    }
+
+    /**
+     * Sets the value of the spaceLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setSpaceLength(BigDecimal value) {
+        this.spaceLength = value;
+    }
+
+    /**
+     * Gets the value of the id property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public java.lang.String getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the id property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the defaultX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultX() {
-        return defaultX;
-    }
-
-    /**
-     * Sets the value of the defaultX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
+    public void setId(java.lang.String value) {
+        this.id = value;
     }
 
     /**
@@ -389,6 +341,150 @@ public class Slide {
     }
 
     /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the lineType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineType }
+     *     
+     */
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    /**
+     * Sets the value of the lineType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineType }
+     *     
+     */
+    public void setLineType(LineType value) {
+        this.lineType = value;
+    }
+
+    /**
      * Gets the value of the accelerate property.
      * 
      * @return
@@ -482,102 +578,6 @@ public class Slide {
      */
     public void setLastBeat(BigDecimal value) {
         this.lastBeat = value;
-    }
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
-    }
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
-    }
-
-    /**
-     * Gets the value of the dashLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDashLength() {
-        return dashLength;
-    }
-
-    /**
-     * Sets the value of the dashLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDashLength(BigDecimal value) {
-        this.dashLength = value;
-    }
-
-    /**
-     * Gets the value of the spaceLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getSpaceLength() {
-        return spaceLength;
-    }
-
-    /**
-     * Sets the value of the spaceLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setSpaceLength(BigDecimal value) {
-        this.spaceLength = value;
     }
 
 }

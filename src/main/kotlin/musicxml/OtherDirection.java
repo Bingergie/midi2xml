@@ -30,10 +30,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="other-direction">
  *   <simpleContent>
  *     <extension base="<http://www.w3.org/2001/XMLSchema>string">
- *       <attGroup ref="{}print-object"/>
- *       <attGroup ref="{}print-style-align"/>
  *       <attGroup ref="{}optional-unique-id"/>
+ *       <attGroup ref="{}print-style-align"/>
  *       <attGroup ref="{}smufl"/>
+ *       <attGroup ref="{}print-object"/>
  *     </extension>
  *   </simpleContent>
  * </complexType>
@@ -49,21 +49,11 @@ public class OtherDirection {
 
     @XmlValue
     protected java.lang.String value;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
-    @XmlAttribute(name = "halign")
-    protected LeftCenterRight halign;
-    @XmlAttribute(name = "color")
+    @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -73,16 +63,26 @@ public class OtherDirection {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
     @XmlAttribute(name = "valign")
     protected Valign valign;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
     @XmlAttribute(name = "smufl")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String smufl;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
 
     /**
      * Gets the value of the value property.
@@ -109,171 +109,27 @@ public class OtherDirection {
     }
 
     /**
-     * Gets the value of the printObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintObject() {
-        return printObject;
-    }
-
-    /**
-     * Sets the value of the printObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
-    }
-
-    /**
-     * Gets the value of the halign property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public LeftCenterRight getHalign() {
-        return halign;
-    }
-
-    /**
-     * Sets the value of the halign property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LeftCenterRight }
-     *     
-     */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
-    }
-
-    /**
-     * Gets the value of the color property.
+     * Gets the value of the id property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public java.lang.String getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the id property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the defaultX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultX() {
-        return defaultX;
-    }
-
-    /**
-     * Sets the value of the defaultX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
+    public void setId(java.lang.String value) {
+        this.id = value;
     }
 
     /**
@@ -373,6 +229,150 @@ public class OtherDirection {
     }
 
     /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
      * Gets the value of the valign property.
      * 
      * @return
@@ -397,30 +397,6 @@ public class OtherDirection {
     }
 
     /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
-    }
-
-    /**
      * Gets the value of the smufl property.
      * 
      * @return
@@ -442,6 +418,30 @@ public class OtherDirection {
      */
     public void setSmufl(java.lang.String value) {
         this.smufl = value;
+    }
+
+    /**
+     * Gets the value of the printObject property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintObject() {
+        return printObject;
+    }
+
+    /**
+     * Sets the value of the printObject property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
 }

@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * The notehead-value type indicates shapes other than the open and closed ovals associated with note durations. 
+ * The notehead-value type indicates shapes other than the open and closed ovals associated with note durations.
  * 
  * The values do, re, mi, fa, fa up, so, la, and ti correspond to Aikin's 7-shape system.  The fa up shape is typically used with upstems; the fa shape is typically used with downstems or no stems.
  * 

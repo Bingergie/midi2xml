@@ -27,8 +27,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="extend">
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}position"/>
+ *       <attGroup ref="{}color"/>
  *       <attribute name="type" type="{}start-stop-continue" />
  *     </restriction>
  *   </complexContent>
@@ -43,9 +43,6 @@ public class Extend {
 
     @XmlAttribute(name = "type")
     protected StartStopContinue type;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -54,6 +51,9 @@ public class Extend {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the type property.
@@ -77,30 +77,6 @@ public class Extend {
      */
     public void setType(StartStopContinue value) {
         this.type = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
     /**
@@ -197,6 +173,30 @@ public class Extend {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

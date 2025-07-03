@@ -7,8 +7,6 @@
 
 package musicxml;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 import javax.xml.bind.JAXBElement;
@@ -19,7 +17,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the org.musicxml package. 
+ * generated in the musicxml package. 
  * <p>An ObjectFactory allows you to programmatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -80,31 +78,6 @@ public class ObjectFactory {
     private static final QName _OrnamentsHaydn_QNAME = new QName("", "haydn");
     private static final QName _OrnamentsOtherOrnament_QNAME = new QName("", "other-ornament");
     private static final QName _OrnamentsAccidentalMark_QNAME = new QName("", "accidental-mark");
-    private static final QName _NoteGrace_QNAME = new QName("", "grace");
-    private static final QName _NoteChord_QNAME = new QName("", "chord");
-    private static final QName _NotePitch_QNAME = new QName("", "pitch");
-    private static final QName _NoteUnpitched_QNAME = new QName("", "unpitched");
-    private static final QName _NoteRest_QNAME = new QName("", "rest");
-    private static final QName _NoteTie_QNAME = new QName("", "tie");
-    private static final QName _NoteCue_QNAME = new QName("", "cue");
-    private static final QName _NoteDuration_QNAME = new QName("", "duration");
-    private static final QName _NoteInstrument_QNAME = new QName("", "instrument");
-    private static final QName _NoteFootnote_QNAME = new QName("", "footnote");
-    private static final QName _NoteLevel_QNAME = new QName("", "level");
-    private static final QName _NoteVoice_QNAME = new QName("", "voice");
-    private static final QName _NoteType_QNAME = new QName("", "type");
-    private static final QName _NoteDot_QNAME = new QName("", "dot");
-    private static final QName _NoteAccidental_QNAME = new QName("", "accidental");
-    private static final QName _NoteTimeModification_QNAME = new QName("", "time-modification");
-    private static final QName _NoteStem_QNAME = new QName("", "stem");
-    private static final QName _NoteNotehead_QNAME = new QName("", "notehead");
-    private static final QName _NoteNoteheadText_QNAME = new QName("", "notehead-text");
-    private static final QName _NoteStaff_QNAME = new QName("", "staff");
-    private static final QName _NoteBeam_QNAME = new QName("", "beam");
-    private static final QName _NoteNotations_QNAME = new QName("", "notations");
-    private static final QName _NoteLyric_QNAME = new QName("", "lyric");
-    private static final QName _NotePlay_QNAME = new QName("", "play");
-    private static final QName _NoteListen_QNAME = new QName("", "listen");
     private static final QName _LyricSyllabic_QNAME = new QName("", "syllabic");
     private static final QName _LyricText_QNAME = new QName("", "text");
     private static final QName _LyricElision_QNAME = new QName("", "elision");
@@ -113,6 +86,8 @@ public class ObjectFactory {
     private static final QName _LyricHumming_QNAME = new QName("", "humming");
     private static final QName _LyricEndLine_QNAME = new QName("", "end-line");
     private static final QName _LyricEndParagraph_QNAME = new QName("", "end-paragraph");
+    private static final QName _LyricFootnote_QNAME = new QName("", "footnote");
+    private static final QName _LyricLevel_QNAME = new QName("", "level");
     private static final QName _ArticulationsAccent_QNAME = new QName("", "accent");
     private static final QName _ArticulationsStrongAccent_QNAME = new QName("", "strong-accent");
     private static final QName _ArticulationsStaccato_QNAME = new QName("", "staccato");
@@ -173,7 +148,7 @@ public class ObjectFactory {
     private static final QName _DynamicsOtherDynamics_QNAME = new QName("", "other-dynamics");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.musicxml
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: musicxml
      * 
      */
     public ObjectFactory() {
@@ -540,13 +515,13 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link String }
+     * Create an instance of {@link musicxml.String }
      * 
      * @return
-     *     the new instance of {@link String }
+     *     the new instance of {@link musicxml.String }
      */
-    public String createString() {
-        return new String();
+    public musicxml.String createString() {
+        return new musicxml.String();
     }
 
     /**
@@ -2646,16 +2621,16 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}
+     * Create an instance of {@link JAXBElement }{@code <}{@link musicxml.String }{@code >}
      * 
      * @param value
      *     Java instance representing xml element's value.
      * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link String }{@code >}
+     *     the new instance of {@link JAXBElement }{@code <}{@link musicxml.String }{@code >}
      */
     @XmlElementDecl(namespace = "", name = "string", scope = Technical.class)
-    public JAXBElement<String> createTechnicalString(String value) {
-        return new JAXBElement<>(_TechnicalString_QNAME, String.class, Technical.class, value);
+    public JAXBElement<musicxml.String> createTechnicalString(musicxml.String value) {
+        return new JAXBElement<>(_TechnicalString_QNAME, musicxml.String.class, Technical.class, value);
     }
 
     /**
@@ -3101,331 +3076,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Grace }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Grace }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "grace", scope = Note.class)
-    public JAXBElement<Grace> createNoteGrace(Grace value) {
-        return new JAXBElement<>(_NoteGrace_QNAME, Grace.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "chord", scope = Note.class)
-    public JAXBElement<Empty> createNoteChord(Empty value) {
-        return new JAXBElement<>(_NoteChord_QNAME, Empty.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Pitch }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Pitch }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "pitch", scope = Note.class)
-    public JAXBElement<Pitch> createNotePitch(Pitch value) {
-        return new JAXBElement<>(_NotePitch_QNAME, Pitch.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Unpitched }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Unpitched }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "unpitched", scope = Note.class)
-    public JAXBElement<Unpitched> createNoteUnpitched(Unpitched value) {
-        return new JAXBElement<>(_NoteUnpitched_QNAME, Unpitched.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Rest }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Rest }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "rest", scope = Note.class)
-    public JAXBElement<Rest> createNoteRest(Rest value) {
-        return new JAXBElement<>(_NoteRest_QNAME, Rest.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Tie }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Tie }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "tie", scope = Note.class)
-    public JAXBElement<Tie> createNoteTie(Tie value) {
-        return new JAXBElement<>(_NoteTie_QNAME, Tie.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "cue", scope = Note.class)
-    public JAXBElement<Empty> createNoteCue(Empty value) {
-        return new JAXBElement<>(_NoteCue_QNAME, Empty.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link BigDecimal }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link BigDecimal }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "duration", scope = Note.class)
-    public JAXBElement<BigDecimal> createNoteDuration(BigDecimal value) {
-        return new JAXBElement<>(_NoteDuration_QNAME, BigDecimal.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Instrument }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Instrument }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "instrument", scope = Note.class)
-    public JAXBElement<Instrument> createNoteInstrument(Instrument value) {
-        return new JAXBElement<>(_NoteInstrument_QNAME, Instrument.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link FormattedText }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link FormattedText }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "footnote", scope = Note.class)
-    public JAXBElement<FormattedText> createNoteFootnote(FormattedText value) {
-        return new JAXBElement<>(_NoteFootnote_QNAME, FormattedText.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Level }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Level }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "level", scope = Note.class)
-    public JAXBElement<Level> createNoteLevel(Level value) {
-        return new JAXBElement<>(_NoteLevel_QNAME, Level.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "voice", scope = Note.class)
-    public JAXBElement<java.lang.String> createNoteVoice(java.lang.String value) {
-        return new JAXBElement<>(_NoteVoice_QNAME, java.lang.String.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link NoteType }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link NoteType }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "type", scope = Note.class)
-    public JAXBElement<NoteType> createNoteType(NoteType value) {
-        return new JAXBElement<>(_NoteType_QNAME, NoteType.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "dot", scope = Note.class)
-    public JAXBElement<EmptyPlacement> createNoteDot(EmptyPlacement value) {
-        return new JAXBElement<>(_NoteDot_QNAME, EmptyPlacement.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Accidental }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Accidental }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "accidental", scope = Note.class)
-    public JAXBElement<Accidental> createNoteAccidental(Accidental value) {
-        return new JAXBElement<>(_NoteAccidental_QNAME, Accidental.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link TimeModification }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link TimeModification }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "time-modification", scope = Note.class)
-    public JAXBElement<TimeModification> createNoteTimeModification(TimeModification value) {
-        return new JAXBElement<>(_NoteTimeModification_QNAME, TimeModification.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Stem }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Stem }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "stem", scope = Note.class)
-    public JAXBElement<Stem> createNoteStem(Stem value) {
-        return new JAXBElement<>(_NoteStem_QNAME, Stem.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Notehead }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Notehead }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "notehead", scope = Note.class)
-    public JAXBElement<Notehead> createNoteNotehead(Notehead value) {
-        return new JAXBElement<>(_NoteNotehead_QNAME, Notehead.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link NoteheadText }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link NoteheadText }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "notehead-text", scope = Note.class)
-    public JAXBElement<NoteheadText> createNoteNoteheadText(NoteheadText value) {
-        return new JAXBElement<>(_NoteNoteheadText_QNAME, NoteheadText.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "staff", scope = Note.class)
-    public JAXBElement<BigInteger> createNoteStaff(BigInteger value) {
-        return new JAXBElement<>(_NoteStaff_QNAME, BigInteger.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Beam }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Beam }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "beam", scope = Note.class)
-    public JAXBElement<Beam> createNoteBeam(Beam value) {
-        return new JAXBElement<>(_NoteBeam_QNAME, Beam.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Notations }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Notations }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "notations", scope = Note.class)
-    public JAXBElement<Notations> createNoteNotations(Notations value) {
-        return new JAXBElement<>(_NoteNotations_QNAME, Notations.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Lyric }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Lyric }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "lyric", scope = Note.class)
-    public JAXBElement<Lyric> createNoteLyric(Lyric value) {
-        return new JAXBElement<>(_NoteLyric_QNAME, Lyric.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Play }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Play }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "play", scope = Note.class)
-    public JAXBElement<Play> createNotePlay(Play value) {
-        return new JAXBElement<>(_NotePlay_QNAME, Play.class, Note.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Listen }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Listen }{@code >}
-     */
-    @XmlElementDecl(namespace = "", name = "listen", scope = Note.class)
-    public JAXBElement<Listen> createNoteListen(Listen value) {
-        return new JAXBElement<>(_NoteListen_QNAME, Listen.class, Note.class, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Syllabic }{@code >}
      * 
      * @param value
@@ -3539,7 +3189,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "", name = "footnote", scope = Lyric.class)
     public JAXBElement<FormattedText> createLyricFootnote(FormattedText value) {
-        return new JAXBElement<>(_NoteFootnote_QNAME, FormattedText.class, Lyric.class, value);
+        return new JAXBElement<>(_LyricFootnote_QNAME, FormattedText.class, Lyric.class, value);
     }
 
     /**
@@ -3552,7 +3202,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "", name = "level", scope = Lyric.class)
     public JAXBElement<Level> createLyricLevel(Level value) {
-        return new JAXBElement<>(_NoteLevel_QNAME, Level.class, Lyric.class, value);
+        return new JAXBElement<>(_LyricLevel_QNAME, Level.class, Lyric.class, value);
     }
 
     /**

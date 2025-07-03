@@ -28,8 +28,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="group-symbol">
  *   <simpleContent>
  *     <extension base="<>group-symbol-value">
- *       <attGroup ref="{}position"/>
  *       <attGroup ref="{}color"/>
+ *       <attGroup ref="{}position"/>
  *     </extension>
  *   </simpleContent>
  * </complexType>
@@ -49,6 +49,9 @@ public class GroupSymbol {
      */
     @XmlValue
     protected GroupSymbolValue value;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -57,9 +60,6 @@ public class GroupSymbol {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
 
     /**
      * The group-symbol-value type indicates how the symbol for a group or multi-staff part is indicated in the score.
@@ -84,6 +84,30 @@ public class GroupSymbol {
      */
     public void setValue(GroupSymbolValue value) {
         this.value = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -180,30 +204,6 @@ public class GroupSymbol {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
     }
 
 }

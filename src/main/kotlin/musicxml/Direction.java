@@ -42,10 +42,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         <element name="sound" type="{}sound" minOccurs="0"/>
  *         <element name="listening" type="{}listening" minOccurs="0"/>
  *       </sequence>
+ *       <attGroup ref="{}optional-unique-id"/>
  *       <attGroup ref="{}directive"/>
  *       <attGroup ref="{}system-relation"/>
  *       <attGroup ref="{}placement"/>
- *       <attGroup ref="{}optional-unique-id"/>
  *     </restriction>
  *   </complexContent>
  * </complexType>
@@ -80,17 +80,17 @@ public class Direction {
     protected BigInteger staff;
     protected Sound sound;
     protected Listening listening;
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
     @XmlAttribute(name = "directive")
     protected YesNo directive;
     @XmlAttribute(name = "system")
     protected SystemRelation system;
     @XmlAttribute(name = "placement")
     protected AboveBelow placement;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
 
     /**
      * Gets the value of the directionType property.
@@ -294,6 +294,30 @@ public class Direction {
     }
 
     /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setId(java.lang.String value) {
+        this.id = value;
+    }
+
+    /**
      * Gets the value of the directive property.
      * 
      * @return
@@ -363,30 +387,6 @@ public class Direction {
      */
     public void setPlacement(AboveBelow value) {
         this.placement = value;
-    }
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
     }
 
 }

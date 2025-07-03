@@ -30,10 +30,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="other-notation">
  *   <simpleContent>
  *     <extension base="<http://www.w3.org/2001/XMLSchema>string">
- *       <attGroup ref="{}print-object"/>
- *       <attGroup ref="{}smufl"/>
- *       <attGroup ref="{}optional-unique-id"/>
  *       <attGroup ref="{}print-style"/>
+ *       <attGroup ref="{}optional-unique-id"/>
+ *       <attGroup ref="{}smufl"/>
+ *       <attGroup ref="{}print-object"/>
  *       <attGroup ref="{}placement"/>
  *       <attribute name="type" use="required" type="{}start-stop-single" />
  *       <attribute name="number" type="{}number-level" default="1" />
@@ -56,27 +56,6 @@ public class OtherNotation {
     protected StartStopSingle type;
     @XmlAttribute(name = "number")
     protected Integer number;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
-    @XmlAttribute(name = "smufl")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String smufl;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -86,6 +65,27 @@ public class OtherNotation {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
+    @XmlAttribute(name = "smufl")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String smufl;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
     @XmlAttribute(name = "placement")
     protected AboveBelow placement;
 
@@ -166,99 +166,99 @@ public class OtherNotation {
     }
 
     /**
-     * Gets the value of the printObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintObject() {
-        return printObject;
-    }
-
-    /**
-     * Sets the value of the printObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
-    }
-
-    /**
-     * Gets the value of the smufl property.
+     * Gets the value of the fontFamily property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getSmufl() {
-        return smufl;
+    public java.lang.String getFontFamily() {
+        return fontFamily;
     }
 
     /**
-     * Sets the value of the smufl property.
+     * Sets the value of the fontFamily property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setSmufl(java.lang.String value) {
-        this.smufl = value;
+    public void setFontFamily(java.lang.String value) {
+        this.fontFamily = value;
     }
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the fontStyle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontStyle }
+     *     
+     */
+    public FontStyle getFontStyle() {
+        return fontStyle;
+    }
+
+    /**
+     * Sets the value of the fontStyle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontStyle }
+     *     
+     */
+    public void setFontStyle(FontStyle value) {
+        this.fontStyle = value;
+    }
+
+    /**
+     * Gets the value of the fontSize property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getId() {
-        return id;
+    public java.lang.String getFontSize() {
+        return fontSize;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the fontSize property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setId(java.lang.String value) {
-        this.id = value;
+    public void setFontSize(java.lang.String value) {
+        this.fontSize = value;
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the fontWeight property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link FontWeight }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public FontWeight getFontWeight() {
+        return fontWeight;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the fontWeight property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link FontWeight }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setFontWeight(FontWeight value) {
+        this.fontWeight = value;
     }
 
     /**
@@ -358,99 +358,99 @@ public class OtherNotation {
     }
 
     /**
-     * Gets the value of the fontFamily property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getFontFamily() {
-        return fontFamily;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the fontFamily property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setFontFamily(java.lang.String value) {
-        this.fontFamily = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
-     * Gets the value of the fontStyle property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontStyle }
-     *     
-     */
-    public FontStyle getFontStyle() {
-        return fontStyle;
-    }
-
-    /**
-     * Sets the value of the fontStyle property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontStyle }
-     *     
-     */
-    public void setFontStyle(FontStyle value) {
-        this.fontStyle = value;
-    }
-
-    /**
-     * Gets the value of the fontSize property.
+     * Gets the value of the id property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getFontSize() {
-        return fontSize;
+    public java.lang.String getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the fontSize property.
+     * Sets the value of the id property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setFontSize(java.lang.String value) {
-        this.fontSize = value;
+    public void setId(java.lang.String value) {
+        this.id = value;
     }
 
     /**
-     * Gets the value of the fontWeight property.
+     * Gets the value of the smufl property.
      * 
      * @return
      *     possible object is
-     *     {@link FontWeight }
+     *     {@link java.lang.String }
      *     
      */
-    public FontWeight getFontWeight() {
-        return fontWeight;
+    public java.lang.String getSmufl() {
+        return smufl;
     }
 
     /**
-     * Sets the value of the fontWeight property.
+     * Sets the value of the smufl property.
      * 
      * @param value
      *     allowed object is
-     *     {@link FontWeight }
+     *     {@link java.lang.String }
      *     
      */
-    public void setFontWeight(FontWeight value) {
-        this.fontWeight = value;
+    public void setSmufl(java.lang.String value) {
+        this.smufl = value;
+    }
+
+    /**
+     * Gets the value of the printObject property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link YesNo }
+     *     
+     */
+    public YesNo getPrintObject() {
+        return printObject;
+    }
+
+    /**
+     * Sets the value of the printObject property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link YesNo }
+     *     
+     */
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
     /**

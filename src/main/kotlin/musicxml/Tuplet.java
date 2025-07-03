@@ -38,10 +38,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         <element name="tuplet-actual" type="{}tuplet-portion" minOccurs="0"/>
  *         <element name="tuplet-normal" type="{}tuplet-portion" minOccurs="0"/>
  *       </sequence>
+ *       <attGroup ref="{}line-shape"/>
  *       <attGroup ref="{}placement"/>
  *       <attGroup ref="{}optional-unique-id"/>
  *       <attGroup ref="{}position"/>
- *       <attGroup ref="{}line-shape"/>
  *       <attribute name="type" use="required" type="{}start-stop" />
  *       <attribute name="number" type="{}number-level" />
  *       <attribute name="bracket" type="{}yes-no" />
@@ -83,6 +83,8 @@ public class Tuplet {
     protected ShowTuplet showNumber;
     @XmlAttribute(name = "show-type")
     protected ShowTuplet showType;
+    @XmlAttribute(name = "line-shape")
+    protected LineShape lineShape;
     @XmlAttribute(name = "placement")
     protected AboveBelow placement;
     @XmlAttribute(name = "id")
@@ -98,8 +100,6 @@ public class Tuplet {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "line-shape")
-    protected LineShape lineShape;
 
     /**
      * The tuplet-actual element provide optional full control over how the actual part of the tuplet is displayed, including number and note type (with dots). If any of these elements are absent, their values are based on the time-modification element.
@@ -272,6 +272,30 @@ public class Tuplet {
     }
 
     /**
+     * Gets the value of the lineShape property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineShape }
+     *     
+     */
+    public LineShape getLineShape() {
+        return lineShape;
+    }
+
+    /**
+     * Sets the value of the lineShape property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineShape }
+     *     
+     */
+    public void setLineShape(LineShape value) {
+        this.lineShape = value;
+    }
+
+    /**
      * Gets the value of the placement property.
      * 
      * @return
@@ -413,30 +437,6 @@ public class Tuplet {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the lineShape property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineShape }
-     *     
-     */
-    public LineShape getLineShape() {
-        return lineShape;
-    }
-
-    /**
-     * Sets the value of the lineShape property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineShape }
-     *     
-     */
-    public void setLineShape(LineShape value) {
-        this.lineShape = value;
     }
 
 }

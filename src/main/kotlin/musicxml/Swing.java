@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * The swing element specifies whether or not to use swing playback, where consecutive on-beat / off-beat eighth or 16th notes are played with unequal nominal durations. 
+ * The swing element specifies whether or not to use swing playback, where consecutive on-beat / off-beat eighth or 16th notes are played with unequal nominal durations.
  * 
  * The straight element specifies that no swing is present, so consecutive notes have equal durations.
  * 

@@ -36,8 +36,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         </choice>
  *         <element name="with-bar" type="{}placement-text" minOccurs="0"/>
  *       </sequence>
- *       <attGroup ref="{}bend-sound"/>
  *       <attGroup ref="{}print-style"/>
+ *       <attGroup ref="{}bend-sound"/>
  *       <attribute name="shape" type="{}bend-shape" />
  *     </restriction>
  *   </complexContent>
@@ -76,25 +76,6 @@ public class Bend {
     protected PlacementText withBar;
     @XmlAttribute(name = "shape")
     protected BendShape shape;
-    @XmlAttribute(name = "accelerate")
-    protected YesNo accelerate;
-    @XmlAttribute(name = "beats")
-    protected BigDecimal beats;
-    @XmlAttribute(name = "first-beat")
-    protected BigDecimal firstBeat;
-    @XmlAttribute(name = "last-beat")
-    protected BigDecimal lastBeat;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -104,6 +85,25 @@ public class Bend {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "accelerate")
+    protected YesNo accelerate;
+    @XmlAttribute(name = "beats")
+    protected BigDecimal beats;
+    @XmlAttribute(name = "first-beat")
+    protected BigDecimal firstBeat;
+    @XmlAttribute(name = "last-beat")
+    protected BigDecimal lastBeat;
 
     /**
      * The bend-alter element indicates the number of semitones in the bend, similar to the alter element. As with the alter element, numbers like 0.5 can be used to indicate microtones. Negative values indicate pre-bends or releases. The pre-bend and release elements are used to distinguish what is intended. Because the bend-alter element represents the number of steps in the bend, a release after a bend has a negative bend-alter value, not a zero value.
@@ -229,123 +229,99 @@ public class Bend {
     }
 
     /**
-     * Gets the value of the accelerate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getAccelerate() {
-        return accelerate;
-    }
-
-    /**
-     * Sets the value of the accelerate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setAccelerate(YesNo value) {
-        this.accelerate = value;
-    }
-
-    /**
-     * Gets the value of the beats property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getBeats() {
-        return beats;
-    }
-
-    /**
-     * Sets the value of the beats property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setBeats(BigDecimal value) {
-        this.beats = value;
-    }
-
-    /**
-     * Gets the value of the firstBeat property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getFirstBeat() {
-        return firstBeat;
-    }
-
-    /**
-     * Sets the value of the firstBeat property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setFirstBeat(BigDecimal value) {
-        this.firstBeat = value;
-    }
-
-    /**
-     * Gets the value of the lastBeat property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getLastBeat() {
-        return lastBeat;
-    }
-
-    /**
-     * Sets the value of the lastBeat property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setLastBeat(BigDecimal value) {
-        this.lastBeat = value;
-    }
-
-    /**
-     * Gets the value of the color property.
+     * Gets the value of the fontFamily property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public java.lang.String getFontFamily() {
+        return fontFamily;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the fontFamily property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setFontFamily(java.lang.String value) {
+        this.fontFamily = value;
+    }
+
+    /**
+     * Gets the value of the fontStyle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontStyle }
+     *     
+     */
+    public FontStyle getFontStyle() {
+        return fontStyle;
+    }
+
+    /**
+     * Sets the value of the fontStyle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontStyle }
+     *     
+     */
+    public void setFontStyle(FontStyle value) {
+        this.fontStyle = value;
+    }
+
+    /**
+     * Gets the value of the fontSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontSize() {
+        return fontSize;
+    }
+
+    /**
+     * Sets the value of the fontSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontSize(java.lang.String value) {
+        this.fontSize = value;
+    }
+
+    /**
+     * Gets the value of the fontWeight property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontWeight }
+     *     
+     */
+    public FontWeight getFontWeight() {
+        return fontWeight;
+    }
+
+    /**
+     * Sets the value of the fontWeight property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontWeight }
+     *     
+     */
+    public void setFontWeight(FontWeight value) {
+        this.fontWeight = value;
     }
 
     /**
@@ -445,99 +421,123 @@ public class Bend {
     }
 
     /**
-     * Gets the value of the fontFamily property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getFontFamily() {
-        return fontFamily;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the fontFamily property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setFontFamily(java.lang.String value) {
-        this.fontFamily = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
-     * Gets the value of the fontStyle property.
+     * Gets the value of the accelerate property.
      * 
      * @return
      *     possible object is
-     *     {@link FontStyle }
+     *     {@link YesNo }
      *     
      */
-    public FontStyle getFontStyle() {
-        return fontStyle;
+    public YesNo getAccelerate() {
+        return accelerate;
     }
 
     /**
-     * Sets the value of the fontStyle property.
+     * Sets the value of the accelerate property.
      * 
      * @param value
      *     allowed object is
-     *     {@link FontStyle }
+     *     {@link YesNo }
      *     
      */
-    public void setFontStyle(FontStyle value) {
-        this.fontStyle = value;
+    public void setAccelerate(YesNo value) {
+        this.accelerate = value;
     }
 
     /**
-     * Gets the value of the fontSize property.
+     * Gets the value of the beats property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link BigDecimal }
      *     
      */
-    public java.lang.String getFontSize() {
-        return fontSize;
+    public BigDecimal getBeats() {
+        return beats;
     }
 
     /**
-     * Sets the value of the fontSize property.
+     * Sets the value of the beats property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link BigDecimal }
      *     
      */
-    public void setFontSize(java.lang.String value) {
-        this.fontSize = value;
+    public void setBeats(BigDecimal value) {
+        this.beats = value;
     }
 
     /**
-     * Gets the value of the fontWeight property.
+     * Gets the value of the firstBeat property.
      * 
      * @return
      *     possible object is
-     *     {@link FontWeight }
+     *     {@link BigDecimal }
      *     
      */
-    public FontWeight getFontWeight() {
-        return fontWeight;
+    public BigDecimal getFirstBeat() {
+        return firstBeat;
     }
 
     /**
-     * Sets the value of the fontWeight property.
+     * Sets the value of the firstBeat property.
      * 
      * @param value
      *     allowed object is
-     *     {@link FontWeight }
+     *     {@link BigDecimal }
      *     
      */
-    public void setFontWeight(FontWeight value) {
-        this.fontWeight = value;
+    public void setFirstBeat(BigDecimal value) {
+        this.firstBeat = value;
+    }
+
+    /**
+     * Gets the value of the lastBeat property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getLastBeat() {
+        return lastBeat;
+    }
+
+    /**
+     * Sets the value of the lastBeat property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setLastBeat(BigDecimal value) {
+        this.lastBeat = value;
     }
 
 }

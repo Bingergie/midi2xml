@@ -167,7 +167,7 @@ public class Technical {
      * {@link JAXBElement }{@code <}{@link Hole }{@code >}
      * {@link JAXBElement }{@code <}{@link OtherPlacementText }{@code >}
      * {@link JAXBElement }{@code <}{@link PlacementText }{@code >}
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
+     * {@link JAXBElement }{@code <}{@link musicxml.String }{@code >}
      * {@link JAXBElement }{@code <}{@link Tap }{@code >}
      * </p>
      * 

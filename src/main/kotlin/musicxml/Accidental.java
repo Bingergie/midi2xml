@@ -28,8 +28,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="accidental">
  *   <simpleContent>
  *     <extension base="<>accidental-value">
- *       <attGroup ref="{}level-display"/>
  *       <attGroup ref="{}print-style"/>
+ *       <attGroup ref="{}level-display"/>
  *       <attribute name="cautionary" type="{}yes-no" />
  *       <attribute name="editorial" type="{}yes-no" />
  *       <attribute name="smufl" type="{}smufl-accidental-glyph-name" />
@@ -59,23 +59,6 @@ public class Accidental {
     @XmlAttribute(name = "smufl")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String smufl;
-    @XmlAttribute(name = "parentheses")
-    protected YesNo parentheses;
-    @XmlAttribute(name = "bracket")
-    protected YesNo bracket;
-    @XmlAttribute(name = "size")
-    protected SymbolSize size;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -85,6 +68,23 @@ public class Accidental {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "parentheses")
+    protected YesNo parentheses;
+    @XmlAttribute(name = "bracket")
+    protected YesNo bracket;
+    @XmlAttribute(name = "size")
+    protected SymbolSize size;
 
     /**
      * The accidental-value type represents notated accidentals supported by MusicXML. In the MusicXML 2.0 DTD this was a string with values that could be included. The XSD strengthens the data typing to an enumerated list. The quarter- and three-quarters- accidentals are Tartini-style quarter-tone accidentals. The -down and -up accidentals are quarter-tone accidentals that include arrows pointing down or up. The slash- accidentals are used in Turkish classical music. The numbered sharp and flat accidentals are superscripted versions of the accidental signs, used in Turkish folk music. The sori and koron accidentals are microtonal sharp and flat accidentals used in Iranian and Persian music. The other accidental covers accidentals other than those listed here. It is usually used in combination with the smufl attribute to specify a particular SMuFL accidental. The smufl attribute may be used with any accidental value to help specify the appearance of symbols that share the same MusicXML semantics.
@@ -184,99 +184,99 @@ public class Accidental {
     }
 
     /**
-     * Gets the value of the parentheses property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getParentheses() {
-        return parentheses;
-    }
-
-    /**
-     * Sets the value of the parentheses property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setParentheses(YesNo value) {
-        this.parentheses = value;
-    }
-
-    /**
-     * Gets the value of the bracket property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getBracket() {
-        return bracket;
-    }
-
-    /**
-     * Sets the value of the bracket property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setBracket(YesNo value) {
-        this.bracket = value;
-    }
-
-    /**
-     * Gets the value of the size property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SymbolSize }
-     *     
-     */
-    public SymbolSize getSize() {
-        return size;
-    }
-
-    /**
-     * Sets the value of the size property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SymbolSize }
-     *     
-     */
-    public void setSize(SymbolSize value) {
-        this.size = value;
-    }
-
-    /**
-     * Gets the value of the color property.
+     * Gets the value of the fontFamily property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public java.lang.String getFontFamily() {
+        return fontFamily;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the fontFamily property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setFontFamily(java.lang.String value) {
+        this.fontFamily = value;
+    }
+
+    /**
+     * Gets the value of the fontStyle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontStyle }
+     *     
+     */
+    public FontStyle getFontStyle() {
+        return fontStyle;
+    }
+
+    /**
+     * Sets the value of the fontStyle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontStyle }
+     *     
+     */
+    public void setFontStyle(FontStyle value) {
+        this.fontStyle = value;
+    }
+
+    /**
+     * Gets the value of the fontSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontSize() {
+        return fontSize;
+    }
+
+    /**
+     * Sets the value of the fontSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontSize(java.lang.String value) {
+        this.fontSize = value;
+    }
+
+    /**
+     * Gets the value of the fontWeight property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontWeight }
+     *     
+     */
+    public FontWeight getFontWeight() {
+        return fontWeight;
+    }
+
+    /**
+     * Sets the value of the fontWeight property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontWeight }
+     *     
+     */
+    public void setFontWeight(FontWeight value) {
+        this.fontWeight = value;
     }
 
     /**
@@ -376,99 +376,99 @@ public class Accidental {
     }
 
     /**
-     * Gets the value of the fontFamily property.
+     * Gets the value of the color property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getFontFamily() {
-        return fontFamily;
+    public java.lang.String getColor() {
+        return color;
     }
 
     /**
-     * Sets the value of the fontFamily property.
+     * Sets the value of the color property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setFontFamily(java.lang.String value) {
-        this.fontFamily = value;
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
-     * Gets the value of the fontStyle property.
+     * Gets the value of the parentheses property.
      * 
      * @return
      *     possible object is
-     *     {@link FontStyle }
+     *     {@link YesNo }
      *     
      */
-    public FontStyle getFontStyle() {
-        return fontStyle;
+    public YesNo getParentheses() {
+        return parentheses;
     }
 
     /**
-     * Sets the value of the fontStyle property.
+     * Sets the value of the parentheses property.
      * 
      * @param value
      *     allowed object is
-     *     {@link FontStyle }
+     *     {@link YesNo }
      *     
      */
-    public void setFontStyle(FontStyle value) {
-        this.fontStyle = value;
+    public void setParentheses(YesNo value) {
+        this.parentheses = value;
     }
 
     /**
-     * Gets the value of the fontSize property.
+     * Gets the value of the bracket property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link YesNo }
      *     
      */
-    public java.lang.String getFontSize() {
-        return fontSize;
+    public YesNo getBracket() {
+        return bracket;
     }
 
     /**
-     * Sets the value of the fontSize property.
+     * Sets the value of the bracket property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link YesNo }
      *     
      */
-    public void setFontSize(java.lang.String value) {
-        this.fontSize = value;
+    public void setBracket(YesNo value) {
+        this.bracket = value;
     }
 
     /**
-     * Gets the value of the fontWeight property.
+     * Gets the value of the size property.
      * 
      * @return
      *     possible object is
-     *     {@link FontWeight }
+     *     {@link SymbolSize }
      *     
      */
-    public FontWeight getFontWeight() {
-        return fontWeight;
+    public SymbolSize getSize() {
+        return size;
     }
 
     /**
-     * Sets the value of the fontWeight property.
+     * Sets the value of the size property.
      * 
      * @param value
      *     allowed object is
-     *     {@link FontWeight }
+     *     {@link SymbolSize }
      *     
      */
-    public void setFontWeight(FontWeight value) {
-        this.fontWeight = value;
+    public void setSize(SymbolSize value) {
+        this.size = value;
     }
 
 }

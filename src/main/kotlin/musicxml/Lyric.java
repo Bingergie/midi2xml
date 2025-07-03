@@ -59,10 +59,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         <group ref="{}editorial"/>
  *       </sequence>
  *       <attGroup ref="{}print-object"/>
- *       <attGroup ref="{}optional-unique-id"/>
- *       <attGroup ref="{}placement"/>
  *       <attGroup ref="{}position"/>
+ *       <attGroup ref="{}placement"/>
  *       <attGroup ref="{}justify"/>
+ *       <attGroup ref="{}optional-unique-id"/>
  *       <attGroup ref="{}color"/>
  *       <attribute name="number" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN" />
  *       <attribute name="name" type="{http://www.w3.org/2001/XMLSchema}token" />
@@ -119,13 +119,6 @@ public class Lyric {
     protected java.lang.String timeOnly;
     @XmlAttribute(name = "print-object")
     protected YesNo printObject;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
-    @XmlAttribute(name = "placement")
-    protected AboveBelow placement;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -134,8 +127,15 @@ public class Lyric {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
     @XmlAttribute(name = "justify")
     protected LeftCenterRight justify;
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
@@ -289,54 +289,6 @@ public class Lyric {
     }
 
     /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -433,6 +385,30 @@ public class Lyric {
     }
 
     /**
+     * Gets the value of the placement property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public AboveBelow getPlacement() {
+        return placement;
+    }
+
+    /**
+     * Sets the value of the placement property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link AboveBelow }
+     *     
+     */
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
+    }
+
+    /**
      * Gets the value of the justify property.
      * 
      * @return
@@ -454,6 +430,30 @@ public class Lyric {
      */
     public void setJustify(LeftCenterRight value) {
         this.justify = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setId(java.lang.String value) {
+        this.id = value;
     }
 
     /**

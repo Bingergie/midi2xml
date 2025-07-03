@@ -29,10 +29,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="dashes">
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       <attGroup ref="{}position"/>
- *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}dashed-formatting"/>
+ *       <attGroup ref="{}position"/>
  *       <attGroup ref="{}optional-unique-id"/>
+ *       <attGroup ref="{}color"/>
  *       <attribute name="type" use="required" type="{}start-stop-continue" />
  *       <attribute name="number" type="{}number-level" />
  *     </restriction>
@@ -50,6 +50,10 @@ public class Dashes {
     protected StartStopContinue type;
     @XmlAttribute(name = "number")
     protected Integer number;
+    @XmlAttribute(name = "dash-length")
+    protected BigDecimal dashLength;
+    @XmlAttribute(name = "space-length")
+    protected BigDecimal spaceLength;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -58,18 +62,14 @@ public class Dashes {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "dash-length")
-    protected BigDecimal dashLength;
-    @XmlAttribute(name = "space-length")
-    protected BigDecimal spaceLength;
     @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected java.lang.String id;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
 
     /**
      * Gets the value of the type property.
@@ -117,6 +117,54 @@ public class Dashes {
      */
     public void setNumber(Integer value) {
         this.number = value;
+    }
+
+    /**
+     * Gets the value of the dashLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDashLength() {
+        return dashLength;
+    }
+
+    /**
+     * Sets the value of the dashLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDashLength(BigDecimal value) {
+        this.dashLength = value;
+    }
+
+    /**
+     * Gets the value of the spaceLength property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getSpaceLength() {
+        return spaceLength;
+    }
+
+    /**
+     * Sets the value of the spaceLength property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setSpaceLength(BigDecimal value) {
+        this.spaceLength = value;
     }
 
     /**
@@ -216,78 +264,6 @@ public class Dashes {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the dashLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDashLength() {
-        return dashLength;
-    }
-
-    /**
-     * Sets the value of the dashLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDashLength(BigDecimal value) {
-        this.dashLength = value;
-    }
-
-    /**
-     * Gets the value of the spaceLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getSpaceLength() {
-        return spaceLength;
-    }
-
-    /**
-     * Sets the value of the spaceLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setSpaceLength(BigDecimal value) {
-        this.spaceLength = value;
-    }
-
-    /**
      * Gets the value of the id property.
      * 
      * @return
@@ -309,6 +285,30 @@ public class Dashes {
      */
     public void setId(java.lang.String value) {
         this.id = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

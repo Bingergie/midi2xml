@@ -29,8 +29,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       <attGroup ref="{}print-object"/>
- *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}line-type"/>
+ *       <attGroup ref="{}color"/>
  *       <attribute name="line" use="required" type="{}staff-line" />
  *       <attribute name="width" type="{}tenths" />
  *     </restriction>
@@ -50,11 +50,11 @@ public class LineDetail {
     protected BigDecimal width;
     @XmlAttribute(name = "print-object")
     protected YesNo printObject;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
     @XmlAttribute(name = "color")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String color;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
 
     /**
      * Gets the value of the line property.
@@ -129,30 +129,6 @@ public class LineDetail {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the lineType property.
      * 
      * @return
@@ -174,6 +150,30 @@ public class LineDetail {
      */
     public void setLineType(LineType value) {
         this.lineType = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
 }

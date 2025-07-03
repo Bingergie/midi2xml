@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="wavy-line">
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       <attGroup ref="{}position"/>
  *       <attGroup ref="{}color"/>
- *       <attGroup ref="{}trill-sound"/>
+ *       <attGroup ref="{}position"/>
  *       <attGroup ref="{}placement"/>
+ *       <attGroup ref="{}trill-sound"/>
  *       <attribute name="type" use="required" type="{}start-stop-continue" />
  *       <attribute name="number" type="{}number-level" />
  *       <attribute name="smufl" type="{}smufl-wavy-line-glyph-name" />
@@ -52,6 +52,9 @@ public class WavyLine {
     @XmlAttribute(name = "smufl")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String smufl;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -60,9 +63,8 @@ public class WavyLine {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
     @XmlAttribute(name = "start-note")
     protected StartNote startNote;
     @XmlAttribute(name = "trill-step")
@@ -77,8 +79,6 @@ public class WavyLine {
     protected BigDecimal secondBeat;
     @XmlAttribute(name = "last-beat")
     protected BigDecimal lastBeat;
-    @XmlAttribute(name = "placement")
-    protected AboveBelow placement;
 
     /**
      * Gets the value of the type property.
@@ -150,6 +150,30 @@ public class WavyLine {
      */
     public void setSmufl(java.lang.String value) {
         this.smufl = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**
@@ -249,27 +273,27 @@ public class WavyLine {
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the placement property.
      * 
      * @return
      *     possible object is
-     *     {@link java.lang.String }
+     *     {@link AboveBelow }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public AboveBelow getPlacement() {
+        return placement;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the placement property.
      * 
      * @param value
      *     allowed object is
-     *     {@link java.lang.String }
+     *     {@link AboveBelow }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
     /**
@@ -438,30 +462,6 @@ public class WavyLine {
      */
     public void setLastBeat(BigDecimal value) {
         this.lastBeat = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
     }
 
 }

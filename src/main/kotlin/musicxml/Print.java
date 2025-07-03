@@ -42,8 +42,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         <element name="part-name-display" type="{}name-display" minOccurs="0"/>
  *         <element name="part-abbreviation-display" type="{}name-display" minOccurs="0"/>
  *       </sequence>
- *       <attGroup ref="{}print-attributes"/>
  *       <attGroup ref="{}optional-unique-id"/>
+ *       <attGroup ref="{}print-attributes"/>
  *     </restriction>
  *   </complexContent>
  * </complexType>
@@ -77,6 +77,11 @@ public class Print {
     protected NameDisplay partNameDisplay;
     @XmlElement(name = "part-abbreviation-display")
     protected NameDisplay partAbbreviationDisplay;
+    @XmlAttribute(name = "id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
     @XmlAttribute(name = "staff-spacing")
     protected BigDecimal staffSpacing;
     @XmlAttribute(name = "new-system")
@@ -90,11 +95,6 @@ public class Print {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected java.lang.String pageNumber;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
 
     /**
      * Gets the value of the pageLayout property.
@@ -273,6 +273,30 @@ public class Print {
     }
 
     /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setId(java.lang.String value) {
+        this.id = value;
+    }
+
+    /**
      * Gets the value of the staffSpacing property.
      * 
      * @return
@@ -390,30 +414,6 @@ public class Print {
      */
     public void setPageNumber(java.lang.String value) {
         this.pageNumber = value;
-    }
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
     }
 
 }

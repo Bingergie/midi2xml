@@ -11,12 +11,10 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlElementRefs;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
@@ -25,18 +23,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * Notes are the most common type of MusicXML data. The MusicXML format distinguishes between elements used for sound information and elements used for notation information (e.g., tie is used for sound, tied for notation). Thus grace notes do not have a duration element. Cue notes have a duration element, as do forward elements, but no tie elements. Having these two types of information available can make interchange easier, as some programs handle one type of information more readily than the other.
- * 
- * The print-leger attribute is used to indicate whether leger lines are printed. Notes without leger lines are used to indicate indeterminate high and low notes. By default, it is set to yes. If print-object is set to no, print-leger is interpreted to also be set to no if not present. This attribute is ignored for rests.
- * 
- * The dynamics and end-dynamics attributes correspond to MIDI 1.0's Note On and Note Off velocities, respectively. They are expressed in terms of percentages of the default forte value (90 for MIDI 1.0).
- * 
- * The attack and release attributes are used to alter the starting and stopping time of the note from when it would otherwise occur based on the flow of durations - information that is specific to a performance. They are expressed in terms of divisions, either positive or negative. A note that starts a tie should not have a release attribute, and a note that stops a tie should not have an attack attribute. The attack and release attributes are independent of each other. The attack attribute only changes the starting time of a note, and the release attribute only changes the stopping time of a note.
- * 
- * If a note is played only particular times through a repeat, the time-only attribute shows which times to play the note.
- * 
- * The pizzicato attribute is used when just this note is sounded pizzicato, vs. the pizzicato element which changes overall playback between pizzicato and arco.
- * 
  * <p>Java class for note complex type</p>.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.</p>
@@ -46,33 +32,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       <sequence>
- *         <choice>
- *           <sequence>
- *             <element name="grace" type="{}grace"/>
- *             <choice>
- *               <sequence>
- *                 <group ref="{}full-note"/>
- *                 <element name="tie" type="{}tie" maxOccurs="2" minOccurs="0"/>
- *               </sequence>
- *               <sequence>
- *                 <element name="cue" type="{}empty"/>
- *                 <group ref="{}full-note"/>
- *               </sequence>
- *             </choice>
- *           </sequence>
- *           <sequence>
- *             <element name="cue" type="{}empty"/>
- *             <group ref="{}full-note"/>
- *             <group ref="{}duration"/>
- *           </sequence>
- *           <sequence>
- *             <group ref="{}full-note"/>
- *             <group ref="{}duration"/>
- *             <element name="tie" type="{}tie" maxOccurs="2" minOccurs="0"/>
- *           </sequence>
- *         </choice>
+ *         <element name="grace" type="{}grace" minOccurs="0"/>
+ *         <element name="cue" type="{}empty" minOccurs="0"/>
+ *         <group ref="{}full-note" minOccurs="0"/>
+ *         <group ref="{}duration" minOccurs="0"/>
+ *         <element name="tie" type="{}tie" maxOccurs="2" minOccurs="0"/>
  *         <element name="instrument" type="{}instrument" maxOccurs="unbounded" minOccurs="0"/>
- *         <group ref="{}editorial-voice"/>
+ *         <group ref="{}editorial-voice" minOccurs="0"/>
  *         <element name="type" type="{}note-type" minOccurs="0"/>
  *         <element name="dot" type="{}empty-placement" maxOccurs="unbounded" minOccurs="0"/>
  *         <element name="accidental" type="{}accidental" minOccurs="0"/>
@@ -87,11 +53,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         <element name="play" type="{}play" minOccurs="0"/>
  *         <element name="listen" type="{}listen" minOccurs="0"/>
  *       </sequence>
+ *       <attGroup ref="{}color"/>
+ *       <attGroup ref="{}font"/>
  *       <attGroup ref="{}printout"/>
  *       <attGroup ref="{}optional-unique-id"/>
- *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}x-position"/>
- *       <attGroup ref="{}font"/>
  *       <attribute name="print-leger" type="{}yes-no" />
  *       <attribute name="dynamics" type="{}non-negative-decimal" />
  *       <attribute name="end-dynamics" type="{}non-negative-decimal" />
@@ -108,51 +74,80 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "note", propOrder = {
-    "content"
+    "grace",
+    "cue",
+    "chord",
+    "pitch",
+    "unpitched",
+    "rest",
+    "duration",
+    "tie",
+    "instrument",
+    "footnote",
+    "level",
+    "voice",
+    "type",
+    "dot",
+    "accidental",
+    "timeModification",
+    "stem",
+    "notehead",
+    "noteheadText",
+    "staff",
+    "beam",
+    "notations",
+    "lyric",
+    "play",
+    "listen"
 })
 public class Note {
 
+    protected Grace grace;
+    protected Empty cue;
     /**
-     * Gets the rest of the content model. 
+     * The chord element indicates that this note is an additional chord tone with the preceding note.
      * 
-     * <p>
-     * You are getting this "catch-all" property because of the following reason: 
-     * The field name "Chord" is used by two different parts of a schema. See: 
-     * line 6495 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
-     * line 6495 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
-     * <p>
-     * To get rid of this property, apply a property customization to one 
-     * of both of the following declarations to change their names:
+     * The duration of a chord note does not move the musical position within a measure. That is done by the duration of the first preceding note without a chord element. Thus the duration of a chord note cannot be longer than the preceding note.
+     * 
+     * In most cases the duration will be the same as the preceding note. However it can be shorter in situations such as multiple stops for string instruments.
      * 
      */
-    @XmlElementRefs({
-        @XmlElementRef(name = "grace", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "chord", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "pitch", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "unpitched", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "rest", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "tie", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "cue", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "duration", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "instrument", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "footnote", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "level", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "voice", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "type", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "dot", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "accidental", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "time-modification", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "stem", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "notehead", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "notehead-text", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "staff", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "beam", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "notations", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "lyric", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "play", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "listen", type = JAXBElement.class, required = false)
-    })
-    protected List<JAXBElement<?>> content;
+    protected Empty chord;
+    protected Pitch pitch;
+    protected Unpitched unpitched;
+    protected Rest rest;
+    /**
+     * Duration is a positive number specified in division units. This is the intended duration vs. notated duration (for instance, differences in dotted notes in Baroque-era music). Differences in duration specific to an interpretation or performance should be represented using the note element's attack and release attributes.
+     * 
+     * The duration element moves the musical position when used in backup elements, forward elements, and note elements that do not contain a chord child element.
+     * 
+     */
+    protected BigDecimal duration;
+    protected List<Tie> tie;
+    protected List<Instrument> instrument;
+    protected FormattedText footnote;
+    protected Level level;
+    protected java.lang.String voice;
+    protected NoteType type;
+    protected List<EmptyPlacement> dot;
+    protected Accidental accidental;
+    @XmlElement(name = "time-modification")
+    protected TimeModification timeModification;
+    protected Stem stem;
+    protected Notehead notehead;
+    @XmlElement(name = "notehead-text")
+    protected NoteheadText noteheadText;
+    /**
+     * Staff assignment is only needed for music notated on multiple staves. Used by both notes and directions. Staff values are numbers, with 1 referring to the top-most staff in a part.
+     * 
+     */
+    @XmlSchemaType(name = "positiveInteger")
+    protected BigInteger staff;
+    protected List<Beam> beam;
+    protected List<Notations> notations;
+    protected List<Lyric> lyric;
+    protected Play play;
+    protected Listen listen;
     @XmlAttribute(name = "print-leger")
     protected YesNo printLeger;
     @XmlAttribute(name = "dynamics")
@@ -168,6 +163,18 @@ public class Note {
     protected java.lang.String timeOnly;
     @XmlAttribute(name = "pizzicato")
     protected YesNo pizzicato;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "font-family")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String fontFamily;
+    @XmlAttribute(name = "font-style")
+    protected FontStyle fontStyle;
+    @XmlAttribute(name = "font-size")
+    protected java.lang.String fontSize;
+    @XmlAttribute(name = "font-weight")
+    protected FontWeight fontWeight;
     @XmlAttribute(name = "print-dot")
     protected YesNo printDot;
     @XmlAttribute(name = "print-lyric")
@@ -181,9 +188,6 @@ public class Note {
     @XmlID
     @XmlSchemaType(name = "ID")
     protected java.lang.String id;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "default-x")
     protected BigDecimal defaultX;
     @XmlAttribute(name = "default-y")
@@ -192,81 +196,662 @@ public class Note {
     protected BigDecimal relativeX;
     @XmlAttribute(name = "relative-y")
     protected BigDecimal relativeY;
-    @XmlAttribute(name = "font-family")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String fontFamily;
-    @XmlAttribute(name = "font-style")
-    protected FontStyle fontStyle;
-    @XmlAttribute(name = "font-size")
-    protected java.lang.String fontSize;
-    @XmlAttribute(name = "font-weight")
-    protected FontWeight fontWeight;
 
     /**
-     * Gets the rest of the content model. 
+     * Gets the value of the grace property.
      * 
-     * <p>
-     * You are getting this "catch-all" property because of the following reason: 
-     * The field name "Chord" is used by two different parts of a schema. See: 
-     * line 6495 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
-     * line 6495 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
-     * <p>
-     * To get rid of this property, apply a property customization to one 
-     * of both of the following declarations to change their names:
+     * @return
+     *     possible object is
+     *     {@link Grace }
+     *     
+     */
+    public Grace getGrace() {
+        return grace;
+    }
+
+    /**
+     * Sets the value of the grace property.
      * 
-     * Gets the value of the content property.
+     * @param value
+     *     allowed object is
+     *     {@link Grace }
+     *     
+     */
+    public void setGrace(Grace value) {
+        this.grace = value;
+    }
+
+    /**
+     * Gets the value of the cue property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Empty }
+     *     
+     */
+    public Empty getCue() {
+        return cue;
+    }
+
+    /**
+     * Sets the value of the cue property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Empty }
+     *     
+     */
+    public void setCue(Empty value) {
+        this.cue = value;
+    }
+
+    /**
+     * The chord element indicates that this note is an additional chord tone with the preceding note.
+     * 
+     * The duration of a chord note does not move the musical position within a measure. That is done by the duration of the first preceding note without a chord element. Thus the duration of a chord note cannot be longer than the preceding note.
+     * 
+     * In most cases the duration will be the same as the preceding note. However it can be shorter in situations such as multiple stops for string instruments.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Empty }
+     *     
+     */
+    public Empty getChord() {
+        return chord;
+    }
+
+    /**
+     * Sets the value of the chord property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Empty }
+     *     
+     * @see #getChord()
+     */
+    public void setChord(Empty value) {
+        this.chord = value;
+    }
+
+    /**
+     * Gets the value of the pitch property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Pitch }
+     *     
+     */
+    public Pitch getPitch() {
+        return pitch;
+    }
+
+    /**
+     * Sets the value of the pitch property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Pitch }
+     *     
+     */
+    public void setPitch(Pitch value) {
+        this.pitch = value;
+    }
+
+    /**
+     * Gets the value of the unpitched property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Unpitched }
+     *     
+     */
+    public Unpitched getUnpitched() {
+        return unpitched;
+    }
+
+    /**
+     * Sets the value of the unpitched property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Unpitched }
+     *     
+     */
+    public void setUnpitched(Unpitched value) {
+        this.unpitched = value;
+    }
+
+    /**
+     * Gets the value of the rest property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Rest }
+     *     
+     */
+    public Rest getRest() {
+        return rest;
+    }
+
+    /**
+     * Sets the value of the rest property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Rest }
+     *     
+     */
+    public void setRest(Rest value) {
+        this.rest = value;
+    }
+
+    /**
+     * Duration is a positive number specified in division units. This is the intended duration vs. notated duration (for instance, differences in dotted notes in Baroque-era music). Differences in duration specific to an interpretation or performance should be represented using the note element's attack and release attributes.
+     * 
+     * The duration element moves the musical position when used in backup elements, forward elements, and note elements that do not contain a chord child element.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDuration() {
+        return duration;
+    }
+
+    /**
+     * Sets the value of the duration property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     * @see #getDuration()
+     */
+    public void setDuration(BigDecimal value) {
+        this.duration = value;
+    }
+
+    /**
+     * Gets the value of the tie property.
      * 
      * <p>This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the content property.</p>
+     * This is why there is not a <CODE>set</CODE> method for the tie property.</p>
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * </p>
      * <pre>
-     * getContent().add(newItem);
+     * getTie().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link java.lang.String }{@code >}
-     * {@link JAXBElement }{@code <}{@link BigDecimal }{@code >}
-     * {@link JAXBElement }{@code <}{@link BigInteger }{@code >}
-     * {@link JAXBElement }{@code <}{@link Accidental }{@code >}
-     * {@link JAXBElement }{@code <}{@link Beam }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link Empty }{@code >}
-     * {@link JAXBElement }{@code <}{@link EmptyPlacement }{@code >}
-     * {@link JAXBElement }{@code <}{@link FormattedText }{@code >}
-     * {@link JAXBElement }{@code <}{@link Grace }{@code >}
-     * {@link JAXBElement }{@code <}{@link Instrument }{@code >}
-     * {@link JAXBElement }{@code <}{@link Level }{@code >}
-     * {@link JAXBElement }{@code <}{@link Listen }{@code >}
-     * {@link JAXBElement }{@code <}{@link Lyric }{@code >}
-     * {@link JAXBElement }{@code <}{@link Notations }{@code >}
-     * {@link JAXBElement }{@code <}{@link NoteType }{@code >}
-     * {@link JAXBElement }{@code <}{@link Notehead }{@code >}
-     * {@link JAXBElement }{@code <}{@link NoteheadText }{@code >}
-     * {@link JAXBElement }{@code <}{@link Pitch }{@code >}
-     * {@link JAXBElement }{@code <}{@link Play }{@code >}
-     * {@link JAXBElement }{@code <}{@link Rest }{@code >}
-     * {@link JAXBElement }{@code <}{@link Stem }{@code >}
-     * {@link JAXBElement }{@code <}{@link Tie }{@code >}
-     * {@link JAXBElement }{@code <}{@link TimeModification }{@code >}
-     * {@link JAXBElement }{@code <}{@link Unpitched }{@code >}
+     * {@link Tie }
      * </p>
      * 
      * 
      * @return
-     *     The value of the content property.
+     *     The value of the tie property.
      */
-    public List<JAXBElement<?>> getContent() {
-        if (content == null) {
-            content = new ArrayList<>();
+    public List<Tie> getTie() {
+        if (tie == null) {
+            tie = new ArrayList<>();
         }
-        return this.content;
+        return this.tie;
+    }
+
+    /**
+     * Gets the value of the instrument property.
+     * 
+     * <p>This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the instrument property.</p>
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * </p>
+     * <pre>
+     * getInstrument().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Instrument }
+     * </p>
+     * 
+     * 
+     * @return
+     *     The value of the instrument property.
+     */
+    public List<Instrument> getInstrument() {
+        if (instrument == null) {
+            instrument = new ArrayList<>();
+        }
+        return this.instrument;
+    }
+
+    /**
+     * Gets the value of the footnote property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FormattedText }
+     *     
+     */
+    public FormattedText getFootnote() {
+        return footnote;
+    }
+
+    /**
+     * Sets the value of the footnote property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FormattedText }
+     *     
+     */
+    public void setFootnote(FormattedText value) {
+        this.footnote = value;
+    }
+
+    /**
+     * Gets the value of the level property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Level }
+     *     
+     */
+    public Level getLevel() {
+        return level;
+    }
+
+    /**
+     * Sets the value of the level property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Level }
+     *     
+     */
+    public void setLevel(Level value) {
+        this.level = value;
+    }
+
+    /**
+     * Gets the value of the voice property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getVoice() {
+        return voice;
+    }
+
+    /**
+     * Sets the value of the voice property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setVoice(java.lang.String value) {
+        this.voice = value;
+    }
+
+    /**
+     * Gets the value of the type property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link NoteType }
+     *     
+     */
+    public NoteType getType() {
+        return type;
+    }
+
+    /**
+     * Sets the value of the type property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link NoteType }
+     *     
+     */
+    public void setType(NoteType value) {
+        this.type = value;
+    }
+
+    /**
+     * Gets the value of the dot property.
+     * 
+     * <p>This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the dot property.</p>
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * </p>
+     * <pre>
+     * getDot().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link EmptyPlacement }
+     * </p>
+     * 
+     * 
+     * @return
+     *     The value of the dot property.
+     */
+    public List<EmptyPlacement> getDot() {
+        if (dot == null) {
+            dot = new ArrayList<>();
+        }
+        return this.dot;
+    }
+
+    /**
+     * Gets the value of the accidental property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Accidental }
+     *     
+     */
+    public Accidental getAccidental() {
+        return accidental;
+    }
+
+    /**
+     * Sets the value of the accidental property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Accidental }
+     *     
+     */
+    public void setAccidental(Accidental value) {
+        this.accidental = value;
+    }
+
+    /**
+     * Gets the value of the timeModification property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TimeModification }
+     *     
+     */
+    public TimeModification getTimeModification() {
+        return timeModification;
+    }
+
+    /**
+     * Sets the value of the timeModification property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TimeModification }
+     *     
+     */
+    public void setTimeModification(TimeModification value) {
+        this.timeModification = value;
+    }
+
+    /**
+     * Gets the value of the stem property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Stem }
+     *     
+     */
+    public Stem getStem() {
+        return stem;
+    }
+
+    /**
+     * Sets the value of the stem property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Stem }
+     *     
+     */
+    public void setStem(Stem value) {
+        this.stem = value;
+    }
+
+    /**
+     * Gets the value of the notehead property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Notehead }
+     *     
+     */
+    public Notehead getNotehead() {
+        return notehead;
+    }
+
+    /**
+     * Sets the value of the notehead property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Notehead }
+     *     
+     */
+    public void setNotehead(Notehead value) {
+        this.notehead = value;
+    }
+
+    /**
+     * Gets the value of the noteheadText property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link NoteheadText }
+     *     
+     */
+    public NoteheadText getNoteheadText() {
+        return noteheadText;
+    }
+
+    /**
+     * Sets the value of the noteheadText property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link NoteheadText }
+     *     
+     */
+    public void setNoteheadText(NoteheadText value) {
+        this.noteheadText = value;
+    }
+
+    /**
+     * Staff assignment is only needed for music notated on multiple staves. Used by both notes and directions. Staff values are numbers, with 1 referring to the top-most staff in a part.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getStaff() {
+        return staff;
+    }
+
+    /**
+     * Sets the value of the staff property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     * @see #getStaff()
+     */
+    public void setStaff(BigInteger value) {
+        this.staff = value;
+    }
+
+    /**
+     * Gets the value of the beam property.
+     * 
+     * <p>This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the beam property.</p>
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * </p>
+     * <pre>
+     * getBeam().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Beam }
+     * </p>
+     * 
+     * 
+     * @return
+     *     The value of the beam property.
+     */
+    public List<Beam> getBeam() {
+        if (beam == null) {
+            beam = new ArrayList<>();
+        }
+        return this.beam;
+    }
+
+    /**
+     * Gets the value of the notations property.
+     * 
+     * <p>This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the notations property.</p>
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * </p>
+     * <pre>
+     * getNotations().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Notations }
+     * </p>
+     * 
+     * 
+     * @return
+     *     The value of the notations property.
+     */
+    public List<Notations> getNotations() {
+        if (notations == null) {
+            notations = new ArrayList<>();
+        }
+        return this.notations;
+    }
+
+    /**
+     * Gets the value of the lyric property.
+     * 
+     * <p>This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the lyric property.</p>
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * </p>
+     * <pre>
+     * getLyric().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Lyric }
+     * </p>
+     * 
+     * 
+     * @return
+     *     The value of the lyric property.
+     */
+    public List<Lyric> getLyric() {
+        if (lyric == null) {
+            lyric = new ArrayList<>();
+        }
+        return this.lyric;
+    }
+
+    /**
+     * Gets the value of the play property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Play }
+     *     
+     */
+    public Play getPlay() {
+        return play;
+    }
+
+    /**
+     * Sets the value of the play property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Play }
+     *     
+     */
+    public void setPlay(Play value) {
+        this.play = value;
+    }
+
+    /**
+     * Gets the value of the listen property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Listen }
+     *     
+     */
+    public Listen getListen() {
+        return listen;
+    }
+
+    /**
+     * Sets the value of the listen property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Listen }
+     *     
+     */
+    public void setListen(Listen value) {
+        this.listen = value;
     }
 
     /**
@@ -438,6 +1023,126 @@ public class Note {
     }
 
     /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the fontFamily property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontFamily() {
+        return fontFamily;
+    }
+
+    /**
+     * Sets the value of the fontFamily property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontFamily(java.lang.String value) {
+        this.fontFamily = value;
+    }
+
+    /**
+     * Gets the value of the fontStyle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontStyle }
+     *     
+     */
+    public FontStyle getFontStyle() {
+        return fontStyle;
+    }
+
+    /**
+     * Sets the value of the fontStyle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontStyle }
+     *     
+     */
+    public void setFontStyle(FontStyle value) {
+        this.fontStyle = value;
+    }
+
+    /**
+     * Gets the value of the fontSize property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getFontSize() {
+        return fontSize;
+    }
+
+    /**
+     * Sets the value of the fontSize property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setFontSize(java.lang.String value) {
+        this.fontSize = value;
+    }
+
+    /**
+     * Gets the value of the fontWeight property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link FontWeight }
+     *     
+     */
+    public FontWeight getFontWeight() {
+        return fontWeight;
+    }
+
+    /**
+     * Sets the value of the fontWeight property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link FontWeight }
+     *     
+     */
+    public void setFontWeight(FontWeight value) {
+        this.fontWeight = value;
+    }
+
+    /**
      * Gets the value of the printDot property.
      * 
      * @return
@@ -558,30 +1263,6 @@ public class Note {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the defaultX property.
      * 
      * @return
@@ -675,102 +1356,6 @@ public class Note {
      */
     public void setRelativeY(BigDecimal value) {
         this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the fontFamily property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getFontFamily() {
-        return fontFamily;
-    }
-
-    /**
-     * Sets the value of the fontFamily property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setFontFamily(java.lang.String value) {
-        this.fontFamily = value;
-    }
-
-    /**
-     * Gets the value of the fontStyle property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontStyle }
-     *     
-     */
-    public FontStyle getFontStyle() {
-        return fontStyle;
-    }
-
-    /**
-     * Sets the value of the fontStyle property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontStyle }
-     *     
-     */
-    public void setFontStyle(FontStyle value) {
-        this.fontStyle = value;
-    }
-
-    /**
-     * Gets the value of the fontSize property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getFontSize() {
-        return fontSize;
-    }
-
-    /**
-     * Sets the value of the fontSize property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setFontSize(java.lang.String value) {
-        this.fontSize = value;
-    }
-
-    /**
-     * Gets the value of the fontWeight property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link FontWeight }
-     *     
-     */
-    public FontWeight getFontWeight() {
-        return fontWeight;
-    }
-
-    /**
-     * Sets the value of the fontWeight property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link FontWeight }
-     *     
-     */
-    public void setFontWeight(FontWeight value) {
-        this.fontWeight = value;
     }
 
 }

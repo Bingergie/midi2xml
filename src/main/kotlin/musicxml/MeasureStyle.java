@@ -38,8 +38,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         <element name="beat-repeat" type="{}beat-repeat"/>
  *         <element name="slash" type="{}slash"/>
  *       </choice>
- *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}font"/>
+ *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}optional-unique-id"/>
  *       <attribute name="number" type="{}staff-number" />
  *     </restriction>
@@ -67,9 +67,6 @@ public class MeasureStyle {
     protected Slash slash;
     @XmlAttribute(name = "number")
     protected BigInteger number;
-    @XmlAttribute(name = "color")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -79,6 +76,9 @@ public class MeasureStyle {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
     @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
@@ -206,30 +206,6 @@ public class MeasureStyle {
     }
 
     /**
-     * Gets the value of the color property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getColor() {
-        return color;
-    }
-
-    /**
-     * Sets the value of the color property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
      * Gets the value of the fontFamily property.
      * 
      * @return
@@ -323,6 +299,30 @@ public class MeasureStyle {
      */
     public void setFontWeight(FontWeight value) {
         this.fontWeight = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
     }
 
     /**

@@ -37,14 +37,14 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * <complexType name="tied">
  *   <complexContent>
  *     <restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       <attGroup ref="{}line-type"/>
+ *       <attGroup ref="{}position"/>
+ *       <attGroup ref="{}orientation"/>
  *       <attGroup ref="{}optional-unique-id"/>
- *       <attGroup ref="{}placement"/>
  *       <attGroup ref="{}bezier"/>
  *       <attGroup ref="{}color"/>
  *       <attGroup ref="{}dashed-formatting"/>
- *       <attGroup ref="{}position"/>
- *       <attGroup ref="{}line-type"/>
- *       <attGroup ref="{}orientation"/>
+ *       <attGroup ref="{}placement"/>
  *       <attribute name="type" use="required" type="{}tied-type" />
  *       <attribute name="number" type="{}number-level" />
  *     </restriction>
@@ -62,13 +62,23 @@ public class Tied {
     protected TiedType type;
     @XmlAttribute(name = "number")
     protected Integer number;
+    @XmlAttribute(name = "line-type")
+    protected LineType lineType;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "orientation")
+    protected OverUnder orientation;
     @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected java.lang.String id;
-    @XmlAttribute(name = "placement")
-    protected AboveBelow placement;
     @XmlAttribute(name = "bezier-x")
     protected BigDecimal bezierX;
     @XmlAttribute(name = "bezier-y")
@@ -88,18 +98,8 @@ public class Tied {
     protected BigDecimal dashLength;
     @XmlAttribute(name = "space-length")
     protected BigDecimal spaceLength;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
-    @XmlAttribute(name = "line-type")
-    protected LineType lineType;
-    @XmlAttribute(name = "orientation")
-    protected OverUnder orientation;
+    @XmlAttribute(name = "placement")
+    protected AboveBelow placement;
 
     /**
      * Gets the value of the type property.
@@ -150,6 +150,150 @@ public class Tied {
     }
 
     /**
+     * Gets the value of the lineType property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LineType }
+     *     
+     */
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    /**
+     * Sets the value of the lineType property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LineType }
+     *     
+     */
+    public void setLineType(LineType value) {
+        this.lineType = value;
+    }
+
+    /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the orientation property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link OverUnder }
+     *     
+     */
+    public OverUnder getOrientation() {
+        return orientation;
+    }
+
+    /**
+     * Sets the value of the orientation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link OverUnder }
+     *     
+     */
+    public void setOrientation(OverUnder value) {
+        this.orientation = value;
+    }
+
+    /**
      * Gets the value of the id property.
      * 
      * @return
@@ -171,30 +315,6 @@ public class Tied {
      */
     public void setId(java.lang.String value) {
         this.id = value;
-    }
-
-    /**
-     * Gets the value of the placement property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public AboveBelow getPlacement() {
-        return placement;
-    }
-
-    /**
-     * Sets the value of the placement property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AboveBelow }
-     *     
-     */
-    public void setPlacement(AboveBelow value) {
-        this.placement = value;
     }
 
     /**
@@ -414,147 +534,27 @@ public class Tied {
     }
 
     /**
-     * Gets the value of the defaultX property.
+     * Gets the value of the placement property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link AboveBelow }
      *     
      */
-    public BigDecimal getDefaultX() {
-        return defaultX;
+    public AboveBelow getPlacement() {
+        return placement;
     }
 
     /**
-     * Sets the value of the defaultX property.
+     * Sets the value of the placement property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link AboveBelow }
      *     
      */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
-    }
-
-    /**
-     * Gets the value of the lineType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link LineType }
-     *     
-     */
-    public LineType getLineType() {
-        return lineType;
-    }
-
-    /**
-     * Sets the value of the lineType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link LineType }
-     *     
-     */
-    public void setLineType(LineType value) {
-        this.lineType = value;
-    }
-
-    /**
-     * Gets the value of the orientation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link OverUnder }
-     *     
-     */
-    public OverUnder getOrientation() {
-        return orientation;
-    }
-
-    /**
-     * Sets the value of the orientation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link OverUnder }
-     *     
-     */
-    public void setOrientation(OverUnder value) {
-        this.orientation = value;
+    public void setPlacement(AboveBelow value) {
+        this.placement = value;
     }
 
 }

@@ -55,9 +55,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *           </sequence>
  *         </sequence>
  *       </choice>
- *       <attGroup ref="{}print-style-align"/>
- *       <attGroup ref="{}optional-unique-id"/>
  *       <attGroup ref="{}print-object"/>
+ *       <attGroup ref="{}optional-unique-id"/>
+ *       <attGroup ref="{}print-style-align"/>
  *       <attGroup ref="{}justify"/>
  *       <attribute name="parentheses" type="{}yes-no" />
  *     </restriction>
@@ -79,8 +79,8 @@ public class Metronome {
      * <p>
      * You are getting this "catch-all" property because of the following reason: 
      * The field name "BeatUnit" is used by two different parts of a schema. See: 
-     * line 6393 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
-     * line 6393 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
+     * line 6394 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
+     * line 6394 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
      * <p>
      * To get rid of this property, apply a property customization to one 
      * of both of the following declarations to change their names:
@@ -98,19 +98,13 @@ public class Metronome {
     protected List<JAXBElement<?>> content;
     @XmlAttribute(name = "parentheses")
     protected YesNo parentheses;
-    @XmlAttribute(name = "halign")
-    protected LeftCenterRight halign;
-    @XmlAttribute(name = "color")
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
+    @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected java.lang.String color;
-    @XmlAttribute(name = "default-x")
-    protected BigDecimal defaultX;
-    @XmlAttribute(name = "default-y")
-    protected BigDecimal defaultY;
-    @XmlAttribute(name = "relative-x")
-    protected BigDecimal relativeX;
-    @XmlAttribute(name = "relative-y")
-    protected BigDecimal relativeY;
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected java.lang.String id;
     @XmlAttribute(name = "font-family")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected java.lang.String fontFamily;
@@ -120,15 +114,21 @@ public class Metronome {
     protected java.lang.String fontSize;
     @XmlAttribute(name = "font-weight")
     protected FontWeight fontWeight;
+    @XmlAttribute(name = "default-x")
+    protected BigDecimal defaultX;
+    @XmlAttribute(name = "default-y")
+    protected BigDecimal defaultY;
+    @XmlAttribute(name = "relative-x")
+    protected BigDecimal relativeX;
+    @XmlAttribute(name = "relative-y")
+    protected BigDecimal relativeY;
+    @XmlAttribute(name = "color")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected java.lang.String color;
+    @XmlAttribute(name = "halign")
+    protected LeftCenterRight halign;
     @XmlAttribute(name = "valign")
     protected Valign valign;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected java.lang.String id;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
     @XmlAttribute(name = "justify")
     protected LeftCenterRight justify;
 
@@ -138,8 +138,8 @@ public class Metronome {
      * <p>
      * You are getting this "catch-all" property because of the following reason: 
      * The field name "BeatUnit" is used by two different parts of a schema. See: 
-     * line 6393 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
-     * line 6393 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
+     * line 6394 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
+     * line 6394 of file:/Users/bing/Documents/School/Secondary%20School/High%20School/DP/Computer%20Science/IA/Project_Files/music2xml/src/main/resources/musicxml-4/schema/musicxml.xsd
      * <p>
      * To get rid of this property, apply a property customization to one 
      * of both of the following declarations to change their names:
@@ -206,147 +206,51 @@ public class Metronome {
     }
 
     /**
-     * Gets the value of the halign property.
+     * Gets the value of the printObject property.
      * 
      * @return
      *     possible object is
-     *     {@link LeftCenterRight }
+     *     {@link YesNo }
      *     
      */
-    public LeftCenterRight getHalign() {
-        return halign;
+    public YesNo getPrintObject() {
+        return printObject;
     }
 
     /**
-     * Sets the value of the halign property.
+     * Sets the value of the printObject property.
      * 
      * @param value
      *     allowed object is
-     *     {@link LeftCenterRight }
+     *     {@link YesNo }
      *     
      */
-    public void setHalign(LeftCenterRight value) {
-        this.halign = value;
+    public void setPrintObject(YesNo value) {
+        this.printObject = value;
     }
 
     /**
-     * Gets the value of the color property.
+     * Gets the value of the id property.
      * 
      * @return
      *     possible object is
      *     {@link java.lang.String }
      *     
      */
-    public java.lang.String getColor() {
-        return color;
+    public java.lang.String getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the color property.
+     * Sets the value of the id property.
      * 
      * @param value
      *     allowed object is
      *     {@link java.lang.String }
      *     
      */
-    public void setColor(java.lang.String value) {
-        this.color = value;
-    }
-
-    /**
-     * Gets the value of the defaultX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultX() {
-        return defaultX;
-    }
-
-    /**
-     * Sets the value of the defaultX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultX(BigDecimal value) {
-        this.defaultX = value;
-    }
-
-    /**
-     * Gets the value of the defaultY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getDefaultY() {
-        return defaultY;
-    }
-
-    /**
-     * Sets the value of the defaultY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setDefaultY(BigDecimal value) {
-        this.defaultY = value;
-    }
-
-    /**
-     * Gets the value of the relativeX property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeX() {
-        return relativeX;
-    }
-
-    /**
-     * Sets the value of the relativeX property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeX(BigDecimal value) {
-        this.relativeX = value;
-    }
-
-    /**
-     * Gets the value of the relativeY property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public BigDecimal getRelativeY() {
-        return relativeY;
-    }
-
-    /**
-     * Sets the value of the relativeY property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigDecimal }
-     *     
-     */
-    public void setRelativeY(BigDecimal value) {
-        this.relativeY = value;
+    public void setId(java.lang.String value) {
+        this.id = value;
     }
 
     /**
@@ -446,6 +350,150 @@ public class Metronome {
     }
 
     /**
+     * Gets the value of the defaultX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultX() {
+        return defaultX;
+    }
+
+    /**
+     * Sets the value of the defaultX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultX(BigDecimal value) {
+        this.defaultX = value;
+    }
+
+    /**
+     * Gets the value of the defaultY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getDefaultY() {
+        return defaultY;
+    }
+
+    /**
+     * Sets the value of the defaultY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setDefaultY(BigDecimal value) {
+        this.defaultY = value;
+    }
+
+    /**
+     * Gets the value of the relativeX property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeX() {
+        return relativeX;
+    }
+
+    /**
+     * Sets the value of the relativeX property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeX(BigDecimal value) {
+        this.relativeX = value;
+    }
+
+    /**
+     * Gets the value of the relativeY property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRelativeY() {
+        return relativeY;
+    }
+
+    /**
+     * Sets the value of the relativeY property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRelativeY(BigDecimal value) {
+        this.relativeY = value;
+    }
+
+    /**
+     * Gets the value of the color property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the value of the color property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setColor(java.lang.String value) {
+        this.color = value;
+    }
+
+    /**
+     * Gets the value of the halign property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public LeftCenterRight getHalign() {
+        return halign;
+    }
+
+    /**
+     * Sets the value of the halign property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LeftCenterRight }
+     *     
+     */
+    public void setHalign(LeftCenterRight value) {
+        this.halign = value;
+    }
+
+    /**
      * Gets the value of the valign property.
      * 
      * @return
@@ -467,54 +515,6 @@ public class Metronome {
      */
     public void setValign(Valign value) {
         this.valign = value;
-    }
-
-    /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
-    }
-
-    /**
-     * Gets the value of the printObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link YesNo }
-     *     
-     */
-    public YesNo getPrintObject() {
-        return printObject;
-    }
-
-    /**
-     * Sets the value of the printObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link YesNo }
-     *     
-     */
-    public void setPrintObject(YesNo value) {
-        this.printObject = value;
     }
 
     /**

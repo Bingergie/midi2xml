@@ -51,8 +51,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *           <element name="other-notation" type="{}other-notation"/>
  *         </choice>
  *       </sequence>
- *       <attGroup ref="{}optional-unique-id"/>
  *       <attGroup ref="{}print-object"/>
+ *       <attGroup ref="{}optional-unique-id"/>
  *     </restriction>
  *   </complexContent>
  * </complexType>
@@ -87,13 +87,13 @@ public class Notations {
         @XmlElement(name = "other-notation", type = OtherNotation.class)
     })
     protected List<Object> tiedOrSlurOrTuplet;
+    @XmlAttribute(name = "print-object")
+    protected YesNo printObject;
     @XmlAttribute(name = "id")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlID
     @XmlSchemaType(name = "ID")
     protected java.lang.String id;
-    @XmlAttribute(name = "print-object")
-    protected YesNo printObject;
 
     /**
      * Gets the value of the footnote property.
@@ -189,30 +189,6 @@ public class Notations {
     }
 
     /**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public java.lang.String getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link java.lang.String }
-     *     
-     */
-    public void setId(java.lang.String value) {
-        this.id = value;
-    }
-
-    /**
      * Gets the value of the printObject property.
      * 
      * @return
@@ -234,6 +210,30 @@ public class Notations {
      */
     public void setPrintObject(YesNo value) {
         this.printObject = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public java.lang.String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link java.lang.String }
+     *     
+     */
+    public void setId(java.lang.String value) {
+        this.id = value;
     }
 
 }
