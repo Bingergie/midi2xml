@@ -1,9 +1,7 @@
-import com.sun.xml.internal.ws.util.Pool
 import core.MidiParser
 import musicxml.*
 import java.io.File
 import java.io.FileWriter
-import java.io.StringWriter
 import java.math.BigDecimal
 import java.math.BigInteger
 import javax.xml.bind.JAXBContext
@@ -121,23 +119,26 @@ fun exportNotesToXML(midiData: MidiParser.Companion.MidiData): ScorePartwise {
 
 
 fun main(args: Array<String>) {
+//    val midiInput: File = File("src/test/resources/tsmidi/TS02-01 Who's licking it.mid")
     val midiInput: File = File("src/test/resources/mary.mid")
     val notes = MidiParser.getNotesFromMidi(midiInput)
     println(notes)
     val score = exportNotesToXML(notes)
 
-    val writer = FileWriter("_test/test.musicxml")
+    val writer = FileWriter("_test/test_sep16.musicxml")
 
     val context = JAXBContext.newInstance("musicxml")
     val marshaller = context.createMarshaller().apply {
         setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true)
         setProperty(Marshaller.JAXB_FRAGMENT, false)
-        setProperty("com.sun.xml.internal.bind.xmlHeaders","""
+        setProperty(
+            "com.sun.xml.internal.bind.xmlHeaders", """
             <!DOCTYPE score-partwise PUBLIC
                 "-//Recordare//DTD MusicXML 4.0 Partwise//EN"
                 "http://www.musicxml.org/dtds/partwise.dtd">
             
-        """.trimIndent());
+        """.trimIndent()
+        )
     }
     marshaller.marshal(score, writer)
     println(writer.toString())
