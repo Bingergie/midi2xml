@@ -8,7 +8,7 @@ import javax.xml.bind.JAXBContext
 import javax.xml.bind.Marshaller
 
 
-fun exportNotesToXML(midiData: MidiParser.Companion.MidiData): ScorePartwise {
+fun exportNotesToXML(midiData: MidiParser.MidiData): ScorePartwise {
 
     val scorePartwise = ScorePartwise().apply {
         this.version = "4.0"
@@ -30,22 +30,22 @@ fun exportNotesToXML(midiData: MidiParser.Companion.MidiData): ScorePartwise {
         fun createMeasures(): List<ScorePartwise.Part.Measure> {
             val measures = mutableListOf<ScorePartwise.Part.Measure>()
 
-            val notesCopy = trackData.notesData.toMutableList()
+            val notesCopy = trackData.notesData.values.toMutableList()
             val timeSignaturesCopy = trackData.timeSignatureData.toMutableList()
-            var currentTimeSignature = timeSignaturesCopy.removeAt(0)
+            var currentTimeSignature = timeSignaturesCopy.removeFirst()
             var currentTick = 0L
 
-            val carryOverNotes = mutableListOf<MidiParser.Companion.NoteData>()
+            val carryOverNotes = mutableListOf<MidiParser.NoteData>()
             var measureNumber = 1
             while (notesCopy.isNotEmpty() or carryOverNotes.isNotEmpty()) { // loop over measures
-                val notesQueue = mutableListOf<MidiParser.Companion.NoteData>()
-                val timeSignatureQueue = mutableListOf<MidiParser.Companion.TimeSignatureData>()
+                val notesQueue = mutableListOf<MidiParser.NoteData>()
+                val timeSignatureQueue = mutableListOf<MidiParser.TimeSignatureData>()
                 // Move notes to queues until we reach a tick that is not in the current measure
                 val tickMax =
                     currentTimeSignature.numerator / currentTimeSignature.denominator * midiData.divisionsPerQuarterNote * 4
                 while (notesCopy.firstOrNull() != null) {
                     val tempNote = notesCopy.first()
-                    if (tempNote.startTick + tempNote.duration <= tickMax) {
+                    if (/*tempNote.startTick + tempNote.duration <= tickMax*/true) {
                         notesQueue.add(notesCopy.removeFirst())
                     } else {
                         break
@@ -121,11 +121,11 @@ fun exportNotesToXML(midiData: MidiParser.Companion.MidiData): ScorePartwise {
 fun main(args: Array<String>) {
 //    val midiInput: File = File("src/test/resources/tsmidi/TS02-01 Who's licking it.mid")
     val midiInput: File = File("src/test/resources/mary.mid")
-    val notes = MidiParser.getNotesFromMidi(midiInput)
+    val notes = MidiParser().getNotesFromMidi(midiInput)
     println(notes)
     val score = exportNotesToXML(notes)
 
-    val writer = FileWriter("_test/test_sep16.musicxml")
+    val writer = FileWriter("_test/test_oct31.musicxml")
 
     val context = JAXBContext.newInstance("musicxml")
     val marshaller = context.createMarshaller().apply {
