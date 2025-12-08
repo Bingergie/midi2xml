@@ -6,7 +6,7 @@ import javax.sound.midi.*
 
 class MidiParser {
 
-    private val notes = HashMap<Long, NoteData>() // todo: use a binary sort tree instead
+    private val notes = HashMap<Long, NoteData>() // startTick -> NoteData
     private val tempNotes = HashMap<Pair<Int, Int>, MutableList<Pair<Long, Int>>>() // <channel, pitch> -> stack(<startTick, velocity>)
 
     private fun handleNoteStart(channel: Int, pitch: Int, velocity: Int, startTick: Long): Unit {
