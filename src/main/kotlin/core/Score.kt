@@ -1,11 +1,15 @@
 package core
 
-class Score(val ticksPerBeat: Int) {
+class Score(val ticksPerQuarterNote: Int) {
     val staves = mutableListOf<Staff>()
+    val conductorStaff = Staff()
 }
 
-class Staff(val instrument: Instrument) {
+class Staff() {
     val staffSymbols = mutableListOf<StaffSymbol>()
+    fun add(staffSymbol: StaffSymbol) {
+        staffSymbols.add(staffSymbol)
+    }
 }
 
 class Instrument(val instrumentName: String)
@@ -19,6 +23,7 @@ class NotationInfo()
 
 class Note(
     anchorTick: Long,
+    val pitch: Int,
     val durationInTicks: Long,
     val velocity: Int
 ) : StaffSymbol(anchorTick) {
