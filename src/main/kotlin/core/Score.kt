@@ -31,7 +31,7 @@ class Note(
 
 class KeySignature(
     anchorTick: Long,
-    val fifthsAboveC: Int,
+    val fifthsAboveC: Long,
 ) : StaffSymbol(anchorTick) {
 }
 
