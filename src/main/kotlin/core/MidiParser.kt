@@ -22,9 +22,7 @@ class MidiParser {
 
                     is MetaMessage -> this.handleMetaMessage(event.tick, message)
 
-                    is SysexMessage -> {
-
-                    }
+                    is SysexMessage -> {}
                 }
             }
             for (staff in currentStaves)
