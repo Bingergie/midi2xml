@@ -10,5 +10,5 @@ fun main(args: Array<String>) {
     val score = midiParser.parse(midiFile)
     print(score)
     val xmlWriter = XmlWriter()
-    xmlWriter.writeScoreToXml(score, File("_test/test_Dec18-2.musicxml"))
+    xmlWriter.writeScoreToXml(score, File("_test/test_Dec18-3.musicxml"))
 }
