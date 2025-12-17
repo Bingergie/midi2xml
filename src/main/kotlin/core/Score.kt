@@ -1,5 +1,7 @@
 package core
 
+import musicxml.Step
+
 class Score(val ticksPerQuarterNote: Int) {
     val staves = mutableListOf<Staff>()
     val conductorStaff = Staff()
@@ -42,6 +44,7 @@ class Note(
     val velocity: Int
 ) : StaffSymbol(anchorTick) {
     class NoteNotationInfo() : NotationInfo() {
+        var step: Step? = null
         var isChord: Boolean? = null
         var duration: Int? = null
     }

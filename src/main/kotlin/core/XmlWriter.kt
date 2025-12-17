@@ -134,7 +134,7 @@ class XmlWriter {
         return musicxml.Note().apply {
 //                            this.voice = 1.toString()
             this.pitch = musicxml.Pitch().apply {
-                step = musicxml.Step.C // TODO: convert midi pitch to step, octave, alter
+                step = note.notationInfo.step ?: musicxml.Step.C // TODO: convert midi pitch to step, octave, alter
                 octave = note.pitch / 12
             }
             this.duration = BigDecimal(note.durationInTicks/* ?: throw Exception("Missing notation duration!!")*/)
