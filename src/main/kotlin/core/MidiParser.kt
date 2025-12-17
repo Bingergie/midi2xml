@@ -5,8 +5,8 @@ import javax.sound.midi.*
 
 
 class MidiParser {
-    var currentScore: Score? = null
-    var currentStaff: Staff? = null
+    private var currentScore: Score? = null
+    private var currentStaff: Staff? = null
 
     fun parse(file: File): Score {
         val sequence = MidiSystem.getSequence(file)
