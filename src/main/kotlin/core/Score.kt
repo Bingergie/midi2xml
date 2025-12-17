@@ -15,10 +15,10 @@ class Staff() {
 class Instrument(val instrumentName: String)
 
 abstract class StaffSymbol(val anchorTick: Long) {
-    val notationInfo = NotationInfo()
+    open val notationInfo: NotationInfo = NotationInfo()
 }
 
-class NotationInfo()
+open class NotationInfo()
 
 
 class Note(
@@ -27,6 +27,11 @@ class Note(
     val durationInTicks: Long,
     val velocity: Int
 ) : StaffSymbol(anchorTick) {
+    class NoteNotationInfo() : NotationInfo() {
+        var isChord: Boolean? = null
+        var duration: Int? = null
+    }
+    override val notationInfo: NoteNotationInfo = NoteNotationInfo()
 }
 
 class KeySignature(
