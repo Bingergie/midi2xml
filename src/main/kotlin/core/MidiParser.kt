@@ -6,7 +6,7 @@ import javax.sound.midi.*
 
 class MidiParser {
     private var currentScore: Score? = null
-    private var currentStaff: Staff? = null
+    private var currentStaves: MutableList<Staff?> = mutableListOf() // index is channel
 
     fun parse(file: File): Score {
         val sequence = MidiSystem.getSequence(file)
@@ -14,8 +14,7 @@ class MidiParser {
         val ticksPerQuarterNote = sequence.resolution
         currentScore = Score(ticksPerQuarterNote)
         for (track in sequence.tracks) {
-            currentStaff = Staff()
-            currentScore!!.staves.add(currentStaff!!)
+            currentStaves = MutableList(16) { null }
             for (i in 0..<track.size()) {
                 val event: MidiEvent = track.get(i)
                 when (val message = event.message) {
@@ -28,6 +27,8 @@ class MidiParser {
                     }
                 }
             }
+            for (staff in currentStaves)
+                staff?.let { currentScore!!.staves.add(it) }
         }
         return currentScore!!
     }
@@ -90,6 +91,7 @@ class MidiParser {
     private fun handleNoteStart(channel: Int, pitch: Int, velocity: Int, startTick: Long) {
         val startTicks = tempNotes.getOrPut(channel to pitch) { mutableListOf() }
         startTicks.add(startTick to velocity)
+        println(channel)
         return
     }
 
@@ -99,6 +101,7 @@ class MidiParser {
             ?: throw IllegalStateException("No tempNote found for channel $channel and pitch $pitch")
         val (startTick, velocity) = noteStartData.removeFirst()
         val duration = endTick - startTick
-        this.currentStaff!!.add(Note(startTick, pitch, duration, velocity))
+        if (this.currentStaves[channel] == null) this.currentStaves[channel] = Staff()
+        this.currentStaves[channel]!!.add(Note(startTick, pitch, duration, velocity))
     }
 }
