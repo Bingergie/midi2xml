@@ -15,6 +15,7 @@ class MidiParser {
         currentScore = Score(ticksPerQuarterNote)
         for (track in sequence.tracks) {
             currentStaff = Staff()
+            currentScore!!.staves.add(currentStaff!!)
             for (i in 0..<track.size()) {
                 val event: MidiEvent = track.get(i)
                 when (val message = event.message) {
@@ -58,7 +59,6 @@ class MidiParser {
         val denominator = 1 shl message.data[1].toInt()
         val timeSignature = TimeSignature(tick, numerator, denominator)
         this.currentScore!!.conductorStaff.add(timeSignature)
-        println("staff: ${timeSignature.numerator} / ${timeSignature.denominator}")
     }
 
     private fun handleShortMessage(tick: Long, message: ShortMessage) {

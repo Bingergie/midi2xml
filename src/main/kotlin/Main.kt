@@ -1,4 +1,5 @@
 import core.MidiParser
+import core.XmlWriter
 import musicxml.*
 import java.io.File
 import java.io.FileWriter
@@ -8,7 +9,7 @@ import javax.xml.bind.JAXBContext
 import javax.xml.bind.Marshaller
 
 
-fun exportNotesToXML(midiData: MidiParser.MidiData): ScorePartwise {
+/*fun exportNotesToXML(midiData: MidiParser.MidiData): ScorePartwise {
 
     val scorePartwise = ScorePartwise().apply {
         this.version = "4.0"
@@ -115,31 +116,34 @@ fun exportNotesToXML(midiData: MidiParser.MidiData): ScorePartwise {
 
 
     return scorePartwise
-}
+}*/
 
 
 fun main(args: Array<String>) {
-//    val midiInput: File = File("src/test/resources/tsmidi/TS02-01 Who's licking it.mid")
-    val midiInput: File = File("src/test/resources/mary.mid")
-    val notes = MidiParser().getNotesFromMidi(midiInput)
-    println(notes)
-    val score = exportNotesToXML(notes)
-
-    val writer = FileWriter("_test/test_oct31.musicxml")
-
-    val context = JAXBContext.newInstance("musicxml")
-    val marshaller = context.createMarshaller().apply {
-        setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true)
-        setProperty(Marshaller.JAXB_FRAGMENT, false)
-        setProperty(
-            "com.sun.xml.internal.bind.xmlHeaders", """
-            <!DOCTYPE score-partwise PUBLIC
-                "-//Recordare//DTD MusicXML 4.0 Partwise//EN"
-                "http://www.musicxml.org/dtds/partwise.dtd">
-            
-        """.trimIndent()
-        )
-    }
-    marshaller.marshal(score, writer)
-    println(writer.toString())
+    val midiFile = File("src/test/resources/tsmidi/TS02-01 Who's licking it.mid")
+//    val midiFile = File("src/test/resources/mary.mid")
+    val midiParser = MidiParser()
+    val score = midiParser.parse(midiFile)
+    print(score)
+    val xmlWriter = XmlWriter()
+    xmlWriter.writeScoreToXml(score, File("_test/test_Dec18-2.musicxml"))
+//    val xmlScore = exportNotesToXML(notes)
+//
+//    val writer = FileWriter("_test/test_oct31.musicxml")
+//
+//    val context = JAXBContext.newInstance("musicxml")
+//    val marshaller = context.createMarshaller().apply {
+//        setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true)
+//        setProperty(Marshaller.JAXB_FRAGMENT, false)
+//        setProperty(
+//            "com.sun.xml.internal.bind.xmlHeaders", """
+//            <!DOCTYPE score-partwise PUBLIC
+//                "-//Recordare//DTD MusicXML 4.0 Partwise//EN"
+//                "http://www.musicxml.org/dtds/partwise.dtd">
+//
+//        """.trimIndent()
+//        )
+//    }
+//    marshaller.marshal(xmlScore, writer)
+//    println(writer.toString())
 }
