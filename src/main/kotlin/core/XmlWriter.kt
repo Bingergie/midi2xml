@@ -86,23 +86,8 @@ class XmlWriter {
         carryOverNotesStack: MutableList<Note> // todo: side effect: return new carry over notes and handle ties
     ): musicxml.ScorePartwise.Part.Measure {
         val xmlMeasure = musicxml.ScorePartwise.Part.Measure().apply {
-            val factory = musicxml.ObjectFactory()
             if (currentMeasureNumber == 1) {
-                noteOrBackupOrForward.add(
-                    musicxml.Attributes().apply { // todo: extract this into createFirstMeasureAttributes
-                        divisions = BigDecimal(currentScore!!.ticksPerQuarterNote)
-                        key.add(musicxml.Key().apply {
-                            fifths = BigInteger.valueOf(currentKeySignature.fifthsAboveC)
-                        })
-                        time.add(musicxml.Time().apply {
-                            this.timeSignature.add(factory.createTimeBeats(currentTimeSignature.numerator.toString()))
-                            this.timeSignature.add(factory.createTimeBeatType(currentTimeSignature.denominator.toString()))
-                        })
-                        clef.add(musicxml.Clef().apply {
-                            this.sign = musicxml.ClefSign.valueOf("G") // todo
-                            this.line = BigInteger.valueOf(2L) // clef.anchorLine
-                        })
-                    })
+                noteOrBackupOrForward.add(createFirstMeasureAttributes())
             }
             number = currentMeasureNumber.toString()
             while (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty()) {
@@ -128,6 +113,25 @@ class XmlWriter {
             }
         }
         return xmlMeasure
+    }
+
+    fun createFirstMeasureAttributes(): musicxml.Attributes {
+        return musicxml.Attributes().apply {
+            divisions = BigDecimal(currentScore!!.ticksPerQuarterNote)
+            key.add(musicxml.Key().apply {
+                fifths = BigInteger.valueOf(currentKeySignature.fifthsAboveC)
+            })
+            time.add(musicxml.Time().apply {
+                val factory = musicxml.ObjectFactory()
+                this.timeSignature.add(factory.createTimeBeats(currentTimeSignature.numerator.toString()))
+                this.timeSignature.add(factory.createTimeBeatType(currentTimeSignature.denominator.toString()))
+            })
+            clef.add(musicxml.Clef().apply {
+                this.sign = musicxml.ClefSign.valueOf("G") // todo
+                this.line = BigInteger.valueOf(2L) // clef.anchorLine
+            })
+        }
+
     }
 
     private fun createNote(note: Note): musicxml.Note {
