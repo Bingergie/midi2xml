@@ -9,5 +9,5 @@ fun main(args: Array<String>) {
     val midiParser = MidiParser()
     val score = midiParser.parse(midiFile)
     val xmlWriter = XmlWriter()
-    xmlWriter.writeScoreToXml(score, File("_test/test_Dec18-3.musicxml"))
+    xmlWriter.writeScoreToXml(score, File("_test/test_Dec18-5.musicxml"))
 }
