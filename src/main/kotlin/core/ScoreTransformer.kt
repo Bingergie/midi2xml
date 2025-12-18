@@ -7,11 +7,23 @@ class ScoreTransformer {
         currentScore = score
     }
 
-    fun addRests() {
+    private fun addRests() {
 
     }
 
-    fun setNoteNotationType() {
+    private fun addNoteNotationType() {
+
+    }
+
+    private fun addNoteNotationStepAndAlter() {
+
+    }
+
+    private fun addNoteNotationChordAndVoice() {
+
+    }
+
+    private fun quantizeNotes() {
 
     }
 }
