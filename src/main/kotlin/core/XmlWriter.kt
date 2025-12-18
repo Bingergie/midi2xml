@@ -73,7 +73,7 @@ class XmlWriter {
         var currentTick = 0L
         currentMeasureNumber = 0
         var currentTimeSignature = TimeSignature(0, 4, 4)
-        while (conductorStaffStack.isNotEmpty() or staffStack.isNotEmpty() or carryOverNotesStack.isNotEmpty()) {
+        while (conductorStaffStack.isNotEmpty() || staffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty()) {
             val xmlMeasure = this.createMeasure(conductorStaffStack, staffStack, carryOverNotesStack)
             xmlMeasures.add(xmlMeasure)
         }
