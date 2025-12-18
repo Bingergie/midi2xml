@@ -18,7 +18,11 @@ class XmlWriter {
     private var currentMeasureNumber: Int = 0
     private var currentTick: Long = 0L
 
+    /**
+     * Converts a score object into musicxml then writes it to a specified file.
+     */
     fun writeScoreToXml(score: Score, outputFile: File) {
+
         currentScore = score
         val xmlPartList = musicxml.PartList()
         xmlScorePartwise = musicxml.ScorePartwise().apply {
