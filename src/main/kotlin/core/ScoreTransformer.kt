@@ -5,7 +5,13 @@ class ScoreTransformer {
 
     fun transformScore(score: Score) {
         currentScore = score
+    }
+
+    fun addRests() {
 
     }
 
+    fun setNoteNotationType() {
+
+    }
 }
