@@ -12,6 +12,8 @@ class XmlWriter {
     private var xmlScorePartwise: musicxml.ScorePartwise? = null
     private var currentTimeSignature: TimeSignature = TimeSignature(0, 4, 4)
     private var currentKeySignature: KeySignature = KeySignature(0, 0)
+    private var conductorStaffStack: MutableList<StaffSymbol> = mutableListOf()
+    private var currentStaffStack: MutableList<StaffSymbol> = mutableListOf()
     private var carryOverNotesStack: MutableList<Note> = mutableListOf()
     private var currentMeasureNumber: Int = 0
     private var currentTick: Long = 0L
@@ -64,29 +66,31 @@ class XmlWriter {
 
     private fun createMeasuresFromStaff(staff: Staff): List<musicxml.ScorePartwise.Part.Measure> {
         val xmlMeasures = mutableListOf<musicxml.ScorePartwise.Part.Measure>()
-        val conductorStaffStack =
-            this.currentScore!!.conductorStaff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
-        val staffStack = staff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
+        conductorStaffStack = this.currentScore!!.conductorStaff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
+        currentStaffStack = staff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
         carryOverNotesStack = mutableListOf<Note>()
-        // todo: grab all elements of conductorStaffStack with anchorTick 0 and initialize current clef, key, etc...
-
-        var currentMeasureStartTick = 0L
-        var currentTick = 0L
         currentMeasureNumber = 1
-        var currentTimeSignature = TimeSignature(0, 4, 4)
-        while (conductorStaffStack.isNotEmpty() || staffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty()) {
-            val xmlMeasure = this.createMeasure(conductorStaffStack, staffStack, carryOverNotesStack)
+        this.initScoreState()
+        while (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty()) {
+            val xmlMeasure = this.createMeasure()
             xmlMeasures.add(xmlMeasure)
             currentMeasureNumber++
         }
         return xmlMeasures
     }
 
-    private fun createMeasure(
-        conductorStaffStack: MutableList<StaffSymbol>,
-        currentStaffStack: MutableList<StaffSymbol>,
-        carryOverNotesStack: MutableList<Note> // todo: side effect: return new carry over notes and handle ties
-    ): musicxml.ScorePartwise.Part.Measure {
+    private fun initScoreState() {
+        while (conductorStaffStack.firstOrNull()?.anchorTick == 0L) {
+            when (val nextConductorStaffSymbol = conductorStaffStack.removeFirst()) {
+                is TimeSignature -> this.currentTimeSignature = nextConductorStaffSymbol
+                is KeySignature -> this.currentKeySignature = nextConductorStaffSymbol
+                else -> throw Exception("Staff symbol of type $nextConductorStaffSymbol unsupported")
+            }
+        }
+
+    }
+
+    private fun createMeasure(): musicxml.ScorePartwise.Part.Measure {
         val measureStartTick = currentTick
         val nextMeasureStartTick = measureStartTick + currentScore!!.ticksPerQuarterNote * currentMeasureNumber
         val xmlMeasure = musicxml.ScorePartwise.Part.Measure().apply {
