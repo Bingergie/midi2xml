@@ -16,6 +16,7 @@ class Staff() {
     fun add(staffSymbol: StaffSymbol) {
         staffSymbols.add(staffSymbol)
     }
+
     override fun toString(): String {
         return "Staff(staffSymbols=${staffSymbols.joinToString(", ")})"
     }
@@ -54,8 +55,20 @@ class Note(
 
 class KeySignature(
     anchorTick: Long,
-    val fifthsAboveC: Long,
+    val fifthsAboveC: Int,
+    val mode: Mode,
 ) : StaffSymbol(anchorTick) {
+    enum class Mode(val number: Int) {
+        MAJOR(0),
+        MINOR(1);
+
+        companion object {
+            fun fromInt(number: Int): Mode {
+                return entries.firstOrNull() { it.number == number }
+                    ?: throw IllegalArgumentException("Invalid mode number: $number")
+            }
+        }
+    }
 }
 
 class TimeSignature(

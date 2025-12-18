@@ -35,7 +35,7 @@ class MidiParser {
         when (message.metaMessageType) {
             MetaMessageType.TIME_SIGNATURE -> this.handleTimeSignature(tick, message)
             MetaMessageType.END_OF_TRACK -> {}
-            MetaMessageType.KEY_SIGNATURE -> {}
+            MetaMessageType.KEY_SIGNATURE -> this.handleKeySignature(tick, message)
             MetaMessageType.SEQUENCE_NUMBER -> {}
             MetaMessageType.TEXT -> {}
             MetaMessageType.COPYRIGHT_NOTICE -> {}
@@ -51,6 +51,13 @@ class MidiParser {
             MetaMessageType.SEQUENCER_SPECIFIC -> {}
             null -> println("Warning: null MetaMessage received!")
         }
+    }
+
+    private fun handleKeySignature(tick: Long, message: MetaMessage) {
+        val fifthsAboveC = message.data[0].toInt()
+        val mode = KeySignature.Mode.fromInt(message.data[1].toInt())
+        val keySignature = KeySignature(tick, fifthsAboveC, mode)
+        this.currentScore!!.conductorStaff.add(keySignature)
     }
 
     private fun handleTimeSignature(tick: Long, message: MetaMessage) {
