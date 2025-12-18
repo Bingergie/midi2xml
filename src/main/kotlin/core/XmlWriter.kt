@@ -35,7 +35,7 @@ class XmlWriter {
             }
             if (index == 0) xmlPartList.scorePart = xmlScorePart else xmlPartList.partGroupOrScorePart.add(xmlScorePart)
 
-            val xmlMeasures = createMeasuresFromStaff(staff)
+            val xmlMeasures = createXmlMeasuresFromStaff(staff)
             val xmlPart = musicxml.ScorePartwise.Part().apply {
                 this.id = xmlScorePart
                 for (xmlMeasure in xmlMeasures) {
@@ -64,22 +64,22 @@ class XmlWriter {
         marshaller.marshal(xmlScorePartwise, writer)
     }
 
-    private fun createMeasuresFromStaff(staff: Staff): List<musicxml.ScorePartwise.Part.Measure> {
+    private fun createXmlMeasuresFromStaff(staff: Staff): List<musicxml.ScorePartwise.Part.Measure> {
         val xmlMeasures = mutableListOf<musicxml.ScorePartwise.Part.Measure>()
         conductorStaffStack = this.currentScore!!.conductorStaff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
         currentStaffStack = staff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
         carryOverNotesStack = mutableListOf<Note>()
         currentMeasureNumber = 1
-        this.initScoreState()
+        this.initSignaturesStates()
         while (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty()) {
-            val xmlMeasure = this.createMeasure()
+            val xmlMeasure = this.createXmlMeasure()
             xmlMeasures.add(xmlMeasure)
             currentMeasureNumber++
         }
         return xmlMeasures
     }
 
-    private fun initScoreState() {
+    private fun initSignaturesStates() {
         while (conductorStaffStack.firstOrNull()?.anchorTick == 0L) {
             when (val nextConductorStaffSymbol = conductorStaffStack.removeFirst()) {
                 is TimeSignature -> this.currentTimeSignature = nextConductorStaffSymbol
@@ -90,12 +90,12 @@ class XmlWriter {
 
     }
 
-    private fun createMeasure(): musicxml.ScorePartwise.Part.Measure {
+    private fun createXmlMeasure(): musicxml.ScorePartwise.Part.Measure {
         val measureStartTick = currentTick
         val nextMeasureStartTick = measureStartTick + currentScore!!.ticksPerQuarterNote * currentMeasureNumber
         val xmlMeasure = musicxml.ScorePartwise.Part.Measure().apply {
             if (currentMeasureNumber == 1) {
-                noteOrBackupOrForward.add(createFirstMeasureAttributes())
+                noteOrBackupOrForward.add(createXmlFirstMeasureAttributes())
             }
             number = currentMeasureNumber.toString()
             while (currentTick < nextMeasureStartTick && (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty())) {
@@ -119,7 +119,7 @@ class XmlWriter {
                             note = Note(note.anchorTick, note.pitch, note.durationInTicks - overFlowDurationInTicks, note.velocity) // todo: copy notationInfo, add tie
                             carryOverNotesStack.add(Note(nextMeasureStartTick, note.pitch, overFlowDurationInTicks, note.velocity))
                         }
-                        val xmlNote = createNote(note)
+                        val xmlNote = createXmlNote(note)
                         this.noteOrBackupOrForward.add(xmlNote)
                         currentTick += note.durationInTicks
                     }
@@ -130,7 +130,7 @@ class XmlWriter {
         return xmlMeasure
     }
 
-    fun createFirstMeasureAttributes(): musicxml.Attributes {
+    fun createXmlFirstMeasureAttributes(): musicxml.Attributes {
         return musicxml.Attributes().apply {
             divisions = BigDecimal(currentScore!!.ticksPerQuarterNote)
             key.add(musicxml.Key().apply {
@@ -145,11 +145,12 @@ class XmlWriter {
                 this.sign = musicxml.ClefSign.valueOf("G") // todo: currentClef
                 this.line = BigInteger.valueOf(2L) // clef.anchorLine
             })
+            // todo: if top staff, add tempo as direction
         }
 
     }
 
-    private fun createNote(note: Note): musicxml.Note {
+    private fun createXmlNote(note: Note): musicxml.Note {
         return musicxml.Note().apply {
 //                            this.voice = 1.toString()
             this.pitch = musicxml.Pitch().apply {
