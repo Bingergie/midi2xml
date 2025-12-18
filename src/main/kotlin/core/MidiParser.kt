@@ -89,7 +89,6 @@ class MidiParser {
     private fun handleNoteStart(channel: Int, pitch: Int, velocity: Int, startTick: Long) {
         val startTicks = tempNotes.getOrPut(channel to pitch) { mutableListOf() }
         startTicks.add(startTick to velocity)
-        println(channel)
         return
     }
 
