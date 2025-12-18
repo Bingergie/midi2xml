@@ -105,7 +105,7 @@ class XmlWriter {
                     conductorStaffStack.firstOrNull()?.anchorTick -> conductorStaffStack.removeFirst()
                     carryOverNotesStack.firstOrNull()?.anchorTick -> carryOverNotesStack.removeFirst()
                     currentStaffStack.firstOrNull()?.anchorTick -> currentStaffStack.removeFirst()
-                    else -> throw Exception("WTF??")
+                    else -> throw Exception("WTF?? the code logic is wrong")
                 }
                 when (nextStaffSymbol) {
                     is Note -> {
