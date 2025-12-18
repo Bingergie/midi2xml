@@ -14,6 +14,7 @@ class XmlWriter {
     private var currentKeySignature: KeySignature = KeySignature(0, 0)
     private var carryOverNotesStack: MutableList<Note> = mutableListOf()
     private var currentMeasureNumber: Int = 0
+    private var currentTick: Long = 0L
 
     fun writeScoreToXml(score: Score, outputFile: File) {
         currentScore = score
@@ -71,11 +72,12 @@ class XmlWriter {
 
         var currentMeasureStartTick = 0L
         var currentTick = 0L
-        currentMeasureNumber = 0
+        currentMeasureNumber = 1
         var currentTimeSignature = TimeSignature(0, 4, 4)
         while (conductorStaffStack.isNotEmpty() || staffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty()) {
             val xmlMeasure = this.createMeasure(conductorStaffStack, staffStack, carryOverNotesStack)
             xmlMeasures.add(xmlMeasure)
+            currentMeasureNumber++
         }
         return xmlMeasures
     }
@@ -85,28 +87,37 @@ class XmlWriter {
         currentStaffStack: MutableList<StaffSymbol>,
         carryOverNotesStack: MutableList<Note> // todo: side effect: return new carry over notes and handle ties
     ): musicxml.ScorePartwise.Part.Measure {
+        val measureStartTick = currentTick
+        val nextMeasureStartTick = measureStartTick + currentScore!!.ticksPerQuarterNote * currentMeasureNumber
         val xmlMeasure = musicxml.ScorePartwise.Part.Measure().apply {
             if (currentMeasureNumber == 1) {
                 noteOrBackupOrForward.add(createFirstMeasureAttributes())
             }
             number = currentMeasureNumber.toString()
-            while (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty()) {
+            while (currentTick < nextMeasureStartTick && (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty())) {
                 val candidateNextStaffSymbols = listOfNotNull(
                     conductorStaffStack.firstOrNull(),
-                    currentStaffStack.firstOrNull(),
                     carryOverNotesStack.firstOrNull(),
+                    currentStaffStack.firstOrNull(),
                 )
                 val minTick = candidateNextStaffSymbols.minOf { it.anchorTick }
                 val nextStaffSymbol = when (minTick) {
                     conductorStaffStack.firstOrNull()?.anchorTick -> conductorStaffStack.removeFirst()
-                    currentStaffStack.firstOrNull()?.anchorTick -> currentStaffStack.removeFirst()
                     carryOverNotesStack.firstOrNull()?.anchorTick -> carryOverNotesStack.removeFirst()
+                    currentStaffStack.firstOrNull()?.anchorTick -> currentStaffStack.removeFirst()
                     else -> throw Exception("WTF??")
                 }
                 when (nextStaffSymbol) {
                     is Note -> {
-                        val xmlNote = createNote(nextStaffSymbol)
+                        var note = nextStaffSymbol
+                        if (currentTick + note.durationInTicks > nextMeasureStartTick) {
+                            val overFlowDurationInTicks = currentTick + note.durationInTicks - nextMeasureStartTick
+                            note = Note(note.anchorTick, note.pitch, note.durationInTicks - overFlowDurationInTicks, note.velocity) // todo: copy notationInfo, add tie
+                            carryOverNotesStack.add(Note(nextMeasureStartTick, note.pitch, overFlowDurationInTicks, note.velocity))
+                        }
+                        val xmlNote = createNote(note)
                         this.noteOrBackupOrForward.add(xmlNote)
+                        currentTick += note.durationInTicks
                     }
                 }
 
@@ -127,7 +138,7 @@ class XmlWriter {
                 this.timeSignature.add(factory.createTimeBeatType(currentTimeSignature.denominator.toString()))
             })
             clef.add(musicxml.Clef().apply {
-                this.sign = musicxml.ClefSign.valueOf("G") // todo
+                this.sign = musicxml.ClefSign.valueOf("G") // todo: currentClef
                 this.line = BigInteger.valueOf(2L) // clef.anchorLine
             })
         }
