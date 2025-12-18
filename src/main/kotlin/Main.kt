@@ -8,7 +8,6 @@ fun main(args: Array<String>) {
 //    val midiFile = File("src/test/resources/mary.mid")
     val midiParser = MidiParser()
     val score = midiParser.parse(midiFile)
-    print(score)
     val xmlWriter = XmlWriter()
     xmlWriter.writeScoreToXml(score, File("_test/test_Dec18-3.musicxml"))
 }
