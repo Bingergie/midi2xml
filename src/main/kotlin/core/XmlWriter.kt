@@ -6,6 +6,7 @@ import java.math.BigDecimal
 import java.math.BigInteger
 import javax.xml.bind.JAXBContext
 import javax.xml.bind.Marshaller
+import kotlin.math.abs
 
 class XmlWriter {
     private var currentScore: Score? = null
@@ -15,6 +16,7 @@ class XmlWriter {
     private var conductorStaffStack: MutableList<StaffSymbol> = mutableListOf()
     private var currentStaffStack: MutableList<StaffSymbol> = mutableListOf()
     private var carryOverNotesStack: MutableList<Note> = mutableListOf()
+    private var carryOverRestsStack: MutableList<Rest> = mutableListOf()
     private var currentMeasureNumber: Int = 0
     private var currentTick: Long = 0L
 
@@ -70,7 +72,8 @@ class XmlWriter {
 
     private fun createXmlMeasuresFromStaff(staff: Staff): List<musicxml.ScorePartwise.Part.Measure> {
         val xmlMeasures = mutableListOf<musicxml.ScorePartwise.Part.Measure>()
-        conductorStaffStack = this.currentScore!!.conductorStaff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
+        conductorStaffStack =
+            this.currentScore!!.conductorStaff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
         currentStaffStack = staff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
         carryOverNotesStack = mutableListOf<Note>()
         currentMeasureNumber = 1
@@ -94,38 +97,135 @@ class XmlWriter {
 
     }
 
+    private fun closestNoteDurationAndType(durationInTicks: Long, ticksPerQuarterNote: Int): Pair<Int, String> {
+        val quantizedDurationsInTicks = mapOf<Int, String>(
+            ticksPerQuarterNote * 4 to "whole",
+            ticksPerQuarterNote * 2 to "half",
+//            ticksPerQuarterNote * 3 / 2 to "half",
+            ticksPerQuarterNote to "quarter",
+//            ticksPerQuarterNote * 2 / 3 to "quarter",
+            ticksPerQuarterNote / 2 to "eighth",
+//            ticksPerQuarterNote / 3 to "eighth",
+            ticksPerQuarterNote / 4 to "16th",
+//            ticksPerQuarterNote / 6 to "16th",
+//            ticksPerQuarterNote / 8 to "32th",
+        )
+        val closestDuration = quantizedDurationsInTicks.keys.minByOrNull { quantizedDurationsInTicks ->
+            abs(durationInTicks - quantizedDurationsInTicks)
+        }
+        return Pair<Int, String>(closestDuration as Int, quantizedDurationsInTicks[closestDuration] as String)
+    }
+
     private fun createXmlMeasure(): musicxml.ScorePartwise.Part.Measure {
         val measureStartTick = currentTick
-        val nextMeasureStartTick = measureStartTick + currentScore!!.ticksPerQuarterNote * currentMeasureNumber
+        val nextMeasureStartTick =
+            measureStartTick + currentScore!!.ticksPerQuarterNote * currentTimeSignature.numerator / currentTimeSignature.denominator * 4
         val xmlMeasure = musicxml.ScorePartwise.Part.Measure().apply {
             if (currentMeasureNumber == 1) {
                 noteOrBackupOrForward.add(createXmlFirstMeasureAttributes())
             }
             number = currentMeasureNumber.toString()
-            while (currentTick < nextMeasureStartTick && (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty())) {
+            val nextCarryOverNotesStack = mutableListOf<Note>()
+            val nextCarryOverRestsStack = mutableListOf<Rest>()
+            while (currentTick < nextMeasureStartTick - 1 && (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty() || carryOverRestsStack.isNotEmpty())) {
                 val candidateNextStaffSymbols = listOfNotNull(
                     conductorStaffStack.firstOrNull(),
                     carryOverNotesStack.firstOrNull(),
+                    carryOverRestsStack.firstOrNull(),
                     currentStaffStack.firstOrNull(),
                 )
                 val minTick = candidateNextStaffSymbols.minOf { it.anchorTick }
                 val nextStaffSymbol = when (minTick) {
                     conductorStaffStack.firstOrNull()?.anchorTick -> conductorStaffStack.removeFirst()
                     carryOverNotesStack.firstOrNull()?.anchorTick -> carryOverNotesStack.removeFirst()
+                    carryOverRestsStack.firstOrNull()?.anchorTick -> carryOverRestsStack.removeFirst()
                     currentStaffStack.firstOrNull()?.anchorTick -> currentStaffStack.removeFirst()
                     else -> throw Exception("WTF?? the code logic is wrong")
                 }
                 when (nextStaffSymbol) {
                     is Note -> {
                         var note = nextStaffSymbol
-                        if (currentTick + note.durationInTicks > nextMeasureStartTick) {
-                            val overFlowDurationInTicks = currentTick + note.durationInTicks - nextMeasureStartTick
-                            note = Note(note.anchorTick, note.pitch, note.durationInTicks - overFlowDurationInTicks, note.velocity) // todo: copy notationInfo, add tie
-                            carryOverNotesStack.add(Note(nextMeasureStartTick, note.pitch, overFlowDurationInTicks, note.velocity))
+                        val noteAnchorTick = note.notationInfo.quantizedAnchorTick ?: note.anchorTick
+                        val noteDurationInTicks = note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks
+                        if (currentTick + noteDurationInTicks > nextMeasureStartTick) {
+                            val overFlowDurationInTicks = currentTick + noteDurationInTicks - nextMeasureStartTick
+                            note = Note(
+                                noteAnchorTick,
+                                note.pitch,
+                                noteDurationInTicks - overFlowDurationInTicks,
+                                note.velocity
+                            ).apply {
+                                notationInfo.apply {
+                                    this.isChord = note.notationInfo.isChord
+                                    this.step = note.notationInfo.step
+                                    this.alter = note.notationInfo.alter
+                                    this.quantizedAnchorTick = note.notationInfo.quantizedAnchorTick
+                                }
+                            }
+                            note.notationInfo.apply {
+                                val (closestDurationInTicks, closestDurationType) = closestNoteDurationAndType(
+                                    note.durationInTicks,
+                                    currentScore!!.ticksPerQuarterNote
+                                )
+                                this.quantizedDurationInTicks = closestDurationInTicks.toLong()
+                                this.noteType = closestDurationType
+                            }
+                            val carryOverNote =
+                                Note(nextMeasureStartTick, note.pitch, overFlowDurationInTicks, note.velocity).apply {
+                                    notationInfo.apply {
+                                        this.isChord = note.notationInfo.isChord
+                                        this.step = note.notationInfo.step
+                                        this.alter = note.notationInfo.alter
+                                        this.quantizedAnchorTick = nextMeasureStartTick
+                                    }
+                                }
+                            carryOverNote.notationInfo.apply {
+                                val (closestDurationInTicks, closestDurationType) = closestNoteDurationAndType(
+                                    carryOverNote.durationInTicks,
+                                    currentScore!!.ticksPerQuarterNote
+                                )
+                                this.quantizedDurationInTicks = closestDurationInTicks.toLong()
+                                this.noteType = closestDurationType
+                            }
+                            nextCarryOverNotesStack.add(carryOverNote)
                         }
                         val xmlNote = createXmlNote(note)
                         noteOrBackupOrForward.add(xmlNote)
-                        currentTick += note.durationInTicks
+                        if (note.notationInfo.isChord != true) {
+                            currentTick += note.durationInTicks
+                        }
+                    }
+
+                    is Rest -> {
+                        var rest = nextStaffSymbol
+                        val restAnchorTick = rest.notationInfo.quantizedAnchorTick ?: rest.anchorTick
+                        val restDurationInTicks = rest.notationInfo.quantizedDurationInTicks ?: rest.durationInTicks
+                        if (currentTick + restDurationInTicks > nextMeasureStartTick) {
+                            val overFlowDurationInTicks = currentTick + restDurationInTicks - nextMeasureStartTick
+                            rest = Rest(restAnchorTick, restDurationInTicks - overFlowDurationInTicks)
+                            rest.notationInfo.apply {
+                                val (closestDurationInTicks, closestDurationType) = closestNoteDurationAndType(
+                                    rest.durationInTicks,
+                                    currentScore!!.ticksPerQuarterNote
+                                )
+                                this.quantizedDurationInTicks = closestDurationInTicks.toLong()
+                                this.restType = closestDurationType
+                            }
+                            val carryOverRest = Rest(nextMeasureStartTick, overFlowDurationInTicks)
+                            carryOverRest.notationInfo.apply {
+                                val (closestDurationInTicks, closestDurationType) = closestNoteDurationAndType(
+                                    carryOverRest.durationInTicks,
+                                    currentScore!!.ticksPerQuarterNote
+                                )
+                                this.quantizedAnchorTick = measureStartTick
+                                this.quantizedDurationInTicks = closestDurationInTicks.toLong()
+                                this.restType = closestDurationType
+                            }
+                            nextCarryOverRestsStack.add(carryOverRest)
+                        }
+                        val xmlRest = createXmlRest(rest)
+                        noteOrBackupOrForward.add(xmlRest)
+                        currentTick += rest.durationInTicks
                     }
 
                     is KeySignature -> {
@@ -140,8 +240,17 @@ class XmlWriter {
                 }
 
             }
+            carryOverNotesStack = nextCarryOverNotesStack
+            carryOverRestsStack = nextCarryOverRestsStack
         }
         return xmlMeasure
+    }
+
+    fun createXmlRest(rest: Rest): musicxml.Note {
+        return musicxml.Note().apply {
+            this.rest = musicxml.Rest()
+            this.duration = rest.durationInTicks.toBigDecimal()
+        }
     }
 
     private fun createXmlKeySignature(keySignature: KeySignature): musicxml.Key {
@@ -158,6 +267,7 @@ class XmlWriter {
             this.timeSignature.add(factory.createTimeBeatType(timeSignature.denominator.toString()))
         }
     }
+
     private fun createXmlFirstMeasureAttributes(): musicxml.Attributes {
         return musicxml.Attributes().apply {
             divisions = BigDecimal(currentScore!!.ticksPerQuarterNote)
@@ -175,16 +285,20 @@ class XmlWriter {
     private fun createXmlNote(note: Note): musicxml.Note {
         return musicxml.Note().apply {
 //                            this.voice = 1.toString()
+            if (note.notationInfo.isChord == true) {
+                this.chord = musicxml.Empty()
+            }
             this.pitch = musicxml.Pitch().apply {
                 step = note.notationInfo.step ?: musicxml.Step.C // TODO: convert midi pitch to step, octave, alter
+                if (note.notationInfo.alter != null) {
+                    alter = note.notationInfo.alter
+                }
                 octave = note.pitch / 12
             }
-            this.duration = BigDecimal(note.durationInTicks/* ?: throw Exception("Missing notation duration!!")*/)
-            this.type = musicxml.NoteType().apply {
-                this.value = "16th" // todo: change to notationInfo.noteType
-            }
-            if (note.notationInfo.isChord == true)
-                this.chord = musicxml.Empty()
+            this.duration = BigDecimal(note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks)
+            this.type = musicxml.NoteType()
+                .apply { this.value = note.notationInfo.noteType ?: /*throw Exception("Missing note type!")*/ "eighth" }
+
         }
     }
 }

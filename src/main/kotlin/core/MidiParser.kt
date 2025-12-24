@@ -26,7 +26,10 @@ class MidiParser {
                 }
             }
             for (staff in currentStaves)
-                staff?.let { currentScore!!.staves.add(it) }
+                staff?.let {
+                    it.staffSymbols.sortBy { symbol -> symbol.anchorTick }
+                    currentScore!!.staves.add(it)
+                }
         }
         return currentScore!!
     }
@@ -49,7 +52,7 @@ class MidiParser {
             MetaMessageType.MIDI_CHANNEL_PREFIX -> {}
             MetaMessageType.SET_TEMPO -> {}
             MetaMessageType.SEQUENCER_SPECIFIC -> {}
-            null -> println("Warning: null MetaMessage received!")
+            null -> println("Warning: unknown MetaMessage received!")
         }
     }
 

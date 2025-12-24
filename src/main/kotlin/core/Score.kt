@@ -1,6 +1,7 @@
 package core
 
-import musicxml.Step
+import java.math.BigDecimal
+
 
 class Score(val ticksPerQuarterNote: Int) {
     val staves = mutableListOf<Staff>()
@@ -45,12 +46,27 @@ class Note(
     val velocity: Int
 ) : StaffSymbol(anchorTick) {
     class NoteNotationInfo() : NotationInfo() {
-        var step: Step? = null
+        var step: musicxml.Step? = null
         var isChord: Boolean? = null
-        var duration: Int? = null
+        var quantizedAnchorTick: Long? = null
+        var quantizedDurationInTicks: Long? = null
+        var noteType: String? = null
+        var alter: BigDecimal? = null
     }
 
     override val notationInfo: NoteNotationInfo = NoteNotationInfo()
+}
+
+class Rest(
+    anchorTick: Long,
+    val durationInTicks: Long,
+) : StaffSymbol(anchorTick) {
+    class RestNotationInfo() : NotationInfo() {
+        var quantizedAnchorTick: Long? = null
+        var quantizedDurationInTicks: Long? = null
+        var restType: String? = null
+    }
+    override val notationInfo: RestNotationInfo = RestNotationInfo()
 }
 
 class KeySignature(
