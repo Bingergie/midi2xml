@@ -91,7 +91,8 @@ class XmlWriter {
             when (val nextConductorStaffSymbol = conductorStaffStack.removeFirst()) {
                 is TimeSignature -> this.currentTimeSignature = nextConductorStaffSymbol
                 is KeySignature -> this.currentKeySignature = nextConductorStaffSymbol
-                else -> throw Exception("Staff symbol of type $nextConductorStaffSymbol unsupported")
+                // todo: tempo,
+                else -> TODO("Staff symbol of type $nextConductorStaffSymbol unsupported in initState function")
             }
         }
 
