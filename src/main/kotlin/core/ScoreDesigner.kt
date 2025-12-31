@@ -6,7 +6,7 @@ import kotlin.String
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class ScoreTransformer { // todo: rename to ScoreDesigner
+class ScoreDesigner {
     private var currentScore: Score? = null
 
     fun transformScore(score: Score) {

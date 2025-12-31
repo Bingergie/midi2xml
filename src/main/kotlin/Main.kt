@@ -1,5 +1,5 @@
 import core.MidiParser
-import core.ScoreTransformer
+import core.ScoreDesigner
 import core.XmlWriter
 import java.io.File
 
@@ -13,8 +13,8 @@ fun main(args: Array<String>) {
     val midiFile = File(args[0])
     val midiParser = MidiParser()
     val score = midiParser.parse(midiFile)
-    val scoreTransformer = ScoreTransformer()
-    scoreTransformer.transformScore(score)
+    val scoreDesigner = ScoreDesigner()
+    scoreDesigner.transformScore(score)
     val xmlWriter = XmlWriter()
     xmlWriter.writeScoreToXml(score, File(args[1]))
 }
