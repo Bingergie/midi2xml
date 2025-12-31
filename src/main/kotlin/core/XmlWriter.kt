@@ -77,7 +77,7 @@ class XmlWriter {
         currentStaffStack = staff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
         carryOverNotesStack = mutableListOf<Note>()
         currentMeasureNumber = 1
-        this.initSignaturesStates()
+        this.initState()
         while (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty()) {
             val xmlMeasure = this.createXmlMeasure()
             xmlMeasures.add(xmlMeasure)
@@ -86,7 +86,7 @@ class XmlWriter {
         return xmlMeasures
     }
 
-    private fun initSignaturesStates() {
+    private fun initState() {
         while (conductorStaffStack.firstOrNull()?.anchorTick == 0L) {
             when (val nextConductorStaffSymbol = conductorStaffStack.removeFirst()) {
                 is TimeSignature -> this.currentTimeSignature = nextConductorStaffSymbol
