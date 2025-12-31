@@ -290,7 +290,7 @@ class XmlWriter {
                 this.chord = musicxml.Empty()
             }
             this.pitch = musicxml.Pitch().apply {
-                step = note.notationInfo.step ?: musicxml.Step.C // TODO: convert midi pitch to step, octave, alter
+                step = note.notationInfo.step ?: musicxml.Step.C // todo: come up with better error handling
                 if (note.notationInfo.alter != null) {
                     alter = note.notationInfo.alter
                 }
