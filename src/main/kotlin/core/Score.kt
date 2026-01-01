@@ -52,6 +52,8 @@ class Note(
         var quantizedDurationInTicks: Long? = null
         var noteType: String? = null
         var alter: BigDecimal? = null
+        var tieStart: Boolean = false
+        var tieEnd: Boolean = false
     }
 
     override val notationInfo: NoteNotationInfo = NoteNotationInfo()

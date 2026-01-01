@@ -128,7 +128,7 @@ class XmlWriter {
             number = currentMeasureNumber.toString()
             val nextCarryOverNotesStack = mutableListOf<Note>()
             val nextCarryOverRestsStack = mutableListOf<Rest>()
-            while (currentTick < nextMeasureStartTick - 1 && (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty() || carryOverRestsStack.isNotEmpty())) {
+            while (currentTick < nextMeasureStartTick && (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty() || carryOverRestsStack.isNotEmpty())) {
                 val candidateNextStaffSymbols = listOfNotNull(
                     conductorStaffStack.firstOrNull(),
                     carryOverNotesStack.firstOrNull(),
@@ -148,7 +148,8 @@ class XmlWriter {
                         var note = nextStaffSymbol
                         val noteAnchorTick = note.notationInfo.quantizedAnchorTick ?: note.anchorTick
                         val noteDurationInTicks = note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks
-                        if (currentTick + noteDurationInTicks > nextMeasureStartTick) {
+                        if (currentTick + noteDurationInTicks > nextMeasureStartTick) { // needs to be broken up
+                            // break note into two, separating at bar line
                             val overFlowDurationInTicks = currentTick + noteDurationInTicks - nextMeasureStartTick
                             note = Note(
                                 noteAnchorTick,
@@ -161,6 +162,8 @@ class XmlWriter {
                                     this.step = note.notationInfo.step
                                     this.alter = note.notationInfo.alter
                                     this.quantizedAnchorTick = note.notationInfo.quantizedAnchorTick
+                                    this.tieEnd = note.notationInfo.tieEnd
+                                    this.tieStart = true
                                 }
                             }
                             note.notationInfo.apply {
@@ -178,6 +181,8 @@ class XmlWriter {
                                         this.step = note.notationInfo.step
                                         this.alter = note.notationInfo.alter
                                         this.quantizedAnchorTick = nextMeasureStartTick
+                                        this.tieStart = note.notationInfo.tieStart
+                                        this.tieEnd = true
                                     }
                                 }
                             carryOverNote.notationInfo.apply {
@@ -299,7 +304,16 @@ class XmlWriter {
             this.duration = BigDecimal(note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks)
             this.type = musicxml.NoteType()
                 .apply { this.value = note.notationInfo.noteType ?: /*throw Exception("Missing note type!")*/ "eighth" }
-
+            if (note.notationInfo.tieEnd) {
+                this.tie.add(musicxml.Tie().apply {
+                    this.type = musicxml.StartStop.STOP
+                })
+            }
+            if (note.notationInfo.tieStart) {
+                this.tie.add(musicxml.Tie().apply {
+                    this.type = musicxml.StartStop.START
+                })
+            }
         }
     }
 }
