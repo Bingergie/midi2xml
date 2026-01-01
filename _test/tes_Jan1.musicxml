@@ -273,8 +273,6 @@
                 <duration>960</duration>
                 <type>half</type>
             </note>
-        </measure>
-        <measure number="2">
             <note>
                 <chord/>
                 <pitch>
@@ -293,6 +291,8 @@
                 <duration>960</duration>
                 <type>half</type>
             </note>
+        </measure>
+        <measure number="2">
             <note>
                 <rest/>
                 <duration>480</duration>
@@ -305,8 +305,6 @@
                 <duration>960</duration>
                 <type>half</type>
             </note>
-        </measure>
-        <measure number="3">
             <note>
                 <chord/>
                 <pitch>
@@ -327,6 +325,12 @@
             </note>
             <note>
                 <rest/>
+                <duration>0</duration>
+            </note>
+        </measure>
+        <measure number="3">
+            <note>
+                <rest/>
                 <duration>480</duration>
             </note>
             <note>
@@ -337,8 +341,6 @@
                 <duration>960</duration>
                 <type>half</type>
             </note>
-        </measure>
-        <measure number="4">
             <note>
                 <chord/>
                 <pitch>
@@ -359,6 +361,12 @@
             </note>
             <note>
                 <rest/>
+                <duration>0</duration>
+            </note>
+        </measure>
+        <measure number="4">
+            <note>
+                <rest/>
                 <duration>480</duration>
             </note>
             <note>
@@ -369,8 +377,6 @@
                 <duration>960</duration>
                 <type>half</type>
             </note>
-        </measure>
-        <measure number="5">
             <note>
                 <chord/>
                 <pitch>
@@ -391,6 +397,12 @@
             </note>
             <note>
                 <rest/>
+                <duration>0</duration>
+            </note>
+        </measure>
+        <measure number="5">
+            <note>
+                <rest/>
                 <duration>480</duration>
             </note>
             <note>
@@ -401,8 +413,6 @@
                 <duration>960</duration>
                 <type>half</type>
             </note>
-        </measure>
-        <measure number="6">
             <note>
                 <chord/>
                 <pitch>
@@ -424,6 +434,12 @@
             </note>
             <note>
                 <rest/>
+                <duration>0</duration>
+            </note>
+        </measure>
+        <measure number="6">
+            <note>
+                <rest/>
                 <duration>480</duration>
             </note>
             <note>
@@ -434,8 +450,6 @@
                 <duration>960</duration>
                 <type>half</type>
             </note>
-        </measure>
-        <measure number="7">
             <note>
                 <chord/>
                 <pitch>
@@ -456,6 +470,12 @@
             </note>
             <note>
                 <rest/>
+                <duration>0</duration>
+            </note>
+        </measure>
+        <measure number="7">
+            <note>
+                <rest/>
                 <duration>480</duration>
             </note>
             <note>
@@ -466,8 +486,6 @@
                 <duration>960</duration>
                 <type>half</type>
             </note>
-        </measure>
-        <measure number="8">
             <note>
                 <chord/>
                 <pitch>
@@ -486,6 +504,8 @@
                 <duration>960</duration>
                 <type>half</type>
             </note>
+        </measure>
+        <measure number="8">
             <note>
                 <pitch>
                     <step>G</step>
@@ -520,8 +540,6 @@
                 <duration>960</duration>
                 <type>half</type>
             </note>
-        </measure>
-        <measure number="9">
             <note>
                 <chord/>
                 <pitch>

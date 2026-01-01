@@ -87,6 +87,7 @@ class XmlWriter {
     }
 
     private fun initState() {
+        currentTick = 0L
         while (conductorStaffStack.firstOrNull()?.anchorTick == 0L) {
             when (val nextConductorStaffSymbol = conductorStaffStack.removeFirst()) {
                 is TimeSignature -> this.currentTimeSignature = nextConductorStaffSymbol
@@ -128,7 +129,7 @@ class XmlWriter {
             number = currentMeasureNumber.toString()
             val nextCarryOverNotesStack = mutableListOf<Note>()
             val nextCarryOverRestsStack = mutableListOf<Rest>()
-            while (currentTick < nextMeasureStartTick && (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty() || carryOverRestsStack.isNotEmpty())) {
+            while ((conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty() || carryOverRestsStack.isNotEmpty())) {
                 val candidateNextStaffSymbols = listOfNotNull(
                     conductorStaffStack.firstOrNull(),
                     carryOverNotesStack.firstOrNull(),
@@ -136,6 +137,9 @@ class XmlWriter {
                     currentStaffStack.firstOrNull(),
                 )
                 val minTick = candidateNextStaffSymbols.minOf { it.anchorTick }
+                if (minTick >= nextMeasureStartTick) {
+                    break
+                }
                 val nextStaffSymbol = when (minTick) {
                     conductorStaffStack.firstOrNull()?.anchorTick -> conductorStaffStack.removeFirst()
                     carryOverNotesStack.firstOrNull()?.anchorTick -> carryOverNotesStack.removeFirst()
@@ -148,7 +152,7 @@ class XmlWriter {
                         var note = nextStaffSymbol
                         val noteAnchorTick = note.notationInfo.quantizedAnchorTick ?: note.anchorTick
                         val noteDurationInTicks = note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks
-                        if (currentTick + noteDurationInTicks > nextMeasureStartTick) { // needs to be broken up
+                        if (!note.notationInfo.isChord && (currentTick + noteDurationInTicks > nextMeasureStartTick)) { // note exceeds measure
                             // break note into two, separating at bar line
                             val overFlowDurationInTicks = currentTick + noteDurationInTicks - nextMeasureStartTick
                             note = Note(
@@ -197,7 +201,7 @@ class XmlWriter {
                         }
                         val xmlNote = createXmlNote(note)
                         noteOrBackupOrForward.add(xmlNote)
-                        if (note.notationInfo.isChord != true) {
+                        if (!note.notationInfo.isChord) {
                             currentTick += note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks
                         }
                     }
@@ -291,7 +295,7 @@ class XmlWriter {
     private fun createXmlNote(note: Note): musicxml.Note {
         return musicxml.Note().apply {
 //                            this.voice = 1.toString()
-            if (note.notationInfo.isChord == true) {
+            if (note.notationInfo.isChord) {
                 this.chord = musicxml.Empty()
             }
             this.pitch = musicxml.Pitch().apply {

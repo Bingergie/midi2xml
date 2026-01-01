@@ -25,7 +25,7 @@ class Staff() {
 
 class Instrument(val instrumentName: String)
 
-abstract class StaffSymbol(val anchorTick: Long) {
+abstract class StaffSymbol(open val anchorTick: Long) {
     open val notationInfo: NotationInfo = NotationInfo()
 //    override fun toString(): String {
 //        return this::class.simpleName + "(" +
@@ -47,7 +47,7 @@ class Note(
 ) : StaffSymbol(anchorTick) {
     class NoteNotationInfo() : NotationInfo() {
         var step: musicxml.Step? = null
-        var isChord: Boolean? = null
+        var isChord: Boolean = false
         var quantizedAnchorTick: Long? = null
         var quantizedDurationInTicks: Long? = null
         var noteType: String? = null
@@ -57,6 +57,8 @@ class Note(
     }
 
     override val notationInfo: NoteNotationInfo = NoteNotationInfo()
+    override val anchorTick: Long
+        get() = notationInfo.quantizedAnchorTick ?: super.anchorTick
 }
 
 class Rest(
@@ -69,6 +71,8 @@ class Rest(
         var restType: String? = null
     }
     override val notationInfo: RestNotationInfo = RestNotationInfo()
+    override val anchorTick: Long
+        get() = notationInfo.quantizedAnchorTick ?: super.anchorTick
 }
 
 class KeySignature(

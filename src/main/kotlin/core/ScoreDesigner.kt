@@ -106,15 +106,17 @@ class ScoreDesigner {
     }
 
     private fun addNoteNotationChordAndVoice() {
-        val notes = currentScore!!.staves.flatMap { it.staffSymbols.filterIsInstance<Note>() }
-        var previousNote: Note? = null
-        notes.forEach { note ->
-            if ((note.notationInfo.quantizedAnchorTick
-                    ?: note.anchorTick) == (previousNote?.notationInfo?.quantizedAnchorTick ?: previousNote?.anchorTick)
-            ) {
-                note.notationInfo.isChord = true
+        for (staff in currentScore!!.staves) {
+            val notes = staff.staffSymbols.filterIsInstance<Note>()
+            var previousNote: Note? = null
+            notes.forEach { note ->
+                val currentAnchorTick = note.notationInfo.quantizedAnchorTick ?: note.anchorTick
+                val previousAnchorTick = previousNote?.notationInfo?.quantizedAnchorTick ?: previousNote?.anchorTick
+                if (currentAnchorTick == previousAnchorTick) {
+                    note.notationInfo.isChord = true
+                }
+                previousNote = note
             }
-            previousNote = note
         }
     }
 
