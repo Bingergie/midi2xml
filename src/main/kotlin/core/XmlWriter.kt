@@ -303,7 +303,7 @@ class XmlWriter {
             }
             this.duration = BigDecimal(note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks)
             this.type = musicxml.NoteType()
-                .apply { this.value = note.notationInfo.noteType ?: /*throw Exception("Missing note type!")*/ "eighth" }
+                .apply { this.value = note.notationInfo.noteType ?: "eighth" } // todo: better error handling
             if (note.notationInfo.tieEnd) {
                 this.tie.add(musicxml.Tie().apply {
                     this.type = musicxml.StartStop.STOP
