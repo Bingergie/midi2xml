@@ -198,7 +198,7 @@ class XmlWriter {
                         val xmlNote = createXmlNote(note)
                         noteOrBackupOrForward.add(xmlNote)
                         if (note.notationInfo.isChord != true) {
-                            currentTick += note.durationInTicks
+                            currentTick += note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks
                         }
                     }
 
