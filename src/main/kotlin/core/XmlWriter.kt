@@ -299,7 +299,7 @@ class XmlWriter {
                 if (note.notationInfo.alter != null) {
                     alter = note.notationInfo.alter
                 }
-                octave = note.pitch / 12
+                octave = note.pitch / 12 - 1
             }
             this.duration = BigDecimal(note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks)
             this.type = musicxml.NoteType()
