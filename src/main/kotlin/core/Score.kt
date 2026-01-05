@@ -66,11 +66,11 @@ class Rest(
     anchorTick: Long,
     durationInTicks: Long,
 ) : StaffSymbol(anchorTick), HasDuration {
-    class RestNotationInfo(
+    data class RestNotationInfo(
         var restType: String? = null
     ) : NotationInfo()
 
-    override val notationInfo: RestNotationInfo = RestNotationInfo()
+    override var notationInfo: RestNotationInfo = RestNotationInfo()
     override val exactDurationInTicks: Long = durationInTicks
     override var quantizedDurationInTicks: Long? = null
 }

@@ -134,24 +134,25 @@ class XmlWriter {
                         var note = nextStaffSymbol
                         if (!note.notationInfo.isChord && (currentTick + note.durationInTicks > nextMeasureStartTick)) { // note exceeds measure
                             // break note into two, separating at bar line
-                            val overFlowDurationInTicks = currentTick + note.durationInTicks - nextMeasureStartTick
+                            val originalNote = note
+                            val overFlowDurationInTicks = currentTick + originalNote.durationInTicks - nextMeasureStartTick
                             note = Note(
-                                note.anchorTick,
-                                note.pitch,
-                                note.durationInTicks - overFlowDurationInTicks,
-                                note.velocity
+                                originalNote.anchorTick,
+                                originalNote.pitch,
+                                originalNote.durationInTicks - overFlowDurationInTicks,
+                                originalNote.velocity
                             ).apply {
-                                this.quantizedAnchorTick = note.quantizedAnchorTick
-                                val (closestDurationInTicks, closestDurationType) = quantizer!!.getClosestNoteDurationAndType(note.durationInTicks)
+                                this.quantizedAnchorTick = originalNote.quantizedAnchorTick
+                                val (closestDurationInTicks, closestDurationType) = quantizer!!.getClosestNoteDurationAndType(originalNote.durationInTicks)
                                 this.quantizedDurationInTicks = closestDurationInTicks
-                                notationInfo = note.notationInfo.copy(noteType = closestDurationType, tieStart = true)
+                                notationInfo = originalNote.notationInfo.copy(noteType = closestDurationType, tieStart = true)
                             }
                             val carryOverNote =
-                                Note(nextMeasureStartTick, note.pitch, overFlowDurationInTicks, note.velocity).apply {
+                                Note(nextMeasureStartTick, originalNote.pitch, overFlowDurationInTicks, originalNote.velocity).apply {
                                     this.quantizedAnchorTick = nextMeasureStartTick
                                     val (closestDurationInTicks, closestDurationType) = quantizer!!.getClosestNoteDurationAndType(durationInTicks)
                                     this.quantizedDurationInTicks = closestDurationInTicks
-                                    notationInfo = note.notationInfo.copy(noteType = closestDurationType, tieEnd = true)
+                                    notationInfo = originalNote.notationInfo.copy(noteType = closestDurationType, tieEnd = true)
                                 }
                             nextCarryOverNotesStack.add(carryOverNote)
                         }
@@ -167,17 +168,18 @@ class XmlWriter {
                         val restAnchorTick = rest.anchorTick
                         val restDurationInTicks = rest.durationInTicks
                         if (currentTick + restDurationInTicks > nextMeasureStartTick) {
+                            val originalRest = rest
                             val overFlowDurationInTicks = currentTick + restDurationInTicks - nextMeasureStartTick
                             rest = Rest(restAnchorTick, restDurationInTicks - overFlowDurationInTicks).apply {
                                 val (closestDurationInTicks, closestDurationType) = quantizer!!.getClosestNoteDurationAndType(durationInTicks)
                                 this.quantizedDurationInTicks = closestDurationInTicks
-                                this.notationInfo.restType = closestDurationType
+                                notationInfo = originalRest.notationInfo.copy(restType = closestDurationType)
                             }
                             val carryOverRest = Rest(nextMeasureStartTick, overFlowDurationInTicks).apply {
                                 val (closestDurationInTicks, closestDurationType) = quantizer!!.getClosestNoteDurationAndType(durationInTicks)
                                 this.quantizedAnchorTick = measureStartTick
                                 this.quantizedDurationInTicks = closestDurationInTicks
-                                this.notationInfo.restType = closestDurationType
+                                notationInfo = originalRest.notationInfo.copy(restType = closestDurationType)
                             }
                             nextCarryOverRestsStack.add(carryOverRest)
                         }
