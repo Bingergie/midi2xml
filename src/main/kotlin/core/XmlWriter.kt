@@ -13,8 +13,6 @@ class XmlWriter {
     private var xmlScorePartwise: musicxml.ScorePartwise? = null
     private var currentTimeSignature: TimeSignature = TimeSignature(0, 4, 4)
     private var currentKeySignature: KeySignature = KeySignature(0, 0, KeySignature.Mode.MAJOR)
-    private var conductorStaffStack: MutableList<StaffSymbol> = mutableListOf()
-    private var currentStaffStack: MutableList<StaffSymbol> = mutableListOf()
     private var carryOverNotesStack: MutableList<Note> = mutableListOf()
     private var carryOverRestsStack: MutableList<Rest> = mutableListOf()
     private var currentMeasureNumber: Int = 0
@@ -25,32 +23,7 @@ class XmlWriter {
      */
     fun writeScoreToXml(score: Score, outputFile: File) {
 
-        currentScore = score
-        quantizer = Quantizer(currentScore!!.ticksPerQuarterNote)
-        val xmlPartList = musicxml.PartList()
-        xmlScorePartwise = musicxml.ScorePartwise().apply {
-            this.version = "4.0"
-            this.partList = xmlPartList
-        }
-
-        for ((index, staff) in score.staves.withIndex()) {
-            val xmlPartId = "P${index + 1}"
-            val xmlPartName = musicxml.PartName().apply { value = staff.notationInfo.partName } // todo: staff.currentInstrument.name and handle midi instrument info
-            val xmlScorePart = musicxml.ScorePart().apply {
-                this.id = xmlPartId
-                this.partName = xmlPartName
-            }
-            if (index == 0) xmlPartList.scorePart = xmlScorePart else xmlPartList.partGroupOrScorePart.add(xmlScorePart)
-
-            val xmlMeasures = createXmlMeasuresFromStaff(staff)
-            val xmlPart = musicxml.ScorePartwise.Part().apply {
-                this.id = xmlScorePart
-                for (xmlMeasure in xmlMeasures) {
-                    this.measure.add(xmlMeasure)
-                }
-            }
-            xmlScorePartwise!!.part.add(xmlPart)
-        }
+        createXmlScorePartwise(score)
 
         val writer = FileWriter(outputFile)
 
@@ -68,29 +41,49 @@ class XmlWriter {
                 """.trimIndent()
             )
         }
-        marshaller.marshal(xmlScorePartwise, writer)
+        marshaller.marshal(xmlScorePartwise!!, writer)
+    }
+
+    private fun createXmlScorePartwise(score: Score) {
+        // set state variables
+        currentScore = score
+        quantizer = Quantizer(currentScore!!.ticksPerQuarterNote)
+        val xmlPartList = musicxml.PartList()
+        xmlScorePartwise = musicxml.ScorePartwise().apply {
+            this.version = "4.0"
+            this.partList = xmlPartList
+        }
+
+        // create parts from staves
+        for ((index, staff) in currentScore!!.staves.withIndex()) {
+            val xmlPartId = "P${index + 1}"
+            val xmlPartName = musicxml.PartName().apply {
+                value = staff.notationInfo.partName
+            } // todo: staff.currentInstrument.name and handle midi instrument info
+            val xmlScorePart = musicxml.ScorePart().apply {
+                this.id = xmlPartId
+                this.partName = xmlPartName
+            }
+            if (index == 0) xmlPartList.scorePart = xmlScorePart else xmlPartList.partGroupOrScorePart.add(xmlScorePart)
+
+            val xmlMeasures = createXmlMeasuresFromStaff(staff)
+            val xmlPart = musicxml.ScorePartwise.Part().apply {
+                this.id = xmlScorePart
+                for (xmlMeasure in xmlMeasures) {
+                    this.measure.add(xmlMeasure)
+                }
+            }
+            xmlScorePartwise!!.part.add(xmlPart)
+        }
     }
 
     private fun createXmlMeasuresFromStaff(staff: Staff): List<musicxml.ScorePartwise.Part.Measure> {
-        this.initStaffState(staff)
-
-        // create measures
-        val xmlMeasures = mutableListOf<musicxml.ScorePartwise.Part.Measure>()
-        while (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty() || carryOverRestsStack.isNotEmpty()) {
-            val xmlMeasure = this.createXmlMeasure()
-            xmlMeasures.add(xmlMeasure)
-            currentMeasureNumber++
-        }
-        return xmlMeasures
-    }
-
-    private fun initStaffState(staff: Staff) {
+        // init staff state
         currentTick = 0L
-        conductorStaffStack =
-            this.currentScore!!.conductorStaff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
-        currentStaffStack = staff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
-        carryOverNotesStack = mutableListOf()
-        carryOverRestsStack = mutableListOf()
+        val conductorStaffStack = this.currentScore!!.conductorStaff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
+        val currentStaffStack = staff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
+        carryOverNotesStack = mutableListOf<Note>()
+        carryOverRestsStack = mutableListOf<Rest>()
         currentMeasureNumber = 1
         while (conductorStaffStack.firstOrNull()?.anchorTick == 0L) {
             when (val nextConductorStaffSymbol = conductorStaffStack.removeFirst()) {
@@ -101,9 +94,28 @@ class XmlWriter {
             }
         }
 
+        // create measures
+        val xmlMeasures = mutableListOf<musicxml.ScorePartwise.Part.Measure>()
+        while (
+            conductorStaffStack.isNotEmpty() ||
+            currentStaffStack.isNotEmpty() ||
+            carryOverNotesStack.isNotEmpty() ||
+            carryOverRestsStack.isNotEmpty()
+        ) {
+            val xmlMeasure = this.createXmlMeasure(
+                conductorStaffStack,
+                currentStaffStack,
+            )
+            xmlMeasures.add(xmlMeasure)
+            currentMeasureNumber++
+        }
+        return xmlMeasures
     }
 
-    private fun createXmlMeasure(): musicxml.ScorePartwise.Part.Measure {
+    private fun createXmlMeasure(
+        conductorStaffStack: MutableList<StaffSymbol>,
+        currentStaffStack: MutableList<StaffSymbol>
+    ): musicxml.ScorePartwise.Part.Measure {
         val measureStartTick = currentTick
         val nextMeasureStartTick =
             measureStartTick + currentScore!!.ticksPerQuarterNote * currentTimeSignature.numerator / currentTimeSignature.denominator * 4
