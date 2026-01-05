@@ -29,7 +29,8 @@ abstract class StaffSymbol(anchorTick: Long) {
     open val notationInfo: NotationInfo = NotationInfo()
     val exactAnchorTick: Long = anchorTick
     var quantizedAnchorTick: Long? = null
-    val anchorTick: Long = quantizedAnchorTick ?: exactAnchorTick
+    val anchorTick: Long
+        get() = quantizedAnchorTick ?: exactAnchorTick
 }
 
 open class NotationInfo()
