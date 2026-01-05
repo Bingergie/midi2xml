@@ -54,7 +54,7 @@ class ScoreDesigner {
 //            ticksPerQuarterNote / 3 to "eighth",
             ticksPerQuarterNote / 4 to "16th",
 //            ticksPerQuarterNote / 6 to "16th",
-//            ticksPerQuarterNote / 8 to "32th",
+//            ticksPerQuarterNote / 8 to "32nd",
         )
         val closestDuration = quantizedDurationsInTicks.keys.minByOrNull { quantizedDurationsInTicks ->
             abs(durationInTicks - quantizedDurationsInTicks)
@@ -73,7 +73,7 @@ class ScoreDesigner {
 //            ticksPerQuarterNote / 3 to "eighth",
             ticksPerQuarterNote / 4 to "16th",
 //            ticksPerQuarterNote / 6 to "16th",
-//            ticksPerQuarterNote / 8 to "32th",
+//            ticksPerQuarterNote / 8 to "32nd",
         )
         val closestTickDivision = quantizedDurationsInTicks.keys.minBy { quantizedTick -> abs(anchorTick % quantizedTick) }
         val quantizedTick = (anchorTick / closestTickDivision.toDouble()).roundToInt() * closestTickDivision
