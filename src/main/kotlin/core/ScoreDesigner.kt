@@ -1,19 +1,17 @@
 package core
 
 import musicxml.Step
-import kotlin.Int
-import kotlin.String
-import kotlin.math.abs
-import kotlin.math.roundToInt
 
 /**
  * This class adds and modifies notation information of a score to make it more readable
  */
 class ScoreDesigner {
     private var currentScore: Score? = null
+    private var quantizer: Quantizer? = null
 
     fun transformScore(score: Score) {
         currentScore = score
+        quantizer = Quantizer(currentScore!!.ticksPerQuarterNote)
         addNoteNotationStepAndAlter()
         quantizeNotes()
         addNoteNotationChordAndVoice()
@@ -43,45 +41,9 @@ class ScoreDesigner {
 
     }
 
-    private fun getClosestNoteDurationAndType(durationInTicks: Long, ticksPerQuarterNote: Int): Pair<Int, String> {
-        val quantizedDurationsInTicks = mapOf<Int, String>(
-            ticksPerQuarterNote * 4 to "whole",
-            ticksPerQuarterNote * 2 to "half",
-//            ticksPerQuarterNote * 3 / 2 to "half",
-            ticksPerQuarterNote to "quarter",
-//            ticksPerQuarterNote * 2 / 3 to "quarter",
-            ticksPerQuarterNote / 2 to "eighth",
-//            ticksPerQuarterNote / 3 to "eighth",
-            ticksPerQuarterNote / 4 to "16th",
-//            ticksPerQuarterNote / 6 to "16th",
-//            ticksPerQuarterNote / 8 to "32nd",
-        )
-        val closestDuration = quantizedDurationsInTicks.keys.minBy { quantizedDurationsInTicks ->
-            abs(durationInTicks - quantizedDurationsInTicks)
-        }
-        return Pair<Int, String>(closestDuration, quantizedDurationsInTicks[closestDuration] as String)
-    }
-
-    private fun getClosestQuantizedAnchorTick(anchorTick: Long, ticksPerQuarterNote: Int): Int {
-        val quantizedDurationsInTicks = mapOf<Int, String>(
-            ticksPerQuarterNote * 4 to "whole",
-            ticksPerQuarterNote * 2 to "half",
-//            ticksPerQuarterNote * 3 / 2 to "half",
-            ticksPerQuarterNote to "quarter",
-//            ticksPerQuarterNote * 2 / 3 to "quarter",
-            ticksPerQuarterNote / 2 to "eighth",
-//            ticksPerQuarterNote / 3 to "eighth",
-            ticksPerQuarterNote / 4 to "16th",
-//            ticksPerQuarterNote / 6 to "16th",
-//            ticksPerQuarterNote / 8 to "32nd",
-        )
-        val closestTickDivision = quantizedDurationsInTicks.keys.minBy { quantizedTick -> abs(anchorTick % quantizedTick) }
-        val quantizedTick = (anchorTick / closestTickDivision.toDouble()).roundToInt() * closestTickDivision
-        return quantizedTick
-    }
-
-
     private fun quantizeNotes() {
+        assert(currentScore != null)
+        assert(quantizer != null)
         val ticksPerQuarterNote = currentScore!!.ticksPerQuarterNote
         for (currentStaff in currentScore!!.staves) {
             for (staffSymbol in currentStaff.staffSymbols) {
@@ -90,14 +52,12 @@ class ScoreDesigner {
                         val note = staffSymbol
 
                         // quantize anchor tick
-                        val originalTick = note.anchorTick
-                        val closestTickDivision = getClosestQuantizedAnchorTick(note.anchorTick, ticksPerQuarterNote)
+                        val closestTickDivision = quantizer!!.getClosestQuantizedAnchorTick(note.anchorTick)
+                        note.quantizedAnchorTick = closestTickDivision
 
                         // quantize duration and type
-                        val (closestDuration, closestNoteType) = getClosestNoteDurationAndType(
-                            note.durationInTicks, ticksPerQuarterNote
-                        )
-                        note.quantizedDurationInTicks = closestDuration.toLong()
+                        val (closestDuration, closestNoteType) = quantizer!!.getClosestNoteDurationAndType(note.durationInTicks)
+                        note.quantizedDurationInTicks = closestDuration
                         note.notationInfo.noteType = closestNoteType
                     }
                 }
@@ -134,10 +94,10 @@ class ScoreDesigner {
                             if (restDurationInTicks > 0) {
                                 val rest = Rest(previousNoteEndTick, restDurationInTicks).apply {
                                     val ticksPerQuarterNote = currentScore!!.ticksPerQuarterNote
-                                    val (closestDuration, closestDurationType) = getClosestNoteDurationAndType(durationInTicks, ticksPerQuarterNote)
+                                    val (closestDuration, closestDurationType) = quantizer!!.getClosestNoteDurationAndType(durationInTicks)
                                     this.notationInfo.restType = closestDurationType
                                     this.quantizedDurationInTicks = closestDuration.toLong()
-                                    val closestAnchorTick = getClosestQuantizedAnchorTick(anchorTick, ticksPerQuarterNote)
+                                    val closestAnchorTick = quantizer!!.getClosestQuantizedAnchorTick(anchorTick)
                                     this.quantizedAnchorTick = closestAnchorTick.toLong()
                                 }
                                 staff.staffSymbols.add(index, rest)
