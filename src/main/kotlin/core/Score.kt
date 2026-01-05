@@ -36,8 +36,22 @@ abstract class StaffSymbol(open val anchorTick: Long) {
 //    }
 }
 
-open class NotationInfo()
+/*
+abstract class StaffSymbol(anchorTick: Long) {
+    open val notationInfo: NotationInfo = NotationInfo()
+    private val exactAnchorTick: Long = anchorTick
+    private val quantizedAnchorTick: Long? = null
+    val anchorTick: Long = quantizedAnchorTick ?: exactAnchorTick
 
+}
+ */
+
+open class NotationInfo()
+/*
+abstract interface HasDuration {
+    // overrides duration get
+}
+*/
 
 class Note(
     anchorTick: Long,
