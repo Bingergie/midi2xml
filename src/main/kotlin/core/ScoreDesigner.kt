@@ -145,17 +145,17 @@ class ScoreDesigner {
                             val previousNoteEndTick = previousNote.anchorTick + previousNote.durationInTicks
                             val restDurationInTicks = currentNote.anchorTick - previousNoteEndTick
                             if (restDurationInTicks > 0) {
-                                val rest = Rest(previousNoteEndTick, restDurationInTicks)
-                                staff.staffSymbols.add(index, rest.apply {
-                                    this.notationInfo.apply {
+                                val rest = Rest(previousNoteEndTick, restDurationInTicks).apply {
+                                    notationInfo.apply {
                                         val ticksPerQuarterNote = currentScore!!.ticksPerQuarterNote
-                                        val (closestDuration, closestDurationType) = closestNoteDurationAndType(rest.durationInTicks, ticksPerQuarterNote)
-                                        val (closestAnchorTick, _) = closestNoteDurationAndType(rest.anchorTick % (ticksPerQuarterNote * 4), ticksPerQuarterNote)
+                                        val (closestDuration, closestDurationType) = closestNoteDurationAndType(durationInTicks, ticksPerQuarterNote)
                                         this.restType = closestDurationType
-                                        this.quantizedAnchorTick = closestAnchorTick.toLong()
                                         this.quantizedDurationInTicks = closestDuration.toLong()
+                                        val closestAnchorTick = getQuantizedAnchorTick(anchorTick, ticksPerQuarterNote)
+                                        this.quantizedAnchorTick = closestAnchorTick.toLong()
                                     }
-                                })
+                                }
+                                staff.staffSymbols.add(index, rest)
                             }
                         }
                         previousNote = currentNote
