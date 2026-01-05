@@ -135,6 +135,7 @@ class ScoreDesigner {
     }
 
     private fun addRests() {
+        val lastNoteOfScoreEndTick = currentScore!!.staves.maxOf { staff -> staff.staffSymbols.maxOf { it.anchorTick } }
         currentScore!!.staves.forEach { staff ->
             var previousNote: Note? = Note(0L, 1, 0L, 0)
             for (index in 0 until staff.staffSymbols.size) {
@@ -159,6 +160,13 @@ class ScoreDesigner {
                         previousNote = currentNote
                     }
                 }
+            }
+            val lastNoteOfStaff = staff.staffSymbols.lastOrNull {it is Note} as Note
+            val lastNoteOfStaffEndTick = lastNoteOfStaff.anchorTick + lastNoteOfStaff.durationInTicks
+            if (lastNoteOfStaffEndTick < lastNoteOfScoreEndTick) {
+                val restDuration = lastNoteOfScoreEndTick - lastNoteOfStaffEndTick
+                val rest = Rest(lastNoteOfStaffEndTick, restDuration)
+                staff.staffSymbols.add(rest)
             }
         }
     }
