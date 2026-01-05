@@ -112,6 +112,7 @@ class XmlWriter {
             val nextCarryOverNotesStack = mutableListOf<Note>()
             val nextCarryOverRestsStack = mutableListOf<Rest>()
             while ((conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty() || carryOverRestsStack.isNotEmpty())) {
+                // get the first symbol's anchorTick in these stacks
                 val candidateNextStaffSymbols = listOfNotNull(
                     conductorStaffStack.firstOrNull(),
                     carryOverNotesStack.firstOrNull(),
@@ -119,27 +120,36 @@ class XmlWriter {
                     currentStaffStack.firstOrNull(),
                 )
                 val minTick = candidateNextStaffSymbols.minOf { it.anchorTick }
+
+                // next measure should start
                 if (minTick >= nextMeasureStartTick) {
                     break
                 }
+
+                // get first symbol via anchorTick
                 val nextStaffSymbol = when (minTick) {
                     conductorStaffStack.firstOrNull()?.anchorTick -> conductorStaffStack.removeFirst()
                     carryOverNotesStack.firstOrNull()?.anchorTick -> carryOverNotesStack.removeFirst()
                     carryOverRestsStack.firstOrNull()?.anchorTick -> carryOverRestsStack.removeFirst()
                     currentStaffStack.firstOrNull()?.anchorTick -> currentStaffStack.removeFirst()
-                    else -> throw Exception("WTF?? the code logic is wrong")
+                    else -> throw Exception("Error!! the code logic is wrong")
                 }
+
+                // handle nextStaffSymbol
                 when (nextStaffSymbol) {
                     is Note -> {
                         var note = nextStaffSymbol
+
+                        // handle if note goes over measure
                         if (!note.notationInfo.isChord && (currentTick + note.durationInTicks > nextMeasureStartTick)) { // note exceeds measure
-                            // break note into two, separating at bar line
                             val originalNote = note
+
+                            // break originalNote into two, separating at bar line
                             val overFlowDurationInTicks = currentTick + originalNote.durationInTicks - nextMeasureStartTick
                             note = Note(
                                 originalNote.anchorTick,
                                 originalNote.pitch,
-                                originalNote.durationInTicks - overFlowDurationInTicks,
+                                originalNote.durationInTicks - overFlowDurationInTicks, // take all remaining duration of measure
                                 originalNote.velocity
                             ).apply {
                                 this.quantizedAnchorTick = originalNote.quantizedAnchorTick
@@ -154,10 +164,16 @@ class XmlWriter {
                                     this.quantizedDurationInTicks = closestDurationInTicks
                                     notationInfo = originalNote.notationInfo.copy(noteType = closestDurationType, tieEnd = true)
                                 }
+
+                            // add remaining to carryOverStack
                             nextCarryOverNotesStack.add(carryOverNote)
                         }
+
+                        // add note to measure
                         val xmlNote = createXmlNote(note)
                         noteOrBackupOrForward.add(xmlNote)
+
+                        // advance currentTick if not part of a chord
                         if (!note.notationInfo.isChord) {
                             currentTick += note.durationInTicks
                         }
@@ -165,12 +181,17 @@ class XmlWriter {
 
                     is Rest -> {
                         var rest = nextStaffSymbol
-                        val restAnchorTick = rest.anchorTick
-                        val restDurationInTicks = rest.durationInTicks
-                        if (currentTick + restDurationInTicks > nextMeasureStartTick) {
+
+                        // handle if rest goes over measure
+                        if (currentTick + rest.durationInTicks > nextMeasureStartTick) {
                             val originalRest = rest
-                            val overFlowDurationInTicks = currentTick + restDurationInTicks - nextMeasureStartTick
-                            rest = Rest(restAnchorTick, restDurationInTicks - overFlowDurationInTicks).apply {
+
+                            // split originalRest into two, separating at bar line
+                            val overFlowDurationInTicks = currentTick + rest.durationInTicks - nextMeasureStartTick
+                            rest = Rest(
+                                rest.anchorTick,
+                                rest.durationInTicks - overFlowDurationInTicks // take all remaining duration of measure
+                            ).apply {
                                 val (closestDurationInTicks, closestDurationType) = quantizer!!.getClosestNoteDurationAndType(durationInTicks)
                                 this.quantizedDurationInTicks = closestDurationInTicks
                                 notationInfo = originalRest.notationInfo.copy(restType = closestDurationType)
@@ -181,18 +202,28 @@ class XmlWriter {
                                 this.quantizedDurationInTicks = closestDurationInTicks
                                 notationInfo = originalRest.notationInfo.copy(restType = closestDurationType)
                             }
+
+                            // add remaining to carryOverStack
                             nextCarryOverRestsStack.add(carryOverRest)
                         }
+
+                        // add rest to measure
                         val xmlRest = createXmlRest(rest)
                         noteOrBackupOrForward.add(xmlRest)
+
+                        // advance currentTick
                         currentTick += rest.durationInTicks
                     }
 
                     is KeySignature -> {
                         currentKeySignature = nextStaffSymbol
+
+                        // get attributes of current measure or create new attributes
                         val xmlMeasureAttributes: musicxml.Attributes =
                             (this.noteOrBackupOrForward.firstOrNull { it is musicxml.Attributes }
                                 ?: musicxml.Attributes()) as musicxml.Attributes
+
+                        // add key signature to measure attributes
                         xmlMeasureAttributes.apply {
                             this.key.add(createXmlKeySignature(currentKeySignature))
                         }
@@ -200,6 +231,7 @@ class XmlWriter {
                 }
 
             }
+            // update carry-over stacks
             carryOverNotesStack = nextCarryOverNotesStack
             carryOverRestsStack = nextCarryOverRestsStack
         }
