@@ -122,13 +122,10 @@ class ScoreDesigner {
             for (index in 0 until staff.staffSymbols.size) {
                 when (val staffSymbol = staff.staffSymbols[index]) {
                     is Note -> {
-                        val note = staffSymbol
-                        if (!(note.notationInfo.isChord == true || previousNote == null)) {
-                            val previousNoteDurationInTicks =
-                                previousNote.notationInfo.quantizedDurationInTicks ?: previousNote.durationInTicks
-                            val previousNoteEndTick = previousNote.anchorTick + previousNoteDurationInTicks
-                            val currentNoteAnchorTick = note.notationInfo.quantizedAnchorTick ?: note.anchorTick
-                            val restDurationInTicks = currentNoteAnchorTick - previousNoteEndTick
+                        val currentNote = staffSymbol
+                        if (!(currentNote.notationInfo.isChord || previousNote == null)) {
+                            val previousNoteEndTick = previousNote.anchorTick + previousNote.durationInTicks
+                            val restDurationInTicks = currentNote.anchorTick - previousNoteEndTick
                             if (restDurationInTicks > 0) {
                                 val rest = Rest(previousNoteEndTick, restDurationInTicks)
                                 staff.staffSymbols.add(index, rest.apply {
@@ -143,7 +140,7 @@ class ScoreDesigner {
                                 })
                             }
                         }
-                        previousNote = note
+                        previousNote = currentNote
                     }
                 }
             }
