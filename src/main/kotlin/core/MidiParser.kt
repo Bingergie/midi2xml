@@ -19,9 +19,7 @@ class MidiParser {
                 val event: MidiEvent = track.get(i)
                 when (val message = event.message) {
                     is ShortMessage -> this.handleShortMessage(event.tick, message)
-
                     is MetaMessage -> this.handleMetaMessage(event.tick, message)
-
                     is SysexMessage -> {}
                 }
             }
@@ -39,10 +37,10 @@ class MidiParser {
             MetaMessageType.TIME_SIGNATURE -> this.handleTimeSignature(tick, message)
             MetaMessageType.END_OF_TRACK -> {}
             MetaMessageType.KEY_SIGNATURE -> this.handleKeySignature(tick, message)
-            MetaMessageType.SEQUENCE_NUMBER -> {}
+            MetaMessageType.SEQUENCE_NUMBER -> println("seq number")
             MetaMessageType.TEXT -> {}
             MetaMessageType.COPYRIGHT_NOTICE -> {}
-            MetaMessageType.TRACK_NAME -> {}
+            MetaMessageType.TRACK_NAME -> this.handleTrackName(tick, message)
             MetaMessageType.INSTRUMENT_NAME -> {}
             MetaMessageType.LYRICS -> {}
             MetaMessageType.MARKER -> {}
@@ -54,6 +52,9 @@ class MidiParser {
             MetaMessageType.SEQUENCER_SPECIFIC -> {}
             null -> println("Warning: unknown MetaMessage received!")
         }
+    }
+
+    private fun handleTrackName(tick: Long, message: MetaMessage) {
     }
 
     private fun handleKeySignature(tick: Long, message: MetaMessage) {
