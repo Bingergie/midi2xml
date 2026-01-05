@@ -145,6 +145,7 @@ class XmlWriter {
 
                 // BREAKOUT CONDITION: next measure should start —— this is a wierd place to put breakout condition, but it seems to be the most convenient
                 if (minTick >= nextMeasureStartTick) {
+                    currentTick = nextMeasureStartTick // advance current tick to start of next measure
                     break
                 }
 
