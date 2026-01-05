@@ -105,13 +105,13 @@ class ScoreDesigner {
                         val originalTick = note.anchorTick
                         val closestTickDivision = quantizedDurationsInTicks.keys.minBy { quantizedTick -> abs(originalTick % quantizedTick) }
                         val quantizedTick = (originalTick / closestTickDivision.toDouble()).roundToInt() * closestTickDivision
-                        note.notationInfo.quantizedAnchorTick = quantizedTick.toLong()
+                        note.quantizedAnchorTick = quantizedTick.toLong()
 
                         // quantize duration and type
                         val (closestDuration, closestNoteType) = closestNoteDurationAndType(
                             note.durationInTicks, ticksPerQuarterNote
                         )
-                        note.notationInfo.quantizedDurationInTicks = closestDuration.toLong()
+                        note.quantizedDurationInTicks = closestDuration.toLong()
                         note.notationInfo.noteType = closestNoteType
                     }
                 }
@@ -124,8 +124,8 @@ class ScoreDesigner {
             val notes = staff.staffSymbols.filterIsInstance<Note>()
             var previousNote: Note? = null
             notes.forEach { note ->
-                val currentAnchorTick = note.notationInfo.quantizedAnchorTick ?: note.anchorTick
-                val previousAnchorTick = previousNote?.notationInfo?.quantizedAnchorTick ?: previousNote?.anchorTick
+                val currentAnchorTick = note.anchorTick
+                val previousAnchorTick = previousNote?.anchorTick
                 if (currentAnchorTick == previousAnchorTick) {
                     note.notationInfo.isChord = true
                 }
@@ -146,14 +146,12 @@ class ScoreDesigner {
                             val restDurationInTicks = currentNote.anchorTick - previousNoteEndTick
                             if (restDurationInTicks > 0) {
                                 val rest = Rest(previousNoteEndTick, restDurationInTicks).apply {
-                                    notationInfo.apply {
-                                        val ticksPerQuarterNote = currentScore!!.ticksPerQuarterNote
-                                        val (closestDuration, closestDurationType) = closestNoteDurationAndType(durationInTicks, ticksPerQuarterNote)
-                                        this.restType = closestDurationType
-                                        this.quantizedDurationInTicks = closestDuration.toLong()
-                                        val closestAnchorTick = getQuantizedAnchorTick(anchorTick, ticksPerQuarterNote)
-                                        this.quantizedAnchorTick = closestAnchorTick.toLong()
-                                    }
+                                    val ticksPerQuarterNote = currentScore!!.ticksPerQuarterNote
+                                    val (closestDuration, closestDurationType) = closestNoteDurationAndType(durationInTicks, ticksPerQuarterNote)
+                                    this.notationInfo.restType = closestDurationType
+                                    this.quantizedDurationInTicks = closestDuration.toLong()
+                                    val closestAnchorTick = getQuantizedAnchorTick(anchorTick, ticksPerQuarterNote)
+                                    this.quantizedAnchorTick = closestAnchorTick.toLong()
                                 }
                                 staff.staffSymbols.add(index, rest)
                             }

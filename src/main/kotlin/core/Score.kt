@@ -25,54 +25,32 @@ class Staff() {
 
 class Instrument(val instrumentName: String)
 
-abstract class StaffSymbol(open val anchorTick: Long) {
-    open val notationInfo: NotationInfo = NotationInfo()
-//    override fun toString(): String {
-//        return this::class.simpleName + "(" +
-//                this::class.members
-//                    .filterIsInstance<kotlin.reflect.KProperty<*>>()
-//                    .joinToString(", ") { "${it.name}=${it.getter.call(this)}" } +
-//                ")"
-//    }
-}
-
-/*
 abstract class StaffSymbol(anchorTick: Long) {
     open val notationInfo: NotationInfo = NotationInfo()
-    private val exactAnchorTick: Long = anchorTick
-    private val quantizedAnchorTick: Long? = null
+    val exactAnchorTick: Long = anchorTick
+    var quantizedAnchorTick: Long? = null
     val anchorTick: Long = quantizedAnchorTick ?: exactAnchorTick
-
 }
- */
 
 open class NotationInfo()
-/*
+
 abstract interface HasDuration {
-    // overrides duration get
+    val exactDurationInTicks: Long
+    var quantizedDurationInTicks: Long?
+    val durationInTicks: Long
+        get() = quantizedDurationInTicks ?: exactDurationInTicks
 }
-*/
 
 class Note(
     anchorTick: Long,
     val pitch: Int,
     durationInTicks: Long,
     val velocity: Int
-) : StaffSymbol(anchorTick) {
-    val exactDurationInTicks: Long = durationInTicks
+) : StaffSymbol(anchorTick), HasDuration {
+//    override val exactDurationInTicks: Long = durationInTicks
     class NoteNotationInfo() : NotationInfo() {
         var step: musicxml.Step? = null
         var isChord: Boolean = false
-        @Deprecated(
-            message = "Use note.anchorTick instead; it automatically uses the quantized value when present.",
-            level = DeprecationLevel.WARNING
-        )
-        var quantizedAnchorTick: Long? = null
-        @Deprecated(
-            message = "Use note.durationInTicks instead; it automatically uses the quantized value when present.",
-            level = DeprecationLevel.WARNING
-        )
-        var quantizedDurationInTicks: Long? = null
         var noteType: String? = null
         var alter: BigDecimal? = null
         var tieStart: Boolean = false
@@ -80,37 +58,20 @@ class Note(
     }
 
     override val notationInfo: NoteNotationInfo = NoteNotationInfo()
-    override val anchorTick: Long
-        get() = notationInfo.quantizedAnchorTick ?: super.anchorTick
-
-    val durationInTicks: Long
-        get() = notationInfo.quantizedDurationInTicks ?: exactDurationInTicks
+    override val exactDurationInTicks: Long = durationInTicks
+    override var quantizedDurationInTicks: Long? = null
 }
 
 class Rest(
     anchorTick: Long,
     durationInTicks: Long,
-) : StaffSymbol(anchorTick) {
-    val exactDurationInTicks: Long = durationInTicks
+) : StaffSymbol(anchorTick), HasDuration {
     class RestNotationInfo() : NotationInfo() {
-        @Deprecated(
-            message = "Use note.anchorTick instead; it automatically uses the quantized value when present.",
-            level = DeprecationLevel.WARNING
-        )
-        var quantizedAnchorTick: Long? = null
-        @Deprecated(
-            message = "Use note.durationInTicks instead; it automatically uses the quantized value when present.",
-            level = DeprecationLevel.WARNING
-        )
-        var quantizedDurationInTicks: Long? = null
         var restType: String? = null
     }
     override val notationInfo: RestNotationInfo = RestNotationInfo()
-    override val anchorTick: Long
-        get() = notationInfo.quantizedAnchorTick ?: super.anchorTick
-
-    val durationInTicks: Long
-        get() = notationInfo.quantizedDurationInTicks ?: exactDurationInTicks
+    override val exactDurationInTicks: Long = durationInTicks
+    override var quantizedDurationInTicks: Long? = null
 }
 
 class KeySignature(

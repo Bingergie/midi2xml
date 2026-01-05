@@ -150,8 +150,8 @@ class XmlWriter {
                 when (nextStaffSymbol) {
                     is Note -> {
                         var note = nextStaffSymbol
-                        val noteAnchorTick = note.notationInfo.quantizedAnchorTick ?: note.anchorTick
-                        val noteDurationInTicks = note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks
+                        val noteAnchorTick = note.quantizedAnchorTick ?: note.anchorTick
+                        val noteDurationInTicks = note.quantizedDurationInTicks ?: note.durationInTicks
                         if (!note.notationInfo.isChord && (currentTick + noteDurationInTicks > nextMeasureStartTick)) { // note exceeds measure
                             // break note into two, separating at bar line
                             val overFlowDurationInTicks = currentTick + noteDurationInTicks - nextMeasureStartTick
@@ -161,75 +161,71 @@ class XmlWriter {
                                 noteDurationInTicks - overFlowDurationInTicks,
                                 note.velocity
                             ).apply {
-                                notationInfo.apply {
-                                    this.isChord = note.notationInfo.isChord
-                                    this.step = note.notationInfo.step
-                                    this.alter = note.notationInfo.alter
-                                    this.quantizedAnchorTick = note.notationInfo.quantizedAnchorTick
-                                    this.tieEnd = note.notationInfo.tieEnd
-                                    this.tieStart = true
-                                }
-                            }
-                            note.notationInfo.apply {
+                                this.quantizedAnchorTick = note.quantizedAnchorTick
                                 val (closestDurationInTicks, closestDurationType) = closestNoteDurationAndType(
                                     note.durationInTicks,
                                     currentScore!!.ticksPerQuarterNote
                                 )
                                 this.quantizedDurationInTicks = closestDurationInTicks.toLong()
-                                this.noteType = closestDurationType
+                                notationInfo.apply {
+                                    this.isChord = note.notationInfo.isChord
+                                    this.noteType = closestDurationType
+                                    this.step = note.notationInfo.step
+                                    this.alter = note.notationInfo.alter
+                                    this.tieEnd = note.notationInfo.tieEnd
+                                    this.tieStart = true
+                                }
                             }
                             val carryOverNote =
                                 Note(nextMeasureStartTick, note.pitch, overFlowDurationInTicks, note.velocity).apply {
+                                    this.quantizedAnchorTick = nextMeasureStartTick
+                                    val (closestDurationInTicks, closestDurationType) = closestNoteDurationAndType(
+                                        durationInTicks,
+                                        currentScore!!.ticksPerQuarterNote
+                                    )
+                                    this.quantizedDurationInTicks = closestDurationInTicks.toLong()
                                     notationInfo.apply {
                                         this.isChord = note.notationInfo.isChord
+                                        this.noteType = closestDurationType
                                         this.step = note.notationInfo.step
                                         this.alter = note.notationInfo.alter
-                                        this.quantizedAnchorTick = nextMeasureStartTick
                                         this.tieStart = note.notationInfo.tieStart
                                         this.tieEnd = true
                                     }
                                 }
                             carryOverNote.notationInfo.apply {
-                                val (closestDurationInTicks, closestDurationType) = closestNoteDurationAndType(
-                                    carryOverNote.durationInTicks,
-                                    currentScore!!.ticksPerQuarterNote
-                                )
-                                this.quantizedDurationInTicks = closestDurationInTicks.toLong()
-                                this.noteType = closestDurationType
                             }
                             nextCarryOverNotesStack.add(carryOverNote)
                         }
                         val xmlNote = createXmlNote(note)
                         noteOrBackupOrForward.add(xmlNote)
                         if (!note.notationInfo.isChord) {
-                            currentTick += note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks
+                            currentTick += note.durationInTicks
                         }
                     }
 
                     is Rest -> {
                         var rest = nextStaffSymbol
-                        val restAnchorTick = rest.notationInfo.quantizedAnchorTick ?: rest.anchorTick
-                        val restDurationInTicks = rest.notationInfo.quantizedDurationInTicks ?: rest.durationInTicks
+                        val restAnchorTick = rest.anchorTick
+                        val restDurationInTicks = rest.durationInTicks
                         if (currentTick + restDurationInTicks > nextMeasureStartTick) {
                             val overFlowDurationInTicks = currentTick + restDurationInTicks - nextMeasureStartTick
-                            rest = Rest(restAnchorTick, restDurationInTicks - overFlowDurationInTicks)
-                            rest.notationInfo.apply {
+                            rest = Rest(restAnchorTick, restDurationInTicks - overFlowDurationInTicks).apply {
                                 val (closestDurationInTicks, closestDurationType) = closestNoteDurationAndType(
-                                    rest.durationInTicks,
+                                    durationInTicks,
                                     currentScore!!.ticksPerQuarterNote
                                 )
                                 this.quantizedDurationInTicks = closestDurationInTicks.toLong()
-                                this.restType = closestDurationType
+                                this.notationInfo.restType = closestDurationType
                             }
-                            val carryOverRest = Rest(nextMeasureStartTick, overFlowDurationInTicks)
-                            carryOverRest.notationInfo.apply {
+                            val carryOverRest = Rest(nextMeasureStartTick, overFlowDurationInTicks).apply {
                                 val (closestDurationInTicks, closestDurationType) = closestNoteDurationAndType(
-                                    carryOverRest.durationInTicks,
+                                    durationInTicks,
                                     currentScore!!.ticksPerQuarterNote
                                 )
                                 this.quantizedAnchorTick = measureStartTick
                                 this.quantizedDurationInTicks = closestDurationInTicks.toLong()
-                                this.restType = closestDurationType
+                                this.notationInfo.restType = closestDurationType
                             }
                             nextCarryOverRestsStack.add(carryOverRest)
                         }
@@ -310,7 +306,7 @@ class XmlWriter {
                 }
                 octave = note.pitch / 12 - 1
             }
-            this.duration = BigDecimal(note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks)
+            this.duration = BigDecimal(note.durationInTicks)
             if (note.notationInfo.noteType != null) {
                 this.type = musicxml.NoteType().apply {
                     this.value = note.notationInfo.noteType
