@@ -114,7 +114,13 @@ class XmlWriter {
             number = currentMeasureNumber.toString()
             val nextCarryOverNotesStack = mutableListOf<Note>()
             val nextCarryOverRestsStack = mutableListOf<Rest>()
-            while ((conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty() || carryOverRestsStack.isNotEmpty())) {
+
+            while (
+                conductorStaffStack.isNotEmpty() ||
+                currentStaffStack.isNotEmpty() ||
+                carryOverNotesStack.isNotEmpty() ||
+                carryOverRestsStack.isNotEmpty()
+            ) { // see another breakout condition a few lines later
 
                 // get the first symbol's anchorTick in these stacks
                 val candidateNextStaffSymbols = listOfNotNull(
@@ -125,7 +131,7 @@ class XmlWriter {
                 )
                 val minTick = candidateNextStaffSymbols.minOf { it.anchorTick }
 
-                // next measure should start
+                // BREAKOUT CONDITION: next measure should start —— this is a wierd place to put breakout condition, but it seems to be the most convenient
                 if (minTick >= nextMeasureStartTick) {
                     break
                 }
