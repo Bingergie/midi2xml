@@ -47,14 +47,14 @@ class Note(
     durationInTicks: Long,
     val velocity: Int
 ) : StaffSymbol(anchorTick), HasDuration {
-    class NoteNotationInfo() : NotationInfo() {
-        var step: musicxml.Step? = null
-        var isChord: Boolean = false
-        var noteType: String? = null
-        var alter: BigDecimal? = null
-        var tieStart: Boolean = false
+    data class NoteNotationInfo(
+        var step: musicxml.Step? = null,
+        var isChord: Boolean = false,
+        var noteType: String? = null,
+        var alter: BigDecimal? = null,
+        var tieStart: Boolean = false,
         var tieEnd: Boolean = false
-    }
+    ) : NotationInfo()
 
     override val notationInfo: NoteNotationInfo = NoteNotationInfo()
     override val exactDurationInTicks: Long = durationInTicks
@@ -65,9 +65,10 @@ class Rest(
     anchorTick: Long,
     durationInTicks: Long,
 ) : StaffSymbol(anchorTick), HasDuration {
-    class RestNotationInfo() : NotationInfo() {
+    class RestNotationInfo(
         var restType: String? = null
-    }
+    ) : NotationInfo()
+
     override val notationInfo: RestNotationInfo = RestNotationInfo()
     override val exactDurationInTicks: Long = durationInTicks
     override var quantizedDurationInTicks: Long? = null
