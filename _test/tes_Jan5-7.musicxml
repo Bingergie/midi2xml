@@ -2,13 +2,13 @@
 <!DOCTYPE score-partwise PUBLIC
     "-//Recordare//DTD MusicXML 4.0 Partwise//EN"
     "http://www.musicxml.org/dtds/partwise.dtd">
-<score-partwise version="4.0" xmlns:ns1="http://www.w3.org/1999/xlink">
+<score-partwise version="4.0" xmlns:ns2="http://www.w3.org/1999/xlink">
     <part-list>
         <score-part id="P1">
-            <part-name>P1TODO</part-name>
+            <part-name></part-name>
         </score-part>
         <score-part id="P2">
-            <part-name>P2TODO</part-name>
+            <part-name></part-name>
         </score-part>
     </part-list>
     <part id="P1">

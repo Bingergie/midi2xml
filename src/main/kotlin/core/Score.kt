@@ -13,11 +13,11 @@ class Score(val ticksPerQuarterNote: Int) {
 }
 
 class Staff() {
+    data class StaffNotationInfo(
+        var partName: String = ""
+    )
+    val notationInfo: StaffNotationInfo = StaffNotationInfo()
     val staffSymbols = mutableListOf<StaffSymbol>()
-    fun add(staffSymbol: StaffSymbol) {
-        staffSymbols.add(staffSymbol)
-    }
-
     override fun toString(): String {
         return "Staff(staffSymbols=${staffSymbols.joinToString(", ")})"
     }

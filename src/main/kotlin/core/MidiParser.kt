@@ -55,20 +55,29 @@ class MidiParser {
     }
 
     private fun handleTrackName(tick: Long, message: MetaMessage) {
+        val partName = StringBuilder()
+        val count = message.data[0].toInt() and 0xFF
+        for (i in 1 until count) {
+            partName.append(message.data[i])
+        }
+        println(partName.toString())
+        currentStaves.forEach {
+            it?.notationInfo?.partName = partName.toString()
+        }
     }
 
     private fun handleKeySignature(tick: Long, message: MetaMessage) {
         val fifthsAboveC = message.data[0].toInt()
         val mode = KeySignature.Mode.fromInt(message.data[1].toInt())
         val keySignature = KeySignature(tick, fifthsAboveC, mode)
-        this.currentScore!!.conductorStaff.add(keySignature)
+        this.currentScore!!.conductorStaff.staffSymbols.add(keySignature)
     }
 
     private fun handleTimeSignature(tick: Long, message: MetaMessage) {
         val numerator = message.data[0].toInt()
         val denominator = 1 shl message.data[1].toInt()
         val timeSignature = TimeSignature(tick, numerator, denominator)
-        this.currentScore!!.conductorStaff.add(timeSignature)
+        this.currentScore!!.conductorStaff.staffSymbols.add(timeSignature)
     }
 
     private fun handleShortMessage(tick: Long, message: ShortMessage) {
@@ -110,6 +119,6 @@ class MidiParser {
         val (startTick, velocity) = noteStartData.removeFirst()
         val duration = endTick - startTick
         if (this.currentStaves[channel] == null) this.currentStaves[channel] = Staff()
-        this.currentStaves[channel]!!.add(Note(startTick, pitch, duration, velocity))
+        this.currentStaves[channel]!!.staffSymbols.add(Note(startTick, pitch, duration, velocity))
     }
 }

@@ -35,7 +35,7 @@ class XmlWriter {
 
         for ((index, staff) in score.staves.withIndex()) {
             val xmlPartId = "P${index + 1}"
-            val xmlPartName = musicxml.PartName().apply { value = xmlPartId + "TODO" } // TODO: staff.notationInfo.partName
+            val xmlPartName = musicxml.PartName().apply { value = staff.notationInfo.partName }
             val xmlScorePart = musicxml.ScorePart().apply {
                 this.id = xmlPartId
                 this.partName = xmlPartName
