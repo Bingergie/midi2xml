@@ -82,21 +82,17 @@ class ScoreDesigner {
                 when (staffSymbol) {
                     is Note -> {
                         val note = staffSymbol
+
+                        // quantize anchor tick
+                        val originalTick = note.anchorTick
+                        val closestTickDivision = quantizedDurationsInTicks.keys.minBy { quantizedTick -> abs(originalTick % quantizedTick) }
+                        val quantizedTick = (originalTick / closestTickDivision.toDouble()).roundToInt() * closestTickDivision
+                        note.notationInfo.quantizedAnchorTick = quantizedTick.toLong()
+
+                        // quantize duration and type
                         val (closestDuration, closestNoteType) = closestNoteDurationAndType(
                             note.durationInTicks, ticksPerQuarterNote
                         )
-                        val originalTick = note.anchorTick
-
-                        // Find the closest quantized tick division
-                        val closestTickDivision = quantizedDurationsInTicks.keys.minByOrNull { quantizedTick ->
-                            abs(originalTick % quantizedTick)
-                        }
-
-                        // Quantize the note's anchorTick
-                        if (closestTickDivision != null) {
-                            val quantizedTick = (originalTick / closestTickDivision.toDouble()).roundToInt() * closestTickDivision
-                            note.notationInfo.quantizedAnchorTick = quantizedTick.toLong()
-                        }
                         note.notationInfo.quantizedDurationInTicks = closestDuration.toLong()
                         note.notationInfo.noteType = closestNoteType
                     }
@@ -128,11 +124,9 @@ class ScoreDesigner {
                     is Note -> {
                         val note = staffSymbol
                         if (!(note.notationInfo.isChord == true || previousNote == null)) {
-                            val previousNoteAnchorTick =
-                                previousNote.notationInfo.quantizedAnchorTick ?: previousNote.anchorTick
                             val previousNoteDurationInTicks =
                                 previousNote.notationInfo.quantizedDurationInTicks ?: previousNote.durationInTicks
-                            val previousNoteEndTick = previousNoteAnchorTick + previousNoteDurationInTicks
+                            val previousNoteEndTick = previousNote.anchorTick + previousNoteDurationInTicks
                             val currentNoteAnchorTick = note.notationInfo.quantizedAnchorTick ?: note.anchorTick
                             val restDurationInTicks = currentNoteAnchorTick - previousNoteEndTick
                             if (restDurationInTicks > 0) {

@@ -42,13 +42,22 @@ open class NotationInfo()
 class Note(
     anchorTick: Long,
     val pitch: Int,
-    val durationInTicks: Long,
+    durationInTicks: Long,
     val velocity: Int
 ) : StaffSymbol(anchorTick) {
+    val exactDurationInTicks: Long = durationInTicks
     class NoteNotationInfo() : NotationInfo() {
         var step: musicxml.Step? = null
         var isChord: Boolean = false
+        @Deprecated(
+            message = "Use note.anchorTick instead; it automatically uses the quantized value when present.",
+            level = DeprecationLevel.WARNING
+        )
         var quantizedAnchorTick: Long? = null
+        @Deprecated(
+            message = "Use note.durationInTicks instead; it automatically uses the quantized value when present.",
+            level = DeprecationLevel.WARNING
+        )
         var quantizedDurationInTicks: Long? = null
         var noteType: String? = null
         var alter: BigDecimal? = null
@@ -59,20 +68,35 @@ class Note(
     override val notationInfo: NoteNotationInfo = NoteNotationInfo()
     override val anchorTick: Long
         get() = notationInfo.quantizedAnchorTick ?: super.anchorTick
+
+    val durationInTicks: Long
+        get() = notationInfo.quantizedDurationInTicks ?: exactDurationInTicks
 }
 
 class Rest(
     anchorTick: Long,
-    val durationInTicks: Long,
+    durationInTicks: Long,
 ) : StaffSymbol(anchorTick) {
+    val exactDurationInTicks: Long = durationInTicks
     class RestNotationInfo() : NotationInfo() {
+        @Deprecated(
+            message = "Use note.anchorTick instead; it automatically uses the quantized value when present.",
+            level = DeprecationLevel.WARNING
+        )
         var quantizedAnchorTick: Long? = null
+        @Deprecated(
+            message = "Use note.durationInTicks instead; it automatically uses the quantized value when present.",
+            level = DeprecationLevel.WARNING
+        )
         var quantizedDurationInTicks: Long? = null
         var restType: String? = null
     }
     override val notationInfo: RestNotationInfo = RestNotationInfo()
     override val anchorTick: Long
         get() = notationInfo.quantizedAnchorTick ?: super.anchorTick
+
+    val durationInTicks: Long
+        get() = notationInfo.quantizedDurationInTicks ?: exactDurationInTicks
 }
 
 class KeySignature(
