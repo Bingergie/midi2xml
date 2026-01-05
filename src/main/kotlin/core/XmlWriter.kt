@@ -78,12 +78,13 @@ class XmlWriter {
     }
 
     private fun createXmlMeasuresFromStaff(staff: Staff): List<musicxml.ScorePartwise.Part.Measure> {
+
+        // creates copies with intention to be destroyed in the process of creating measures
+        val conductorStaffStack = this.currentScore!!.conductorStaff.staffSymbols.toMutableList()
+        val currentStaffStack = staff.staffSymbols.toMutableList()
+
         // init staff state
         currentTick = 0L
-        val conductorStaffStack = this.currentScore!!.conductorStaff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
-        val currentStaffStack = staff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
-        carryOverNotesStack = mutableListOf<Note>()
-        carryOverRestsStack = mutableListOf<Rest>()
         currentMeasureNumber = 1
         while (conductorStaffStack.firstOrNull()?.anchorTick == 0L) {
             when (val nextConductorStaffSymbol = conductorStaffStack.removeFirst()) {
@@ -93,6 +94,10 @@ class XmlWriter {
                 else -> TODO("Staff symbol of type $nextConductorStaffSymbol unsupported in initState function")
             }
         }
+
+        // carry over symbols with duration for next measure. They are replaced every time `createXmlMeasure` is called
+        carryOverNotesStack = mutableListOf<Note>()
+        carryOverRestsStack = mutableListOf<Rest>()
 
         // create measures
         val xmlMeasures = mutableListOf<musicxml.ScorePartwise.Part.Measure>()
