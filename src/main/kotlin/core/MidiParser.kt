@@ -85,7 +85,7 @@ class MidiParser {
             ShortMessage.NOTE_ON -> this.handleNoteEvent(tick, message)
             ShortMessage.NOTE_OFF -> this.handleNoteEvent(tick, message)
             ShortMessage.POLY_PRESSURE -> {} // note aftertouch [note number, aftertouch value]
-            ShortMessage.CONTROL_CHANGE -> {}
+            ShortMessage.CONTROL_CHANGE -> {} // CC
             ShortMessage.PROGRAM_CHANGE -> this.handleProgramChange(tick, message)
             ShortMessage.CHANNEL_PRESSURE -> {} // channel aftertouch
             ShortMessage.PITCH_BEND -> {} // pitch bend
