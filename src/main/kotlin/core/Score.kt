@@ -56,7 +56,7 @@ class Note(
         var tieEnd: Boolean = false
     ) : NotationInfo()
 
-    override val notationInfo: NoteNotationInfo = NoteNotationInfo()
+    override var notationInfo: NoteNotationInfo = NoteNotationInfo()
     override val exactDurationInTicks: Long = durationInTicks
     override var quantizedDurationInTicks: Long? = null
 }

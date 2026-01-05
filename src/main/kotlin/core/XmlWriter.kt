@@ -144,31 +144,15 @@ class XmlWriter {
                                 this.quantizedAnchorTick = note.quantizedAnchorTick
                                 val (closestDurationInTicks, closestDurationType) = quantizer!!.getClosestNoteDurationAndType(note.durationInTicks)
                                 this.quantizedDurationInTicks = closestDurationInTicks
-                                notationInfo.apply {
-                                    this.isChord = note.notationInfo.isChord
-                                    this.noteType = closestDurationType
-                                    this.step = note.notationInfo.step
-                                    this.alter = note.notationInfo.alter
-                                    this.tieEnd = note.notationInfo.tieEnd
-                                    this.tieStart = true
-                                }
+                                notationInfo = note.notationInfo.copy(noteType = closestDurationType, tieStart = true)
                             }
                             val carryOverNote =
                                 Note(nextMeasureStartTick, note.pitch, overFlowDurationInTicks, note.velocity).apply {
                                     this.quantizedAnchorTick = nextMeasureStartTick
                                     val (closestDurationInTicks, closestDurationType) = quantizer!!.getClosestNoteDurationAndType(durationInTicks)
                                     this.quantizedDurationInTicks = closestDurationInTicks
-                                    notationInfo.apply {
-                                        this.isChord = note.notationInfo.isChord
-                                        this.noteType = closestDurationType
-                                        this.step = note.notationInfo.step
-                                        this.alter = note.notationInfo.alter
-                                        this.tieStart = note.notationInfo.tieStart
-                                        this.tieEnd = true
-                                    }
+                                    notationInfo = note.notationInfo.copy(noteType = closestDurationType, tieEnd = true)
                                 }
-                            carryOverNote.notationInfo.apply {
-                            }
                             nextCarryOverNotesStack.add(carryOverNote)
                         }
                         val xmlNote = createXmlNote(note)
