@@ -47,7 +47,6 @@ class Note(
     durationInTicks: Long,
     val velocity: Int
 ) : StaffSymbol(anchorTick), HasDuration {
-//    override val exactDurationInTicks: Long = durationInTicks
     class NoteNotationInfo() : NotationInfo() {
         var step: musicxml.Step? = null
         var isChord: Boolean = false
