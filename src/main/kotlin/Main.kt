@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
 //    val midiFile = File("src/test/resources/mary.mid")
     val midiFile = File("src/test/resources/happy-birthday-to-you-c-major.mid")
 //    val midiFile = File("src/test/resources/tsmidi/TS05-01 It's Magic #1.MID")
-    val outputFile = File("_test/tes_Jan5-2.musicxml")
+    val outputFile = File("_test/tes_Jan5-3.musicxml")
     print(args.toString())
 //    val midiFile = File(args[0])
 //    val outputFile = File(args[1])
