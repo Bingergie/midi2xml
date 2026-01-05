@@ -56,10 +56,10 @@ class ScoreDesigner {
 //            ticksPerQuarterNote / 6 to "16th",
 //            ticksPerQuarterNote / 8 to "32nd",
         )
-        val closestDuration = quantizedDurationsInTicks.keys.minByOrNull { quantizedDurationsInTicks ->
+        val closestDuration = quantizedDurationsInTicks.keys.minBy { quantizedDurationsInTicks ->
             abs(durationInTicks - quantizedDurationsInTicks)
         }
-        return Pair<Int, String>(closestDuration as Int, quantizedDurationsInTicks[closestDuration] as String)
+        return Pair<Int, String>(closestDuration, quantizedDurationsInTicks[closestDuration] as String)
     }
 
     private fun getClosestQuantizedAnchorTick(anchorTick: Long, ticksPerQuarterNote: Int): Int {
