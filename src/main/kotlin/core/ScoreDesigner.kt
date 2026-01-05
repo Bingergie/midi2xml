@@ -44,7 +44,7 @@ class ScoreDesigner {
     private fun quantizeNotes() {
         assert(currentScore != null)
         assert(quantizer != null)
-        val ticksPerQuarterNote = currentScore!!.ticksPerQuarterNote
+        currentScore!!.ticksPerQuarterNote
         for (currentStaff in currentScore!!.staves) {
             for (staffSymbol in currentStaff.staffSymbols) {
                 when (staffSymbol) {
@@ -93,12 +93,11 @@ class ScoreDesigner {
                             val restDurationInTicks = currentNote.anchorTick - previousNoteEndTick
                             if (restDurationInTicks > 0) {
                                 val rest = Rest(previousNoteEndTick, restDurationInTicks).apply {
-                                    val ticksPerQuarterNote = currentScore!!.ticksPerQuarterNote
                                     val (closestDuration, closestDurationType) = quantizer!!.getClosestNoteDurationAndType(durationInTicks)
                                     this.notationInfo.restType = closestDurationType
-                                    this.quantizedDurationInTicks = closestDuration.toLong()
+                                    this.quantizedDurationInTicks = closestDuration
                                     val closestAnchorTick = quantizer!!.getClosestQuantizedAnchorTick(anchorTick)
-                                    this.quantizedAnchorTick = closestAnchorTick.toLong()
+                                    this.quantizedAnchorTick = closestAnchorTick
                                 }
                                 staff.staffSymbols.add(index, rest)
                             }
