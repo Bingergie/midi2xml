@@ -54,7 +54,7 @@ class MidiParser {
         }
     }
 
-    private fun handleTrackName(tick: Long, message: MetaMessage) {
+    private fun handleTrackName(tick: Long, message: MetaMessage) { // do not use: wrong interpretation of midi message
         val partName = StringBuilder()
         val count = message.data[0].toInt() and 0xFF
         for (i in 1 until count) {
