@@ -141,6 +141,7 @@ class XmlWriter {
 
                 // get the first symbol's anchorTick in these stacks
                 val candidateNextStaffSymbols = listOfNotNull(
+                    // order matters (might not be correct right now)
                     conductorStaffStack.firstOrNull(),
                     carryOverNotesStack.firstOrNull(),
                     carryOverRestsStack.firstOrNull(),
@@ -156,6 +157,7 @@ class XmlWriter {
 
                 // get first symbol via anchorTick
                 val nextStaffSymbol = when (minTick) {
+                    // order matters (might not be correct right now)
                     conductorStaffStack.firstOrNull()?.anchorTick -> conductorStaffStack.removeFirst()
                     carryOverNotesStack.firstOrNull()?.anchorTick -> carryOverNotesStack.removeFirst()
                     carryOverRestsStack.firstOrNull()?.anchorTick -> carryOverRestsStack.removeFirst()
@@ -163,7 +165,7 @@ class XmlWriter {
                     else -> throw Exception("Error!! the code logic is wrong")
                 }
 
-                // handle nextStaffSymbol
+                // handle the staff symbol
                 when (nextStaffSymbol) {
                     is Note -> {
                         var note = nextStaffSymbol
