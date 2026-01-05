@@ -72,14 +72,11 @@ class XmlWriter {
     }
 
     private fun createXmlMeasuresFromStaff(staff: Staff): List<musicxml.ScorePartwise.Part.Measure> {
+        this.initStaffState(staff)
+
+        // create measures
         val xmlMeasures = mutableListOf<musicxml.ScorePartwise.Part.Measure>()
-        conductorStaffStack =
-            this.currentScore!!.conductorStaff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
-        currentStaffStack = staff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
-        carryOverNotesStack = mutableListOf<Note>()
-        currentMeasureNumber = 1
-        this.initState()
-        while (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty()) {
+        while (conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty() || carryOverRestsStack.isNotEmpty()) {
             val xmlMeasure = this.createXmlMeasure()
             xmlMeasures.add(xmlMeasure)
             currentMeasureNumber++
@@ -87,8 +84,14 @@ class XmlWriter {
         return xmlMeasures
     }
 
-    private fun initState() {
+    private fun initStaffState(staff: Staff) {
         currentTick = 0L
+        conductorStaffStack =
+            this.currentScore!!.conductorStaff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
+        currentStaffStack = staff.staffSymbols.toMutableList() // creates a copy with intention to be destroyed
+        carryOverNotesStack = mutableListOf()
+        carryOverRestsStack = mutableListOf()
+        currentMeasureNumber = 1
         while (conductorStaffStack.firstOrNull()?.anchorTick == 0L) {
             when (val nextConductorStaffSymbol = conductorStaffStack.removeFirst()) {
                 is TimeSignature -> this.currentTimeSignature = nextConductorStaffSymbol
