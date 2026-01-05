@@ -132,15 +132,13 @@ class XmlWriter {
                 when (nextStaffSymbol) {
                     is Note -> {
                         var note = nextStaffSymbol
-                        val noteAnchorTick = note.quantizedAnchorTick ?: note.anchorTick
-                        val noteDurationInTicks = note.quantizedDurationInTicks ?: note.durationInTicks
-                        if (!note.notationInfo.isChord && (currentTick + noteDurationInTicks > nextMeasureStartTick)) { // note exceeds measure
+                        if (!note.notationInfo.isChord && (currentTick + note.durationInTicks > nextMeasureStartTick)) { // note exceeds measure
                             // break note into two, separating at bar line
-                            val overFlowDurationInTicks = currentTick + noteDurationInTicks - nextMeasureStartTick
+                            val overFlowDurationInTicks = currentTick + note.durationInTicks - nextMeasureStartTick
                             note = Note(
-                                noteAnchorTick,
+                                note.anchorTick,
                                 note.pitch,
-                                noteDurationInTicks - overFlowDurationInTicks,
+                                note.durationInTicks - overFlowDurationInTicks,
                                 note.velocity
                             ).apply {
                                 this.quantizedAnchorTick = note.quantizedAnchorTick
