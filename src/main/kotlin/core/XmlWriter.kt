@@ -115,6 +115,7 @@ class XmlWriter {
             val nextCarryOverNotesStack = mutableListOf<Note>()
             val nextCarryOverRestsStack = mutableListOf<Rest>()
             while ((conductorStaffStack.isNotEmpty() || currentStaffStack.isNotEmpty() || carryOverNotesStack.isNotEmpty() || carryOverRestsStack.isNotEmpty())) {
+
                 // get the first symbol's anchorTick in these stacks
                 val candidateNextStaffSymbols = listOfNotNull(
                     conductorStaffStack.firstOrNull(),
