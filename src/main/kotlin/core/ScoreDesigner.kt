@@ -7,7 +7,7 @@ import kotlin.math.abs
 import kotlin.math.roundToInt
 
 /**
- * This class adds and modifies notation information of a score to make it readable
+ * This class adds and modifies notation information of a score to make it more readable
  */
 class ScoreDesigner {
     private var currentScore: Score? = null
