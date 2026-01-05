@@ -260,6 +260,11 @@ class XmlWriter {
         return musicxml.Note().apply {
             this.rest = musicxml.Rest()
             this.duration = rest.durationInTicks.toBigDecimal()
+            if (rest.notationInfo.restType != null) {
+                this.type = musicxml.NoteType().apply {
+                    value = rest.notationInfo.restType
+                }
+            }
         }
     }
 
@@ -306,8 +311,11 @@ class XmlWriter {
                 octave = note.pitch / 12 - 1
             }
             this.duration = BigDecimal(note.notationInfo.quantizedDurationInTicks ?: note.durationInTicks)
-            this.type = musicxml.NoteType()
-                .apply { this.value = note.notationInfo.noteType ?: "eighth" } // todo: better error handling
+            if (note.notationInfo.noteType != null) {
+                this.type = musicxml.NoteType().apply {
+                    this.value = note.notationInfo.noteType
+                }
+            }
             if (note.notationInfo.tieEnd) {
                 this.tie.add(musicxml.Tie().apply {
                     this.type = musicxml.StartStop.STOP
