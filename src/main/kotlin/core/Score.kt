@@ -34,7 +34,7 @@ abstract class StaffSymbol(anchorTick: Long) {
 
 open class NotationInfo()
 
-abstract interface HasDuration {
+interface HasDuration {
     val exactDurationInTicks: Long
     var quantizedDurationInTicks: Long?
     val durationInTicks: Long
