@@ -58,8 +58,8 @@ class XmlWriter {
         for ((index, staff) in currentScore!!.staves.withIndex()) {
             val xmlPartId = "P${index + 1}"
             val xmlPartName = musicxml.PartName().apply {
-                value = staff.notationInfo.partName
-            } // todo: staff.currentInstrument.name and handle midi instrument info
+                value = staff.notationInfo.partName // todo: staff.currentInstrument.name and handle midi instrument info
+            }
             val xmlScorePart = musicxml.ScorePart().apply {
                 this.id = xmlPartId
                 this.partName = xmlPartName
