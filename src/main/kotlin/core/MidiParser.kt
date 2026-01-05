@@ -113,6 +113,7 @@ class MidiParser {
     }
 
     private fun handleNoteStart(channel: Int, pitch: Int, velocity: Int, startTick: Long) {
+        // add note to tempNotes
         val startTicks = tempNotes.getOrPut(channel to pitch) { mutableListOf() }
         startTicks.add(startTick to velocity)
         return
@@ -121,10 +122,12 @@ class MidiParser {
     private fun handleNoteEnd(channel: Int, pitch: Int, endTick: Long) {
         // remove note from tempNotes
         val noteStartData = tempNotes[channel to pitch]
-            ?: throw IllegalStateException("No tempNote found for channel $channel and pitch $pitch")
-        val (startTick, velocity) = noteStartData.removeFirst()
+            ?: throw IllegalStateException("No tempNote found for channel $channel and pitch $pitch") // should not happen with correct midi if my program logic is correct
+        val (startTick, velocity) = noteStartData.removeFirst() // if multiple of the same note was pressed down on the same channel, remove the first one
         val duration = endTick - startTick
+        // create staff if this channel has none
         if (this.currentStaves[channel] == null) this.currentStaves[channel] = Staff()
+        // add note to staff
         this.currentStaves[channel]!!.staffSymbols.add(Note(startTick, pitch, duration, velocity))
     }
 }
