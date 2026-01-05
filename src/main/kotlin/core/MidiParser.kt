@@ -86,10 +86,16 @@ class MidiParser {
             ShortMessage.NOTE_OFF -> this.handleNoteEvent(tick, message)
             ShortMessage.POLY_PRESSURE -> {} // note aftertouch [note number, aftertouch value]
             ShortMessage.CONTROL_CHANGE -> {}
-            ShortMessage.PROGRAM_CHANGE -> {}
+            ShortMessage.PROGRAM_CHANGE -> this.handleProgramChange(tick, message)
             ShortMessage.CHANNEL_PRESSURE -> {} // channel aftertouch
             ShortMessage.PITCH_BEND -> {} // pitch bend
         }
+    }
+
+    private fun handleProgramChange(tick: Long, message: ShortMessage) {
+        val channel = message.channel
+        val instrumentNumber = message.data1
+        // todo: add Instrument(instrumentNumber) to staff
     }
 
     private val tempNotes =
