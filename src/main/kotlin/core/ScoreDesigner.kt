@@ -93,7 +93,7 @@ class ScoreDesigner {
 //            ticksPerQuarterNote / 3 to "eighth",
             ticksPerQuarterNote / 4 to "16th",
 //            ticksPerQuarterNote / 6 to "16th",
-//            ticksPerQuarterNote / 8 to "32th",
+//            ticksPerQuarterNote / 8 to "32nd",
         )
         for (currentStaff in currentScore!!.staves) {
             for (staffSymbol in currentStaff.staffSymbols) {
