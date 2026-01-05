@@ -40,7 +40,7 @@ class MidiParser {
             MetaMessageType.SEQUENCE_NUMBER -> println("seq number")
             MetaMessageType.TEXT -> {}
             MetaMessageType.COPYRIGHT_NOTICE -> {}
-            MetaMessageType.TRACK_NAME -> this.handleTrackName(tick, message)
+            MetaMessageType.TRACK_NAME -> {} // this.handleTrackName(tick, message)
             MetaMessageType.INSTRUMENT_NAME -> {}
             MetaMessageType.LYRICS -> {}
             MetaMessageType.MARKER -> {}
