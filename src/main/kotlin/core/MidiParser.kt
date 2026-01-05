@@ -50,7 +50,7 @@ class MidiParser {
             MetaMessageType.MIDI_CHANNEL_PREFIX -> {}
             MetaMessageType.SET_TEMPO -> {}
             MetaMessageType.SEQUENCER_SPECIFIC -> {}
-            null -> println("Warning: unknown MetaMessage received!")
+            null -> println("Warning: unknown MetaMessage received: ${message.type and 0xFF}")
         }
     }
 
