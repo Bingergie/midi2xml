@@ -62,6 +62,24 @@ class ScoreDesigner {
         return Pair<Int, String>(closestDuration as Int, quantizedDurationsInTicks[closestDuration] as String)
     }
 
+    private fun getQuantizedAnchorTick(anchorTick: Long, ticksPerQuarterNote: Int): Int {
+        val quantizedDurationsInTicks = mapOf<Int, String>(
+            ticksPerQuarterNote * 4 to "whole",
+            ticksPerQuarterNote * 2 to "half",
+//            ticksPerQuarterNote * 3 / 2 to "half",
+            ticksPerQuarterNote to "quarter",
+//            ticksPerQuarterNote * 2 / 3 to "quarter",
+            ticksPerQuarterNote / 2 to "eighth",
+//            ticksPerQuarterNote / 3 to "eighth",
+            ticksPerQuarterNote / 4 to "16th",
+//            ticksPerQuarterNote / 6 to "16th",
+//            ticksPerQuarterNote / 8 to "32th",
+        )
+        val closestTickDivision = quantizedDurationsInTicks.keys.minBy { quantizedTick -> abs(anchorTick % quantizedTick) }
+        val quantizedTick = (anchorTick / closestTickDivision.toDouble()).roundToInt() * closestTickDivision
+        return quantizedTick
+    }
+
 
     private fun quantizeNotes() {
         val ticksPerQuarterNote = currentScore!!.ticksPerQuarterNote
